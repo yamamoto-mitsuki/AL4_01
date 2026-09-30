@@ -1,0 +1,359 @@
+#include "MyEngine/Graphics/Model/ModelManager.h"
+
+#include <map>
+#include <cmath>
+#include <format>
+#include <fstream>
+#include <sstream>
+#include <filesystem>
+
+#include <pix.h>
+
+#include <assimp/Importer.hpp>
+#include <assimp/scene.h>
+#include <assimp/postprocess.h>
+
+#include "MyEngine/Camera/Camera.h"
+#include "MyEngine/Diagnostics/MyAssert.h"
+#include "MyEngine/Diagnostics/LogManager.h"
+#include "MyEngine/Graphics/GPU/DirectXCommon.h"
+#include "MyEngine/Graphics/GPU/UploadContext.h"
+#include "MyEngine/Graphics/Pipeline/ShaderConstants.h"
+#include "MyEngine/Graphics/Texture/TextureManager.h"
+
+//======================================================================================================
+// assimpの行列 → エンジンの行列
+// ・assimpは「列ベクトル（変換後 = 行列 × 頂点）」で行優先。エンジンは「行ベクトル（変換後 = 頂点 × 行列）」なので転置する
+// ・頂点を読むときにxを反転している（右手系→左手系）ので、行列も x を反転した空間へ直す
+//   （x反転の行列で前後から挟む形。結果として「片方の添字だけがx」の成分の符号が反転する）
+//======================================================================================================
+static Matrix4x4 ConvertAssimpMatrix(const aiMatrix4x4& matrix) {
+	Matrix4x4 result{};
+	// 転置しながら入れる
+	result.m[0][0] = matrix.a1;
+	result.m[0][1] = matrix.b1;
+	result.m[0][2] = matrix.c1;
+	result.m[0][3] = matrix.d1;
+	result.m[1][0] = matrix.a2;
+	result.m[1][1] = matrix.b2;
+	result.m[1][2] = matrix.c2;
+	result.m[1][3] = matrix.d2;
+	result.m[2][0] = matrix.a3;
+	result.m[2][1] = matrix.b3;
+	result.m[2][2] = matrix.c3;
+	result.m[2][3] = matrix.d3;
+	result.m[3][0] = matrix.a4;
+	result.m[3][1] = matrix.b4;
+	result.m[3][2] = matrix.c4;
+	result.m[3][3] = matrix.d4;
+	// x反転（位置のxと、xが混ざる回転成分の符号が変わる）
+	result.m[0][1] = -result.m[0][1];
+	result.m[0][2] = -result.m[0][2];
+	result.m[0][3] = -result.m[0][3];
+	result.m[1][0] = -result.m[1][0];
+	result.m[2][0] = -result.m[2][0];
+	result.m[3][0] = -result.m[3][0];
+	return result;
+}
+
+
+// ===== インスタンス取得 =====
+ModelManager& ModelManager::GetInstance() {
+	static ModelManager instance;
+	return instance;
+}
+
+// ===== 初期化 =====
+void ModelManager::Initialize() {}
+
+// ===== 解放 =====
+void ModelManager::Release() {
+	auto& inst = GetInstance();
+	inst.models_.clear();
+	inst.pathToHandle_.clear();
+	inst.modelsKey_ = 1;
+}
+
+// ===== 取得 =====
+// モデル
+const ModelManager::ModelAsset* ModelManager::GetModelAsset(uint32_t handle) {
+	auto it = GetInstance().models_.find(handle);
+	if (it != GetInstance().models_.end()) {
+		return &it->second;
+	}
+
+	LogManager::Warning("ModelAssetが見つかりませんでした");
+	return nullptr;
+}
+
+// モデルのマテリアル
+ModelManager::MtlMaterial* ModelManager::GetMtlMaterial(uint32_t handle, const std::string name) { 
+	// --- 検索対象のモデル ---
+	auto modelCheck = GetInstance().models_.find(handle); 
+	// 存在しているmodelHandleか
+	if (modelCheck == GetInstance().models_.end()) {
+		LogManager::Error(std::format("{}: not found", handle));
+		MY_ASSERT_MSG(false, "存在しないmodelHandleを参照しています");
+	}
+	ModelAsset& model = modelCheck->second;
+
+	// --- マテリアル ---
+	auto materialCheck = model.materialMap.find(name);
+	// 存在している名前か
+	if (materialCheck == model.materialMap.end()) {
+		LogManager::Error(std::format("serach name[{}] bytes={}", name, name.size()));
+		for (auto& [key, _] : model.materialMap) {
+			LogManager::Error(std::format("have key[{}] bytes={}", key, key.size()));
+		}
+
+		LogManager::Error(std::format("{}: not found", name));
+		MY_ASSERT_MSG(false, "存在しないマテリアル名を参照しています");
+		return nullptr;
+	}
+	return &materialCheck->second;
+}
+
+// ===== モデル名取得 =====
+const std::string& ModelManager::GetModelName(uint32_t modelHandle) {
+	auto it = GetInstance().models_.find(modelHandle);
+	if (it != GetInstance().models_.end()) {
+		return it->second.name;
+	}
+	static const std::string emptyString;
+	return emptyString;
+}
+
+// ===== 読み込んだときのパス取得（番号 → パスの逆引き。モデルの数は多くないので、全部を見て探す）=====
+const std::string& ModelManager::GetModelPath(uint32_t modelHandle) {
+	for (const auto& [path, handle] : GetInstance().pathToHandle_) {
+		if (handle == modelHandle) {
+			return path;
+		}
+	}
+	static const std::string emptyString;
+	return emptyString;
+}
+
+
+//======================================================================================================
+// OBJファイルを読み込む
+//======================================================================================================
+uint32_t ModelManager::Load(const std::string& objFilePath) {
+	auto& inst = GetInstance();
+	// 重複チェック
+	auto cached = inst.pathToHandle_.find(objFilePath);
+	if (cached != inst.pathToHandle_.end()) {
+		return cached->second;
+	}
+
+	// ディレクトリパスとファイル名を分離
+	std::filesystem::path path(objFilePath);
+	std::string directoryPath = path.parent_path().string();
+	std::string filename = path.filename().string();
+	// OBJ読み込み
+	ModelAsset ModelAsset = LoadObjFile(directoryPath, filename);
+	ModelAsset.name = std::filesystem::path(filename).stem().string();
+	// マテリアルのテクスチャをTextureManagerでロード
+	for (auto& [name, mat] : ModelAsset.materialMap) {
+		if (!mat.textureFilePath.empty()) {
+			mat.srvIndex = TextureManager::Load(mat.textureFilePath);
+		}
+	}
+	// GPU常駐バッファを構築（転送を予約）
+	for (SubMesh& mesh : ModelAsset.meshes) {
+		MakeMeshBuffer(mesh, filename);
+	}
+	// 予約した転送をまとめて実行
+	UploadContext::Flush();
+	// ハンドル割り当てと登録
+	uint32_t handle = inst.modelsKey_++;
+	inst.models_[handle] = std::move(ModelAsset);
+	inst.pathToHandle_[objFilePath] = handle;
+
+	return handle;
+}
+
+
+//======================================================================================================
+// OBJファイルを読み込む
+//======================================================================================================
+ModelManager::ModelAsset ModelManager::LoadObjFile(const std::string& directoryPath, const std::string& filename) {
+	Assimp::Importer importer;
+	// --- 読み込み ---
+	std::string filePath = directoryPath + "/" + filename;
+	const aiScene* scene = importer.ReadFile(
+	    filePath.c_str(), aiProcess_Triangulate | aiProcess_JoinIdenticalVertices | aiProcess_FlipWindingOrder | aiProcess_FlipUVs | aiProcess_CalcTangentSpace | aiProcess_GenSmoothNormals);
+	MY_ASSERT_MSG(scene != nullptr, std::string("読み込み失敗: ") + importer.GetErrorString());
+	MY_ASSERT_MSG(scene->HasMeshes(), "メッシュを見つけられませんでした");
+
+	ModelAsset modelAsset;
+	// --- Material解析 ---
+	// assimpはメッシュごとにマテリアル番号（mMaterialIndex）しか持たないので、番号→名前の表を作っておき、後でSubMesh::materialNameにいれる
+	std::vector<std::string> materialNames(scene->mNumMaterials);
+	// ループ
+	for (uint32_t materialIndex = 0; materialIndex < scene->mNumMaterials; ++materialIndex) {
+		aiMaterial* material = scene->mMaterials[materialIndex];
+		MtlMaterial mtl;
+		// 名前（objのnewmtl名。ない場合assimpが"DefaultMaterial"を作る）
+		aiString name;
+		material->Get(AI_MATKEY_NAME, name);
+		mtl.name = name.C_Str();
+		materialNames[materialIndex] = mtl.name;
+		// 環境光などの色（見つからない場合、MtlMaterialのデフォルト値）
+		aiColor3D color;
+		if (material->Get(AI_MATKEY_COLOR_AMBIENT, color) == AI_SUCCESS) {
+			mtl.ambient = {color.r, color.g, color.b};
+		}
+		if (material->Get(AI_MATKEY_COLOR_DIFFUSE, color) == AI_SUCCESS) {
+			mtl.diffuse = {color.r, color.g, color.b};
+		}
+		if (material->Get(AI_MATKEY_COLOR_SPECULAR, color) == AI_SUCCESS) {
+			mtl.specular = {color.r, color.g, color.b};
+		}
+		if (material->Get(AI_MATKEY_COLOR_EMISSIVE, color) == AI_SUCCESS) {
+			mtl.emissive = {color.r, color.g, color.b};
+		}
+		// スカラー
+		material->Get(AI_MATKEY_SHININESS, mtl.shininess);
+		material->Get(AI_MATKEY_OPACITY, mtl.dissolve);
+		material->Get(AI_MATKEY_METALLIC_FACTOR, mtl.metallic);
+		material->Get(AI_MATKEY_ROUGHNESS_FACTOR, mtl.roughness);
+		// テクスチャ（パスはモデルファイルからの相対なのでdirectoryPathを前置）
+		aiString texPath;
+		// glTFはbaseColor、OBJ / FBXはdiffuseに入る。あった方を使う
+		if (material->GetTexture(aiTextureType_DIFFUSE, 0, &texPath) == AI_SUCCESS || material->GetTexture(aiTextureType_BASE_COLOR, 0, &texPath) == AI_SUCCESS) {
+			mtl.textureFilePath = directoryPath + "/" + texPath.C_Str();
+		}
+		if (material->GetTexture(aiTextureType_AMBIENT, 0, &texPath) == AI_SUCCESS) {
+			mtl.ambientTexFilePath = directoryPath + "/" + texPath.C_Str();
+		}
+		if (material->GetTexture(aiTextureType_SPECULAR, 0, &texPath) == AI_SUCCESS) {
+			mtl.specularTexFilePath = directoryPath + "/" + texPath.C_Str();
+		}
+		// OBJのmap_bump/bumpはassimpではHEIGHT、glTFはNORMALSに分類される
+		if (material->GetTexture(aiTextureType_HEIGHT, 0, &texPath) == AI_SUCCESS || material->GetTexture(aiTextureType_NORMALS, 0, &texPath) == AI_SUCCESS) {
+			mtl.bumpTexFilePath = directoryPath + "/" + texPath.C_Str();
+		}
+
+		modelAsset.materialMap[mtl.name] = mtl;
+	}
+
+	// --- Mesh解析 ---
+	// assimpは「1メッシュ=1マテリアル」に分割済みなので、aiMeshをそのままSubMeshにする
+	modelAsset.meshes.reserve(scene->mNumMeshes);
+	// ループ
+	for (uint32_t meshIndex = 0; meshIndex < scene->mNumMeshes; ++meshIndex) {
+		aiMesh* mesh = scene->mMeshes[meshIndex];
+		// 法線・UVが無いモデルもあるので、無ければ既定値で補う
+		const bool hasNormals = mesh->HasNormals();
+		const bool hasTexcoords = mesh->HasTextureCoords(0);
+		if (!hasNormals) {
+			LogManager::Warning(filename + ": 法線がないMeshです。(0,1,0)で補完します");
+		}
+		if (!hasTexcoords) {
+			LogManager::Warning(filename + ": TexcoordがないMeshです。(0,0)で補完します");
+		}
+		// SubMesh
+		SubMesh subMesh;
+		subMesh.materialName = materialNames[mesh->mMaterialIndex];
+		subMesh.vertices.reserve(mesh->mNumVertices);
+		for (uint32_t vertexIndex = 0; vertexIndex < mesh->mNumVertices; ++vertexIndex) {
+			aiVector3D& position = mesh->mVertices[vertexIndex];
+			Vertex3dData vertex;
+			// 右手系→左手系はx反転で対処（FlipWindingOrderとセット）
+			vertex.position = {-position.x, position.y, position.z, 1.0f};
+			// 法線
+			if (hasNormals) {
+				aiVector3D& normal = mesh->mNormals[vertexIndex];
+				vertex.normal = {-normal.x, normal.y, normal.z};
+			} else {
+				vertex.normal = {0.0f, 1.0f, 0.0f};
+			}
+			// UV
+			if (hasTexcoords) {
+				aiVector3D& texcoord = mesh->mTextureCoords[0][vertexIndex];
+				vertex.texcoord = {texcoord.x, texcoord.y};
+			} else {
+				vertex.texcoord = {0.0f, 0.0f};
+			}
+			subMesh.vertices.push_back(vertex);
+		}
+		// 頂点インデックス。Faceの中身をそのまま積む
+		subMesh.indices.reserve(mesh->mNumFaces * 3);
+		for (uint32_t faceIndex = 0; faceIndex < mesh->mNumFaces; ++faceIndex) {
+			aiFace& face = mesh->mFaces[faceIndex];
+			MY_ASSERT_MSG(face.mNumIndices == 3, "ポリゴンは三角形のみサポートしています");
+			for (uint32_t element = 0; element < face.mNumIndices; ++element) {
+				subMesh.indices.push_back(face.mIndices[element]);
+			}
+		}
+		modelAsset.meshes.push_back(std::move(subMesh));
+	}
+
+	// --- Node解析（モデルファイルの中の階層構造） ---
+	// 根からたどって、ノードごとの行列とメッシュ番号を配列に写す
+	LoadNode(scene->mRootNode, kInvalidNode, MakeIdentity4x4(), modelAsset);
+
+	return modelAsset;
+}
+
+
+//======================================================================================================
+// aiNodeの木を ModelAsset::nodes（配列）へ写す
+//======================================================================================================
+uint32_t ModelManager::LoadNode(const aiNode* node, uint32_t parentIndex, const Matrix4x4& parentWorld, ModelAsset& modelAsset) {
+	// 先に自分の場所を作る（子を足すと配列が伸びるので、参照ではなくインデックスで触る）
+	uint32_t index = static_cast<uint32_t>(modelAsset.nodes.size());
+	modelAsset.nodes.emplace_back();
+	{
+		Node& self = modelAsset.nodes[index];
+		self.name = node->mName.C_Str();
+		self.localMatrix = ConvertAssimpMatrix(node->mTransformation);
+		self.worldMatrix = self.localMatrix * parentWorld; // 行ベクトルなので「自分 × 親」の順
+		self.parent = parentIndex;
+		// このノードが持つメッシュ（aiMeshの番号は ModelAsset::meshes の番号と同じ）
+		self.meshIndices.assign(node->mMeshes, node->mMeshes + node->mNumMeshes);
+	}
+	Matrix4x4 world = modelAsset.nodes[index].worldMatrix;
+
+	// 子をたどる
+	for (uint32_t childIndex = 0; childIndex < node->mNumChildren; ++childIndex) {
+		uint32_t added = LoadNode(node->mChildren[childIndex], index, world, modelAsset);
+		modelAsset.nodes[index].children.push_back(added);
+	}
+	return index;
+}
+
+
+//======================================================================================================
+// メッシュのCPU頂点を GPU常駐バッファへ転送する（ロード時1回だけ）
+//======================================================================================================
+void ModelManager::MakeMeshBuffer(SubMesh& mesh, const std::string& modelName) {
+	if (mesh.vertices.empty() || mesh.indices.empty()) {
+		return;
+	}
+	const size_t vbSize = sizeof(Vertex3dData) * mesh.vertices.size();
+	const size_t ibSize = sizeof(uint32_t) * mesh.indices.size();
+	// 頂点バッファ
+	mesh.vertexBuffer = DirectXCommon::CreateDefaultBuffer(vbSize);
+	UploadContext::QueueUpload(mesh.vertexBuffer.Get(), mesh.vertices.data(), vbSize, D3D12_RESOURCE_STATE_VERTEX_AND_CONSTANT_BUFFER);
+	// インデックスバッファ
+	mesh.indexBuffer = DirectXCommon::CreateDefaultBuffer(ibSize);
+	UploadContext::QueueUpload(mesh.indexBuffer.Get(), mesh.indices.data(), ibSize, D3D12_RESOURCE_STATE_INDEX_BUFFER);
+	
+	// バッファに名前をつける
+	std::wstring base = ConvertString(modelName + "/" + mesh.materialName);
+	mesh.vertexBuffer->SetName((base + L"_VB").c_str());
+	mesh.indexBuffer->SetName((base + L"_IB").c_str());
+
+	// 頂点バッファビュー
+	mesh.vbv.BufferLocation = mesh.vertexBuffer->GetGPUVirtualAddress();
+	mesh.vbv.SizeInBytes = static_cast<UINT>(vbSize);
+	mesh.vbv.StrideInBytes = sizeof(Vertex3dData);
+	// インデックスバッファビュー
+	mesh.ibv.BufferLocation = mesh.indexBuffer->GetGPUVirtualAddress();
+	mesh.ibv.SizeInBytes = static_cast<UINT>(ibSize);
+	mesh.ibv.Format = DXGI_FORMAT_R32_UINT;
+
+	mesh.indexCount = static_cast<uint32_t>(mesh.indices.size());
+}

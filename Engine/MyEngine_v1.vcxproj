@@ -1,0 +1,396 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>18.0</VCProjectVersion>
+    <Keyword>Win32Proj</Keyword>
+    <ProjectGuid>{1d0f63d3-16bb-43b8-985e-6bb516a1d662}</ProjectGuid>
+    <RootNamespace>MyEnginev1</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v145</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v145</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>_DEBUG;_LIB;USE_IMGUI;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp23</LanguageStandard>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)externals;$(ProjectDir)externals\assimp\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
+    </ClCompile>
+    <Link>
+      <SubSystem>
+      </SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+    <PostBuildEvent>
+      <Command>xcopy /Y /I "$(OutDir)$(TargetName).lib" "$(SolutionDir)MyEngine\lib\$(Configuration)\"
+xcopy /Y /S /I "$(ProjectDir)MyEngine\*.h" "$(SolutionDir)MyEngine\include\MyEngine\"
+xcopy /Y /S /I "$(ProjectDir)MyEngine\Shader\*" "$(SolutionDir)MyEngine\Shader\"
+xcopy /Y /S /I "$(ProjectDir)Resources" "$(SolutionDir)MyEngine\Resources\"
+</Command>
+    </PostBuildEvent>
+    <Lib>
+      <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalLibraryDirectories>$(SolutionDir)MyEngine\lib\$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp23</LanguageStandard>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)externals;$(ProjectDir)externals\assimp\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
+    </ClCompile>
+    <Link>
+      <SubSystem>
+      </SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+    <PostBuildEvent>
+      <Command>xcopy /Y /I "$(OutDir)$(TargetName).lib" "$(SolutionDir)MyEngine\lib\$(Configuration)\"
+xcopy /Y /S /I "$(ProjectDir)MyEngine\*.h" "$(SolutionDir)MyEngine\include\MyEngine\"
+xcopy /Y /S /I "$(ProjectDir)MyEngine\Shader\*" "$(SolutionDir)MyEngine\Shader\"
+xcopy /Y /S /I "$(ProjectDir)Resources" "$(SolutionDir)MyEngine\Resources\"
+</Command>
+    </PostBuildEvent>
+    <Lib>
+      <AdditionalLibraryDirectories>$(SolutionDir)MyEngine\lib\$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <!-- MyEngine -->
+    <ClCompile Include="MyEngine\Systems\AudioSystem.cpp" />
+    <ClCompile Include="MyEngine\Systems\CameraSystem.cpp" />
+    <ClCompile Include="MyEngine\Systems\CollisionSystem.cpp" />
+    <ClCompile Include="MyEngine\Components\EngineComponents.cpp" />
+    <ClCompile Include="MyEngine\ECS\ComponentSerializer.cpp" />
+    <ClCompile Include="MyEngine\ECS\ComponentUI.cpp" />
+    <ClCompile Include="MyEngine\ECS\GameComponent.cpp" />
+    <ClCompile Include="MyEngine\Editor\Inspector\LightEditor.cpp" />
+    <ClCompile Include="MyEngine\Editor\Widgets\ImeInput.cpp" />
+    <ClCompile Include="MyEngine\Editor\Inspector\ModelRendererEditor.cpp" />
+    <ClCompile Include="MyEngine\Editor\Inspector\ComponentEditor.cpp" />
+    <ClCompile Include="MyEngine\Editor\History\EditorHistory.cpp" />
+    <ClCompile Include="MyEngine\Editor\Windows\InspectorWindow.cpp" />
+    <ClCompile Include="MyEngine\Editor\Windows\HierarchyWindow.cpp" />
+    <ClCompile Include="MyEngine\ECS\EntityManager.cpp" />
+    <ClCompile Include="externals\imgui\imgui.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="externals\imgui\ImGuizmo.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="externals\imgui\imgui_demo.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="externals\imgui\imgui_draw.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="externals\imgui\imgui_impl_dx12.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="externals\imgui\imgui_impl_win32.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="externals\imgui\imgui_tables.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="externals\imgui\imgui_widgets.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="MyEngine\Graphics\GPU\FrameUploadBuffer.cpp" />
+    <ClCompile Include="MyEngine\Editor\Gizmos\LightGizmo.cpp" />
+    <ClCompile Include="MyEngine\Collision\Profiling\CollisionProfiler.cpp" />
+    <ClCompile Include="MyEngine\Diagnostics\CrashHandler.cpp" />
+    <ClCompile Include="MyEngine\Diagnostics\LogManager.cpp" />
+    <ClCompile Include="MyEngine\Editor\Viewport\EditorGrid.cpp" />
+    <ClCompile Include="MyEngine\Editor\Viewport\EditorOverlay.cpp" />
+    <ClCompile Include="MyEngine\Editor\Viewport\EditorViewport.cpp" />
+    <ClCompile Include="MyEngine\Editor\ImGuiManager.cpp" />
+    <ClCompile Include="MyEngine\Editor\Profiler.cpp" />
+    <ClCompile Include="MyEngine\Editor\Viewport\ViewportWindow.cpp" />
+    <ClCompile Include="MyEngine\Graphics\Diagnostics\D3D12ResourceLeakChecker.cpp" />
+    <ClCompile Include="MyEngine\Graphics\GPU\DirectXCommon.cpp" />
+    <ClCompile Include="MyEngine\Graphics\GPU\UploadContext.cpp" />
+    <ClCompile Include="MyEngine\Graphics\IBL\BrdfLutPass.cpp" />
+    <ClCompile Include="MyEngine\Graphics\IBL\CubeBakePass.cpp" />
+    <ClCompile Include="MyEngine\Graphics\IBL\IBLBaker.cpp" />
+    <ClCompile Include="MyEngine\Graphics\IBL\IBLEnvironment.cpp" />
+    <ClCompile Include="MyEngine\Graphics\IBL\PrefilterPass.cpp" />
+    <ClCompile Include="MyEngine\Graphics\Model\ModelManager.cpp" />
+    <ClCompile Include="MyEngine\Graphics\Pipeline\PSOManager.cpp" />
+    <ClCompile Include="MyEngine\Graphics\Pipeline\RenderStates.cpp" />
+    <ClCompile Include="MyEngine\Graphics\Pipeline\RootSignatureManager.cpp" />
+    <ClCompile Include="MyEngine\Graphics\Pipeline\ShaderCompiler.cpp" />
+    <ClCompile Include="MyEngine\Graphics\Pipeline\ShaderPackageLoader.cpp" />
+    <ClCompile Include="MyEngine\Graphics\Pipeline\VertexFormat.cpp" />
+    <ClCompile Include="MyEngine\Graphics\PostEffect\BloomPass.cpp" />
+    <ClCompile Include="MyEngine\Graphics\PostEffect\LensPass.cpp" />
+    <ClCompile Include="MyEngine\Graphics\PostEffect\PostProcess.cpp" />
+    <ClCompile Include="MyEngine\Graphics\Profiling\GPUProfiler.cpp" />
+    <ClCompile Include="MyEngine\Graphics\Renderer\Renderer.cpp" />
+    <ClCompile Include="MyEngine\Graphics\Renderer\RenderContext.cpp" />
+    <ClCompile Include="MyEngine\Graphics\Renderer\RenderQueue.cpp" />
+    <ClCompile Include="MyEngine\Graphics\Renderer\SceneRenderer.cpp" />
+    <ClCompile Include="MyEngine\Graphics\RenderTarget\RenderTexture.cpp" />
+    <ClCompile Include="MyEngine\Graphics\RenderTarget\RenderTextureCube.cpp" />
+    <ClCompile Include="MyEngine\Graphics\RenderTarget\RenderTextureManager.cpp" />
+    <ClCompile Include="MyEngine\Graphics\RenderTarget\RenderWindow.cpp" />
+    <ClCompile Include="MyEngine\Graphics\Texture\TextureManager.cpp" />
+    <ClCompile Include="MyEngine\Systems\LightSystem.cpp" />
+    <ClCompile Include="MyEngine\Math\Easing.cpp" />
+    <ClCompile Include="MyEngine\Math\Geometry\AABB.cpp" />
+    <ClCompile Include="MyEngine\Math\Geometry\OBB.cpp" />
+    <ClCompile Include="MyEngine\Math\Geometry\Sphere.cpp" />
+    <ClCompile Include="MyEngine\Math\RandomEngine.cpp" />
+    <ClCompile Include="MyEngine\Particle\Field\AccelerationField.cpp" />
+    <ClCompile Include="MyEngine\Particle\ParticleEmitter.cpp" />
+    <ClCompile Include="MyEngine\Particle\ParticleManager.cpp" />
+    <ClCompile Include="MyEngine\Scene\Skybox.cpp" />
+    <ClCompile Include="MyEngine\Sound\SoundManager.cpp" />
+    <ClCompile Include="MyEngine\Camera\Camera.cpp" />
+    <ClCompile Include="MyEngine\Camera\DebugCamera.cpp" />
+    <ClCompile Include="MyEngine\Collision\Collision.cpp" />
+    <ClCompile Include="MyEngine\Engine.cpp" />
+    <ClCompile Include="MyEngine\Input\InputManager.cpp" />
+    <ClCompile Include="MyEngine\Input\KeyboardInput.cpp" />
+    <ClCompile Include="MyEngine\Input\MouseInput.cpp" />
+    <ClCompile Include="MyEngine\Input\XInputGamepad.cpp" />
+    <ClCompile Include="MyEngine\Math\Matrix3x3.cpp" />
+    <ClCompile Include="MyEngine\Math\Matrix4x4.cpp" />
+    <ClCompile Include="MyEngine\Math\Vector4.cpp" />
+    <ClCompile Include="MyEngine\Scene\SceneManager.cpp" />
+    <ClCompile Include="MyEngine\String\ConvertString.cpp" />
+    <ClCompile Include="MyEngine\UI\GameNotification.cpp" />
+    <ClCompile Include="MyEngine\UI\GlobalVariables.cpp" />
+    <ClCompile Include="MyEngine\Window\Win32Window.cpp" />
+    <ClCompile Include="MyEngine\Window\WindowManager.cpp" />
+    <!-- ImGui（Debugのみ） -->
+    <ClCompile Include="MyEngine\Systems\ModelRenderSystem.cpp" />
+    <ClCompile Include="MyEngine\Editor\Inspector\TransformEditor.cpp" />
+    <ClCompile Include="MyEngine\Scene\SceneSerializer.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="MyEngine\Components\CameraComponent.h" />
+    <ClInclude Include="MyEngine\Sound\AudioBus.h" />
+    <ClInclude Include="MyEngine\Systems\AudioSystem.h" />
+    <ClInclude Include="MyEngine\Components\AudioSourceComponent.h" />
+    <ClInclude Include="MyEngine\Components\ColliderComponent.h" />
+    <ClInclude Include="MyEngine\Systems\CameraSystem.h" />
+    <ClInclude Include="MyEngine\Systems\CollisionSystem.h" />
+    <ClInclude Include="MyEngine\ECS\ComponentSerializer.h" />
+    <ClInclude Include="MyEngine\ECS\ComponentUI.h" />
+    <ClInclude Include="MyEngine\ECS\GameComponent.h" />
+    <ClInclude Include="MyEngine\Editor\Inspector\LightEditor.h" />
+    <ClInclude Include="MyEngine\ECS\ComponentStorage.h" />
+    <ClInclude Include="MyEngine\Editor\Widgets\ImeInput.h" />
+    <ClInclude Include="MyEngine\Editor\Inspector\ModelRendererEditor.h" />
+    <ClInclude Include="MyEngine\Editor\Inspector\ComponentEditor.h" />
+    <ClInclude Include="MyEngine\Editor\History\EditorHistory.h" />
+    <ClInclude Include="MyEngine\Editor\Widgets\EditorWidgets.h" />
+    <ClInclude Include="MyEngine\Editor\Windows\InspectorWindow.h" />
+    <ClInclude Include="MyEngine\Editor\Windows\HierarchyWindow.h" />
+    <ClInclude Include="MyEngine\ECS\EntityManager.h" />
+    <ClInclude Include="externals\imgui\imconfig.h" />
+    <ClInclude Include="externals\imgui\imgui.h" />
+    <ClInclude Include="externals\imgui\ImGuizmo.h" />
+    <ClInclude Include="externals\imgui\imgui_impl_dx12.h" />
+    <ClInclude Include="externals\imgui\imgui_impl_win32.h" />
+    <ClInclude Include="externals\imgui\imgui_internal.h" />
+    <ClInclude Include="externals\imgui\imstb_rectpack.h" />
+    <ClInclude Include="externals\imgui\imstb_textedit.h" />
+    <ClInclude Include="externals\imgui\imstb_truetype.h" />
+    <ClInclude Include="externals\spdlog\async.h" />
+    <ClInclude Include="externals\spdlog\async_logger.h" />
+    <ClInclude Include="externals\spdlog\common.h" />
+    <ClInclude Include="externals\spdlog\spdlog-inl.h" />
+    <ClInclude Include="externals\spdlog\spdlog.h" />
+    <ClInclude Include="MyEngine\ECS\Entity.h" />
+    <ClInclude Include="MyEngine\Components\ModelRendererComponent.h" />
+    <ClInclude Include="MyEngine\Components\TransformComponent.h" />
+    <ClInclude Include="MyEngine\Graphics\GPU\FrameUploadBuffer.h" />
+    <ClInclude Include="MyEngine\Editor\Gizmos\LightGizmo.h" />
+    <ClInclude Include="MyEngine\Camera\CameraIncludes.h" />
+    <ClInclude Include="MyEngine\Collision\CollisionIncludes.h" />
+    <ClInclude Include="MyEngine\Collision\Profiling\CollisionProfiler.h" />
+    <ClInclude Include="MyEngine\Core\Handle.h" />
+    <ClInclude Include="MyEngine\Core\SlotMap.h" />
+    <ClInclude Include="MyEngine\Diagnostics\CrashHandler.h" />
+    <ClInclude Include="MyEngine\Diagnostics\LogManager.h" />
+    <ClInclude Include="MyEngine\Diagnostics\MyAssert.h" />
+    <ClInclude Include="MyEngine\Editor\Viewport\EditorGrid.h" />
+    <ClInclude Include="MyEngine\Editor\Viewport\EditorOverlay.h" />
+    <ClInclude Include="MyEngine\Editor\Viewport\EditorViewport.h" />
+    <ClInclude Include="MyEngine\Editor\ImGuiManager.h" />
+    <ClInclude Include="MyEngine\Editor\Profiler.h" />
+    <ClInclude Include="MyEngine\Editor\Viewport\ViewportWindow.h" />
+    <ClInclude Include="MyEngine\Graphics\Diagnostics\D3D12ResourceLeakChecker.h" />
+    <ClInclude Include="MyEngine\Graphics\GPU\DirectXCommon.h" />
+    <ClInclude Include="MyEngine\Graphics\GPU\UploadContext.h" />
+    <ClInclude Include="MyEngine\Graphics\IBL\BrdfLutPass.h" />
+    <ClInclude Include="MyEngine\Graphics\IBL\CubeBakePass.h" />
+    <ClInclude Include="MyEngine\Graphics\IBL\IBLBaker.h" />
+    <ClInclude Include="MyEngine\Graphics\IBL\IBLConfig.h" />
+    <ClInclude Include="MyEngine\Graphics\IBL\IBLEnvironment.h" />
+    <ClInclude Include="MyEngine\Graphics\IBL\IBLIncludes.h" />
+    <ClInclude Include="MyEngine\Graphics\IBL\PrefilterPass.h" />
+    <ClInclude Include="MyEngine\Graphics\Model\ModelManager.h" />
+    <ClInclude Include="MyEngine\Graphics\Pipeline\PSOManager.h" />
+    <ClInclude Include="MyEngine\Graphics\Pipeline\RenderStates.h" />
+    <ClInclude Include="MyEngine\Graphics\Pipeline\RootSignatureManager.h" />
+    <ClInclude Include="MyEngine\Graphics\Pipeline\ShaderCompiler.h" />
+    <ClInclude Include="MyEngine\Graphics\Pipeline\ShaderConstants.h" />
+    <ClInclude Include="MyEngine\Graphics\Pipeline\ShaderPackageLoader.h" />
+    <ClInclude Include="MyEngine\Graphics\Pipeline\VertexFormat.h" />
+    <ClInclude Include="MyEngine\Graphics\PostEffect\BloomPass.h" />
+    <ClInclude Include="MyEngine\Graphics\PostEffect\LensPass.h" />
+    <ClInclude Include="MyEngine\Graphics\PostEffect\PostProcess.h" />
+    <ClInclude Include="MyEngine\Graphics\Profiling\GPUProfiler.h" />
+    <ClInclude Include="MyEngine\Graphics\Profiling\GPUScope.h" />
+    <ClInclude Include="MyEngine\Graphics\Renderer\DrawRequest.h" />
+    <ClInclude Include="MyEngine\Graphics\Renderer\Renderer.h" />
+    <ClInclude Include="MyEngine\Graphics\Renderer\RenderContext.h" />
+    <ClInclude Include="MyEngine\Graphics\Renderer\RenderQueue.h" />
+    <ClInclude Include="MyEngine\Graphics\Renderer\SceneRenderer.h" />
+    <ClInclude Include="MyEngine\Graphics\RenderTarget\RenderTexture.h" />
+    <ClInclude Include="MyEngine\Graphics\RenderTarget\RenderTextureCube.h" />
+    <ClInclude Include="MyEngine\Graphics\RenderTarget\RenderTextureManager.h" />
+    <ClInclude Include="MyEngine\Graphics\RenderTarget\RenderWindow.h" />
+    <ClInclude Include="MyEngine\Graphics\Texture\TextureManager.h" />
+    <ClInclude Include="MyEngine\Input\InputIncludes.h" />
+    <ClInclude Include="MyEngine\Components\LightComponent.h" />
+    <ClInclude Include="MyEngine\Systems\LightSystem.h" />
+    <ClInclude Include="MyEngine\Math\Easing.h" />
+    <ClInclude Include="MyEngine\Math\Geometry\AABB.h" />
+    <ClInclude Include="MyEngine\Math\Geometry\OBB.h" />
+    <ClInclude Include="MyEngine\Math\Geometry\Plane.h" />
+    <ClInclude Include="MyEngine\Math\Geometry\Ray.h" />
+    <ClInclude Include="MyEngine\Math\Geometry\Sphere.h" />
+    <ClInclude Include="MyEngine\Math\MathIncludes.h" />
+    <ClInclude Include="MyEngine\Math\RandomEngine.h" />
+    <ClInclude Include="MyEngine\Particle\Field\AccelerationField.h" />
+    <ClInclude Include="MyEngine\Particle\ParticleEmitter.h" />
+    <ClInclude Include="MyEngine\Particle\ParticleManager.h" />
+    <ClInclude Include="MyEngine\Scene\SceneIncludes.h" />
+    <ClInclude Include="MyEngine\Scene\Skybox.h" />
+    <ClInclude Include="MyEngine\Sound\SoundIncludes.h" />
+    <ClInclude Include="MyEngine\Sound\SoundManager.h" />
+    <ClInclude Include="MyEngine\Camera\Camera.h" />
+    <ClInclude Include="MyEngine\Camera\DebugCamera.h" />
+    <ClInclude Include="MyEngine\Collision\Collision.h" />
+    <ClInclude Include="MyEngine\Engine.h" />
+    <ClInclude Include="MyEngine\Input\InputManager.h" />
+    <ClInclude Include="MyEngine\Input\KeyboardInput.h" />
+    <ClInclude Include="MyEngine\Input\MouseInput.h" />
+    <ClInclude Include="MyEngine\Input\XInputGamepad.h" />
+    <ClInclude Include="MyEngine\Math\Matrix3x3.h" />
+    <ClInclude Include="MyEngine\Math\Matrix4x4.h" />
+    <ClInclude Include="MyEngine\Math\Vector2.h" />
+    <ClInclude Include="MyEngine\Math\Vector3.h" />
+    <ClInclude Include="MyEngine\Math\Vector4.h" />
+    <ClInclude Include="MyEngine\Math\Transform.h" />
+    <ClInclude Include="MyEngine\Math\MathUtility.h" />
+    <ClInclude Include="MyEngine\Scene\IScene.h" />
+    <ClInclude Include="MyEngine\Scene\SceneManager.h" />
+    <ClInclude Include="MyEngine\String\ConvertString.h" />
+    <ClInclude Include="MyEngine\Time\Time.h" />
+    <ClInclude Include="MyEngine\UI\GameNotification.h" />
+    <ClInclude Include="MyEngine\UI\GlobalVariables.h" />
+    <ClInclude Include="MyEngine\Window\Win32Window.h" />
+    <ClInclude Include="MyEngine\Window\WindowIncludes.h" />
+    <ClInclude Include="MyEngine\Window\WindowManager.h" />
+    <!-- ImGui headers -->
+    <ClInclude Include="MyEngine\Systems\ModelRenderSystem.h" />
+    <ClInclude Include="MyEngine\Editor\Inspector\TransformEditor.h" />
+    <ClInclude Include="MyEngine\Scene\SceneSerializer.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include=".gitignore" />
+    <None Include="Docs\ARCHITECTURE.md" />
+    <None Include="Docs\CLAUDE.md" />
+    <None Include="MyEngine\Shader\Data\Buffers\Camera.hlsli.shader" />
+    <None Include="MyEngine\Shader\Data\Buffers\Light.hlsli.shader" />
+    <None Include="MyEngine\Shader\Data\Buffers\ObjectTransform.hlsli.shader" />
+    <None Include="MyEngine\Shader\Data\IBL\BrdfLUT.PS.shader" />
+    <None Include="MyEngine\Shader\Data\IBL\BrdfLut.VS.shader" />
+    <None Include="MyEngine\Shader\Data\IBL\EquirectToCube.PS.shader" />
+    <None Include="MyEngine\Shader\Data\IBL\EquirectToCube.VS.shader" />
+    <None Include="MyEngine\Shader\Data\IBL\IBLCommon.hlsli.shader" />
+    <None Include="MyEngine\Shader\Data\IBL\IrradianceConvolution.PS.shader" />
+    <None Include="MyEngine\Shader\Data\IBL\Prefilter.PS.shader" />
+    <None Include="MyEngine\Shader\Data\Line\Line3d.hlsli.shader" />
+    <None Include="MyEngine\Shader\Data\Line\Line3d.PS.shader" />
+    <None Include="MyEngine\Shader\Data\Line\Line3d.VS.shader" />
+    <None Include="MyEngine\Shader\Data\Model\BlinnPhong.PS.shader" />
+    <None Include="MyEngine\Shader\Data\Model\HalfLambert.PS.shader" />
+    <None Include="MyEngine\Shader\Data\Model\Lambert.PS.shader" />
+    <None Include="MyEngine\Shader\Data\Model\Object3d.hlsli.shader" />
+    <None Include="MyEngine\Shader\Data\Model\Object3d.VS.shader" />
+    <None Include="MyEngine\Shader\Data\Model\PBR.PS.shader" />
+    <None Include="MyEngine\Shader\Data\Model\Phong.PS.shader" />
+    <None Include="MyEngine\Shader\Data\Model\Unlit.PS.shader" />
+    <None Include="MyEngine\Shader\Data\Particle\Particle.hlsli.shader" />
+    <None Include="MyEngine\Shader\Data\Particle\Particle.PS.shader" />
+    <None Include="MyEngine\Shader\Data\Particle\Particle.VS.shader" />
+    <None Include="MyEngine\Shader\Data\Post\Bloom.hlsli.shader" />
+    <None Include="MyEngine\Shader\Data\Post\BloomBright.PS.shader" />
+    <None Include="MyEngine\Shader\Data\Post\BloomComposite.PS.shader" />
+    <None Include="MyEngine\Shader\Data\Post\BloomDown.PS.shader" />
+    <None Include="MyEngine\Shader\Data\Post\BloomUp.PS.shader" />
+    <None Include="MyEngine\Shader\Data\Post\Fullscreen.VS.shader" />
+    <None Include="MyEngine\Shader\Data\Post\Lens.PS.shader" />
+    <None Include="MyEngine\Shader\Data\Resources\Texture.hlsli.shader" />
+    <None Include="MyEngine\Shader\Data\Resources\TextureCube.hlsli.shader" />
+    <None Include="MyEngine\Shader\Data\Skybox\Skybox.PS.shader" />
+    <None Include="MyEngine\Shader\Data\Skybox\Skybox.VS.shader" />
+    <None Include="MyEngine\Shader\Data\Sprite\Sprite2d.hlsli.shader" />
+    <None Include="MyEngine\Shader\Data\Sprite\Sprite2d.PS.shader" />
+    <None Include="MyEngine\Shader\Data\Sprite\Sprite2d.VS.shader" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
