@@ -3,5 +3,8 @@
     <Platform Name="x64" />
     <Platform Name="x86" />
   </Configurations>
+  <Project Path="../MyEngine_v1/MyEngine_v1.vcxproj">
+    <Platform Project="x64" />
+  </Project>
   <Project Path="AL4_01.vcxproj" />
 </Solution>
