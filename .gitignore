@@ -364,10 +364,4 @@ FodyWeavers.xsd
 # Generated engine export and local build logs
 /MyEngine/
 /build-*.log
-# Required prebuilt Assimp libraries
-!Engine/externals/assimp/lib/
-!Engine/externals/assimp/lib/Debug/
-!Engine/externals/assimp/lib/Release/
-!Engine/externals/assimp/lib/Debug/*.lib
-!Engine/externals/assimp/lib/Release/*.lib
 /imgui.ini
