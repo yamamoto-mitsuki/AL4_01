@@ -11,6 +11,9 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Source\Components\Player.cpp" />
+    <ClCompile Include="Source\Components\InkEnemy.cpp" />
+    <ClCompile Include="Source\Components\InkWall.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -23,6 +26,11 @@
     <ProjectReference Include="..\MyEngine_v1\MyEngine_v1.vcxproj">
       <Project>{1d0f63d3-16bb-43b8-985e-6bb516a1d662}</Project>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Source\Components\Player.h" />
+    <ClInclude Include="Source\Components\InkEnemy.h" />
+    <ClInclude Include="Source\Components\InkWall.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>18.0</VCProjectVersion>
