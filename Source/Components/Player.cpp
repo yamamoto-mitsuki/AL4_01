@@ -9,12 +9,12 @@
 #include <MyEngine/Collision/Collision.h>
 #include <MyEngine/Components/TrailComponent.h>
 #include <MyEngine/Input/InputManager.h>
-#include <MyEngine/Time/Time.h>
+#include <MyEngine/Time/EngineTime.h>
 
 #include "InkEnemy.h"
 #include "InkWall.h"
 
-// データは Player.h
+// テスト
 
 
 // =============================================================================

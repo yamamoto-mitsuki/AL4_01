@@ -1,8 +1,17 @@
 <Solution>
   <Configurations>
+    <BuildType Name="Debug" />
+    <BuildType Name="Development" />
+    <BuildType Name="Release" />
     <Platform Name="x64" />
   </Configurations>
-  <Project Path="AL4_01.vcxproj" Id="6d0c0d39-180b-4d19-b9c9-f51860e8b819" />
-  <Project Path="../MyEngine_v1/MyEngine_v1.vcxproj" Id="1d0f63d3-16bb-43b8-985e-6bb516a1d662" />
-  <Project Path="../MyEngine_v1/externals/DirectXTex/DirectXTex_Desktop_2022_Win10.vcxproj" Id="371b9fa9-4c90-4ac6-a123-aced756d6c77" />
+  <Project Path="../MyEngine_v1/externals/DirectXTex/DirectXTex_Desktop_2022_Win10.vcxproj" Id="371b9fa9-4c90-4ac6-a123-aced756d6c77">
+    <BuildType Solution="Release|*" Project="Development" />
+  </Project>
+  <Project Path="../MyEngine_v1/MyEngine_v1.vcxproj" Id="1d0f63d3-16bb-43b8-985e-6bb516a1d662">
+    <BuildType Solution="Release|*" Project="Development" />
+  </Project>
+  <Project Path="AL4_01.vcxproj" Id="6d0c0d39-180b-4d19-b9c9-f51860e8b819">
+    <BuildType Solution="Release|*" Project="Development" />
+  </Project>
 </Solution>

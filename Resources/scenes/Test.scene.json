@@ -1,0 +1,105 @@
+{
+	"version": 1,
+	"entities": [
+		{
+			"id": 1,
+			"name": "Main Camera",
+			"parent": 0,
+			"active": true,
+			"components": {
+				"Transform": {
+					"translation": [-5.4334106, 16.046865, -22.656734],
+					"rotation": [35.59627, 0.0, 0.0],
+					"scale": [1.0, 1.0, 1.0]
+				},
+				"Camera": {
+					"fovY": 45.0,
+					"nearZ": 0.1,
+					"farZ": 1000.0,
+					"priority": 0
+				}
+			}
+		},
+		{
+			"id": 2,
+			"name": "Directional Light",
+			"parent": 0,
+			"active": true,
+			"components": {
+				"Transform": {
+					"translation": [0.0, 3.0, 0.0],
+					"rotation": [50.0, -30.0, 0.0],
+					"scale": [1.0, 1.0, 1.0]
+				},
+				"Directional Light": {
+					"color": [1.0, 1.0, 1.0],
+					"intensity": 1.0,
+					"showIcon": true,
+					"showRange": true
+				}
+			}
+		},
+		{
+			"id": 3,
+			"name": "Entity",
+			"parent": 0,
+			"active": true,
+			"components": {
+				"Transform": {
+					"translation": [0.0, 2.65, 0.0],
+					"rotation": [0.0, 0.0, 0.0],
+					"scale": [1.0, 1.0, 1.0]
+				},
+				"Model Renderer": {
+					"enabled": true,
+					"model": "resources/Models/cube/cube.obj",
+					"texture": "",
+					"shadingType": "Unlit",
+					"blendMode": "Normal",
+					"rasterizerType": "SolidBack",
+					"depthMode": "TestWrite",
+					"billboard": "None",
+					"color": [1.0, 1.0, 1.0, 1.0],
+					"ambient": [0.2, 0.2, 0.2],
+					"diffuse": [1.0, 1.0, 1.0],
+					"specular": [0.0, 0.0, 0.0],
+					"emissive": [0.0, 0.0, 0.0],
+					"shininess": 32.0,
+					"metallic": 0.0,
+					"roughness": 0.5,
+					"alphaCutoff": 0.0,
+					"uvTranslation": [0.0, 0.0, 0.0],
+					"uvRotation": [0.0, 0.0, 0.0],
+					"uvScale": [1.0, 1.0, 1.0]
+				},
+				"Player": {
+					"Move Speed": 3.0,
+					"Dash Speed": 50.0,
+					"Slow Scale": 0.1,
+					"Point Spacing": 0.25,
+					"Slash Radius": 0.6,
+					"Pickup Radius": 0.5,
+					"Hit Stop Time": 0.05,
+					"Wall Margin": 0.05,
+					"Max Ink": 50.0,
+					"Draw Line Width": 0.5,
+					"Draw Line Color": [1.0, 0.2, 0.8],
+					"Ink Height": 0.01
+				},
+				"Trail": {
+					"enabled": true,
+					"emitting": true,
+					"minVertexDistance": 0.05,
+					"lifeTime": 1.02,
+					"maxPoints": 256,
+					"width": 1.44,
+					"endWidthRate": 0.24,
+					"alignment": "View",
+					"color": [1.0, 1.0, 1.0, 1.0],
+					"texture": "MyEngine/Resources/Textures/uvChecker.png",
+					"blend": "Normal"
+				}
+			}
+		}
+	]
+}
