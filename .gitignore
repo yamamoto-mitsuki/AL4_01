@@ -361,7 +361,11 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+
 # Generated engine export and local build logs
-/MyEngine/
+/project/MyEngine/
 /build-*.log
-/imgui.ini
+/project/imgui.ini
+
+# ビルドの出力・中間ファイル（OutputDirs.props）
+/generated/

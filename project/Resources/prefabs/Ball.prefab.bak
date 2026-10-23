@@ -1,0 +1,50 @@
+{
+	"version": 1,
+	"entities": [
+		{
+			"id": 100,
+			"name": "Ball",
+			"parent": 0,
+			"active": true,
+			"components": {
+				"Transform": {
+					"translation": [-6.523572, 11.42051, 0.0],
+					"rotation": [0.0, 0.0, 0.0],
+					"scale": [2.5, 2.5, 2.5]
+				},
+				"Collider": {
+					"enabled": true,
+					"isTrigger": false,
+					"shape": "Sphere",
+					"center": [0.0, 0.0, 0.0],
+					"radius": 0.5
+				},
+				"Primitive Renderer": {
+					"enabled": true,
+					"shape": "Sphere",
+					"color": [0.9111969, 0.65558195, 0.22867875, 1.0],
+					"texture": "",
+					"uvScale": [1.0, 1.0],
+					"shadingType": "BlinnPhong",
+					"specular": [0.0, 0.0, 0.0],
+					"shininess": 32.0,
+					"metallic": 1.0,
+					"roughness": 0.2,
+					"emissive": [0.0, 0.0, 0.0]
+				},
+				"Rigidbody": {
+					"mass": 30.0,
+					"useGravity": true,
+					"gravityScale": 1.0,
+					"drag": 0.0,
+					"isKinematic": false,
+					"collideWithRigidbodies": true,
+					"freezePositionX": false,
+					"freezePositionY": false,
+					"freezePositionZ": false,
+					"velocity": [0.0, 0.0, 0.0]
+				}
+			}
+		}
+	]
+}

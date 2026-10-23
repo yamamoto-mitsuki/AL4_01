@@ -18,52 +18,65 @@
     <ClCompile Include="main.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Components\InkWall.cpp">
+    <ClCompile Include="Source\Scripts\IceCube.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Components\InkEnemy.cpp">
+    <ClCompile Include="Source\Scripts\LevelInfo.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Components\Player.cpp">
+    <ClCompile Include="Source\Scripts\GoalDoor.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Scripts\Spinner.cpp">
+    <ClCompile Include="Source\Scripts\Gimmicks\JumpOrb.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Scripts\PlayerController.cpp">
+    <ClCompile Include="Source\Scripts\Gimmicks\LaunchOrb.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Scripts\Coin.cpp">
+    <ClCompile Include="Source\Scripts\Gimmicks\StickyWall.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Scripts\CameraFollow.cpp">
+    <ClCompile Include="Source\Scripts\Gimmicks\JumpRing.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Scripts\Gimmicks\Spikes.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Scripts\Gimmicks\HotWater.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include=".gitignore" />
     <None Include="CLAUDE.md" />
+    <None Include="Resources\scenes\GameScene.scene.json" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Source\Components\InkWall.h">
+    <ClInclude Include="Source\Scripts\IceCube.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Components\InkEnemy.h">
+    <ClInclude Include="Source\Scripts\LevelInfo.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Components\Player.h">
+    <ClInclude Include="Source\Scripts\GoalDoor.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Scripts\Spinner.h">
+    <ClInclude Include="Source\Scripts\Gimmicks\JumpOrb.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Scripts\PlayerController.h">
+    <ClInclude Include="Source\Scripts\Gimmicks\LaunchOrb.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Scripts\Coin.h">
+    <ClInclude Include="Source\Scripts\Gimmicks\StickyWall.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Scripts\CameraFollow.h">
+    <ClInclude Include="Source\Scripts\Gimmicks\JumpRing.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Scripts\Gimmicks\Spikes.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Scripts\Gimmicks\HotWater.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>

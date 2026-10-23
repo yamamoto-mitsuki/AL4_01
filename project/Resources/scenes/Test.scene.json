@@ -40,26 +40,35 @@
 			}
 		},
 		{
-			"id": 3,
-			"name": "Entity",
+			"id": 4,
+			"name": "Walk",
 			"parent": 0,
 			"active": true,
 			"components": {
 				"Transform": {
-					"translation": [0.0, 2.65, 0.0],
+					"translation": [0.0, 0.0, 0.0],
 					"rotation": [0.0, 0.0, 0.0],
-					"scale": [1.0, 1.0, 1.0]
+					"scale": [3.0, 3.0, 3.0]
+				},
+				"Animator": {
+					"enabled": true,
+					"animation": "MyEngine/Resources/Model/human/walk.gltf",
+					"clip": "Armature|mixamo.com|Layer0",
+					"speed": 1.0,
+					"loop": true,
+					"playOnStart": true,
+					"previewTime": 0.0
 				},
 				"Model Renderer": {
 					"enabled": true,
-					"model": "resources/Models/cube/cube.obj",
+					"model": "MyEngine/Resources/Model/human/walk.gltf",
 					"texture": "",
-					"shadingType": "Unlit",
+					"shadingType": "PBR",
 					"blendMode": "Normal",
 					"rasterizerType": "SolidBack",
 					"depthMode": "TestWrite",
 					"billboard": "None",
-					"color": [1.0, 1.0, 1.0, 1.0],
+					"color": [0.0, 0.0, 0.0, 1.0],
 					"ambient": [0.2, 0.2, 0.2],
 					"diffuse": [1.0, 1.0, 1.0],
 					"specular": [0.0, 0.0, 0.0],
@@ -71,33 +80,50 @@
 					"uvTranslation": [0.0, 0.0, 0.0],
 					"uvRotation": [0.0, 0.0, 0.0],
 					"uvScale": [1.0, 1.0, 1.0]
+				}
+			}
+		},
+		{
+			"id": 5,
+			"name": "Walk (Copy1)",
+			"parent": 0,
+			"active": true,
+			"components": {
+				"Transform": {
+					"translation": [-4.6814637, 0.0, 0.0],
+					"rotation": [0.0, 0.0, 0.0],
+					"scale": [3.0, 3.0, 3.0]
 				},
-				"Player": {
-					"Move Speed": 3.0,
-					"Dash Speed": 50.0,
-					"Slow Scale": 0.1,
-					"Point Spacing": 0.25,
-					"Slash Radius": 0.6,
-					"Pickup Radius": 0.5,
-					"Hit Stop Time": 0.05,
-					"Wall Margin": 0.05,
-					"Max Ink": 50.0,
-					"Draw Line Width": 0.5,
-					"Draw Line Color": [1.0, 0.2, 0.8],
-					"Ink Height": 0.01
-				},
-				"Trail": {
+				"Animator": {
 					"enabled": true,
-					"emitting": true,
-					"minVertexDistance": 0.05,
-					"lifeTime": 1.02,
-					"maxPoints": 256,
-					"width": 1.44,
-					"endWidthRate": 0.24,
-					"alignment": "View",
-					"color": [1.0, 1.0, 1.0, 1.0],
-					"texture": "MyEngine/Resources/Textures/uvChecker.png",
-					"blend": "Normal"
+					"animation": "MyEngine/Resources/Model/human/walk.gltf",
+					"clip": "Armature|mixamo.com|Layer0",
+					"speed": 1.0,
+					"loop": true,
+					"playOnStart": true,
+					"previewTime": 0.305
+				},
+				"Model Renderer": {
+					"enabled": true,
+					"model": "MyEngine/Resources/Model/human/walk.gltf",
+					"texture": "",
+					"shadingType": "PBR",
+					"blendMode": "Normal",
+					"rasterizerType": "SolidBack",
+					"depthMode": "TestWrite",
+					"billboard": "None",
+					"color": [0.0, 0.0, 0.0, 1.0],
+					"ambient": [0.2, 0.2, 0.2],
+					"diffuse": [1.0, 1.0, 1.0],
+					"specular": [0.0, 0.0, 0.0],
+					"emissive": [0.0, 0.0, 0.0],
+					"shininess": 32.0,
+					"metallic": 0.0,
+					"roughness": 0.5,
+					"alphaCutoff": 0.0,
+					"uvTranslation": [0.0, 0.0, 0.0],
+					"uvRotation": [0.0, 0.0, 0.0],
+					"uvScale": [1.0, 1.0, 1.0]
 				}
 			}
 		}

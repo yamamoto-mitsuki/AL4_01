@@ -1,0 +1,6 @@
+{
+	"friction": 0.3,
+	"bounciness": 0.0,
+	"frictionCombine": "Average",
+	"bounceCombine": "Average"
+}

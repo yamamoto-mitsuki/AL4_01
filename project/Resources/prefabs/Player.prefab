@@ -1,0 +1,116 @@
+{
+	"version": 1,
+	"entities": [
+		{
+			"id": 56,
+			"name": "Player",
+			"parent": 0,
+			"active": true,
+			"components": {
+				"Transform": {
+					"translation": [0.0, 0.5, 0.0],
+					"rotation": [0.0, 0.0, 0.0],
+					"scale": [1.0, 1.0, 1.0]
+				},
+				"Collider": {
+					"enabled": true,
+					"isTrigger": false,
+					"shape": "Sphere",
+					"center": [0.0, 0.0, 0.0],
+					"physicMaterial": "",
+					"radius": 0.5
+				},
+				"IceCube": {
+					"Enabled": true,
+					"Run Speed": 7.0,
+					"Ground Accel": 60.0,
+					"Ground Decel": 70.0,
+					"Air Accel": 35.0,
+					"Air Decel": 10.0,
+					"Jump Height": 3.0,
+					"Gravity": 30.0,
+					"Fall Gravity Multiplier": 1.5,
+					"Max Fall Speed": 20.0,
+					"Jump Cut": 0.5,
+					"Coyote Time": 0.1,
+					"Jump Buffer": 0.1,
+					"Max HP": 3,
+					"Restart Delay": 1.0,
+					"Clear Time": 0.6,
+					"Cube Size": 1.0,
+					"Tilt Angle": 12.0,
+					"Tilt Speed": 12.0,
+					"Jump Stretch": 0.2,
+					"Land Squash": 0.25,
+					"Stretch Time": 0.08
+				},
+				"Rigidbody": {
+					"mass": 1.0,
+					"useGravity": true,
+					"gravityScale": 1.0,
+					"drag": 0.0,
+					"isKinematic": false,
+					"collideWithRigidbodies": false,
+					"freezePositionX": false,
+					"freezePositionY": false,
+					"freezePositionZ": true,
+					"velocity": [0.0, 0.0, 0.0]
+				}
+			}
+		},
+		{
+			"id": 57,
+			"name": "Body",
+			"parent": 56,
+			"active": true,
+			"components": {
+				"Transform": {
+					"translation": [0.0, 0.0, 0.0],
+					"rotation": [0.0, 0.0, 0.0],
+					"scale": [1.0, 1.0, 1.0]
+				},
+				"Primitive Renderer": {
+					"enabled": true,
+					"shape": "Box",
+					"color": [0.15294118, 0.38039216, 0.78431374, 0.6156863],
+					"surface": "Transparent",
+					"texture": "",
+					"uvScale": [1.0, 1.0],
+					"shadingType": "HalfLambert",
+					"specular": [0.0, 0.0, 0.0],
+					"shininess": 32.0,
+					"metallic": 0.0,
+					"roughness": 0.5,
+					"emissive": [0.11196911, 0.10937524, 0.10937524]
+				}
+			}
+		},
+		{
+			"id": 58,
+			"name": "Core",
+			"parent": 57,
+			"active": true,
+			"components": {
+				"Transform": {
+					"translation": [0.0, 0.0, 0.0],
+					"rotation": [0.0, 0.0, 0.0],
+					"scale": [0.55, 0.55, 0.55]
+				},
+				"Primitive Renderer": {
+					"enabled": true,
+					"shape": "Box",
+					"color": [0.60419494, 0.6743964, 0.8108108, 1.0],
+					"surface": "Opaque",
+					"texture": "",
+					"uvScale": [1.0, 1.0],
+					"shadingType": "HalfLambert",
+					"specular": [0.0, 0.0, 0.0],
+					"shininess": 32.0,
+					"metallic": 0.0,
+					"roughness": 0.5,
+					"emissive": [0.0, 0.0, 0.0]
+				}
+			}
+		}
+	]
+}
