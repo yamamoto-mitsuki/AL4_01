@@ -5,18 +5,11 @@
     <BuildType Name="Release" />
     <Platform Name="x64" />
   </Configurations>
+
   <Folder Name="/externals/">
-    <Project Path="../../MyEngine_v1/project/externals/DirectXTex/DirectXTex_Desktop_2022_Win10.vcxproj" Id="371b9fa9-4c90-4ac6-a123-aced756d6c77">
-      <BuildType Solution="Release|*" Project="Development" />
-    </Project>
-    <Project Path="../../MyEngine_v1/project/externals/imgui/imgui.vcxproj" Id="86a1cafe-73b6-4e0a-8c54-ef98278a3806">
-      <BuildType Solution="Release|*" Project="Development" />
-    </Project>
+    <Project Path="../MyEngine_v1/project/externals/DirectXTex/DirectXTex_Desktop_2022_Win10.vcxproj" Id="371b9fa9-4c90-4ac6-a123-aced756d6c77"></Project>
+    <Project Path="../MyEngine_v1/project/externals/imgui/imgui.vcxproj" Id="86a1cafe-73b6-4e0a-8c54-ef98278a3806"></Project>
   </Folder>
-  <Project Path="../../MyEngine_v1/project/MyEngine_v1.vcxproj" Id="1d0f63d3-16bb-43b8-985e-6bb516a1d662">
-    <BuildType Solution="Release|*" Project="Development" />
-  </Project>
-  <Project Path="AL4_01.vcxproj" DefaultStartup="true" Id="6d0c0d39-180b-4d19-b9c9-f51860e8b819">
-    <BuildType Solution="Release|*" Project="Development" />
-  </Project>
+    <Project Path="../MyEngine_v1/project/MyEngine_v1.vcxproj" Id="1d0f63d3-16bb-43b8-985e-6bb516a1d662"></Project>
+    <Project Path="AL4_01.vcxproj" DefaultStartup="true" Id="6d0c0d39-180b-4d19-b9c9-f51860e8b819"></Project>
 </Solution>

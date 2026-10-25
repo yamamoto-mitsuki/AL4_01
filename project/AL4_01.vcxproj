@@ -78,7 +78,8 @@
   <ImportGroup Label="Shared">
   </ImportGroup>
   <ImportGroup Label="PropertySheets">
-    <Import Project="..\..\MyEngine_v1\project\MyEngine.props" />
+    <!-- エンジンはサブモジュール。propsがエンジンの場所、参照、ライブラリを全部決める -->
+    <Import Project="..\MyEngine_v1\project\MyEngine.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />

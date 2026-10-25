@@ -1,0 +1,4 @@
+[submodule "MyEngine_v1"]
+	path = MyEngine_v1
+	url = https://github.com/yamamoto-mitsuki/MyEngine_v1.git
+	branch = develop
