@@ -8,7 +8,7 @@
 			"active": true,
 			"components": {
 				"Transform": {
-					"translation": [0.0, 2.0, -16.5],
+					"translation": [0.0, 1.8, -16.5],
 					"rotation": [0.0, 0.0, 0.0],
 					"scale": [1.0, 1.0, 1.0]
 				},
@@ -31,8 +31,27 @@
 					"smoothTime": 0.15,
 					"maxLag": [6.0, 4.0],
 					"useBounds": true,
-					"boundsMin": [-5.0, -6.0],
-					"boundsMax": [60.0, 20.0]
+					"boundsMin": [-10.0, -6.0],
+					"boundsMax": [75.5, 20.0]
+				},
+				"Depth Of Field": {
+					"enabled": true,
+					"focus": "FollowTarget",
+					"focusRange": 3.0,
+					"farTransition": 40.0,
+					"nearTransition": 4.0,
+					"maxBlur": 8.5
+				},
+				"Fog": {
+					"enabled": true,
+					"color": [0.7, 0.79, 0.81],
+					"startDistance": 20.24,
+					"density": 0.06,
+					"maxOpacity": 0.48,
+					"heightColor": [0.52651274, 0.6738273, 0.7065637],
+					"heightBase": -5.6,
+					"heightFalloff": 0.4,
+					"heightMaxOpacity": 1.0
 				}
 			}
 		},
@@ -44,14 +63,14 @@
 			"components": {
 				"Transform": {
 					"translation": [0.0, 3.0, 0.0],
-					"rotation": [50.0, -30.0, 0.0],
+					"rotation": [15.5, 37.5, 0.0],
 					"scale": [1.0, 1.0, 1.0]
 				},
 				"Directional Light": {
 					"color": [1.0, 1.0, 1.0],
-					"intensity": 1.0,
+					"intensity": 0.61,
 					"showIcon": false,
-					"showRange": false
+					"showRange": true
 				}
 			}
 		},
@@ -62,7 +81,7 @@
 			"active": true,
 			"components": {
 				"Transform": {
-					"translation": [0.0, 7.9045362, 0.0],
+					"translation": [0.0, 1.1316648, 0.0],
 					"rotation": [0.0, 0.0, 0.0],
 					"scale": [1.0, 1.0, 1.0]
 				},
@@ -97,8 +116,8 @@
 					"Max HP": 3,
 					"Restart Delay": 1.0,
 					"Clear Time": 0.6,
-					"Crack Small Texture": "",
-					"Crack Large Texture": "",
+					"Crack Small Texture": "resources/Textures/IceCube/ice_crack_small.png",
+					"Crack Large Texture": "resources/Textures/IceCube/ice_crack_large.png",
 					"Hurt Flash Time": 0.15,
 					"Hurt Shake Angle": 10.0,
 					"Hurt Shake Time": 0.3,
@@ -144,11 +163,11 @@
 				"Primitive Renderer": {
 					"enabled": true,
 					"shape": "Box",
-					"color": [0.15294118, 0.38039216, 0.78431374, 0.6156863],
+					"color": [0.9607843, 0.9607843, 0.9607843, 0.7882353],
 					"surface": "Transparent",
-					"texture": "",
+					"texture": "resources/Textures/IceCube/ice.png",
 					"uvScale": [1.0, 1.0],
-					"shadingType": "HalfLambert",
+					"shadingType": "Unlit",
 					"specular": [0.0, 0.0, 0.0],
 					"shininess": 32.0,
 					"metallic": 0.0,
@@ -200,7 +219,8 @@
 					"Number": 1,
 					"Area Name": "森",
 					"Kill Height": -10.0,
-					"Next Scene": "Level02"
+					"Next Scene": "Level02",
+					"Pause Screen": "Pause"
 				}
 			}
 		},
@@ -211,7 +231,7 @@
 			"active": true,
 			"components": {
 				"Transform": {
-					"translation": [34.88303, 12.301143, 0.0],
+					"translation": [68.995735, 5.7276907, 0.0],
 					"rotation": [0.0, 0.0, 0.0],
 					"scale": [1.5, 3.0, 1.0]
 				},
@@ -244,108 +264,96 @@
 			}
 		},
 		{
-			"id": 66,
-			"name": "GroundA",
-			"parent": 68,
+			"id": 140,
+			"name": "Trees_far2",
+			"parent": 137,
 			"active": true,
 			"components": {
 				"Transform": {
-					"translation": [-4.182789, 2.907286, 0.0],
+					"translation": [89.5, -28.0, 40.0],
 					"rotation": [0.0, 0.0, 0.0],
 					"scale": [1.0, 1.0, 1.0]
 				},
-				"Collider": {
+				"Sprite Renderer": {
 					"enabled": true,
-					"isTrigger": false,
-					"shape": "Polygon",
-					"center": [0.0, 0.0, 0.0],
-					"physicMaterial": ""
-				},
-				"Polygon Renderer": {
-					"enabled": true,
-					"sideShade": 0.7,
-					"worldSpaceUV": true,
-					"color": [0.55, 0.5, 0.45, 1.0],
-					"surface": "Opaque",
-					"texture": "",
-					"uvScale": [2.0, 2.0],
-					"shadingType": "HalfLambert",
-					"specular": [0.0, 0.0, 0.0],
-					"shininess": 32.0,
-					"metallic": 0.0,
-					"roughness": 0.5,
-					"emissive": [0.0, 0.0, 0.0]
-				},
-				"Polygon Shape": {
-					"depth": 4.0,
-					"pointCount": 8,
-					"point0": [-2.0, -0.5],
-					"point1": [2.75, -0.75],
-					"point2": [3.25, 1.0],
-					"point3": [2.25, 3.25],
-					"point4": [1.0, 4.75],
-					"point5": [0.25, 6.5],
-					"point6": [-1.5, 7.25],
-					"point7": [-2.25, 4.0]
+					"texture": "resources/Textures/Forest/trees_far.png",
+					"color": [1.0, 1.0, 1.0, 1.0],
+					"pixelsPerUnit": 17.07,
+					"pivot": [0.5, 0.0],
+					"flipX": true,
+					"flipY": false,
+					"billboard": "None",
+					"blend": "Normal",
+					"alphaClip": true,
+					"columns": 1,
+					"rows": 1,
+					"frame": 0,
+					"useRect": false,
+					"rectPosition": [0.0, 0.0],
+					"rectSize": [0.0, 0.0]
 				}
 			}
 		},
 		{
-			"id": 67,
-			"name": "GroundB",
-			"parent": 68,
+			"id": 139,
+			"name": "Sky2",
+			"parent": 137,
 			"active": true,
 			"components": {
 				"Transform": {
-					"translation": [1.0172998, 3.3921547, 0.0],
+					"translation": [159.5, 16.0, 80.0],
 					"rotation": [0.0, 0.0, 0.0],
 					"scale": [1.0, 1.0, 1.0]
 				},
-				"Collider": {
+				"Sprite Renderer": {
 					"enabled": true,
-					"isTrigger": false,
-					"shape": "Polygon",
-					"center": [0.0, 0.0, 0.0],
-					"physicMaterial": ""
-				},
-				"Polygon Renderer": {
-					"enabled": true,
-					"sideShade": 0.7,
-					"worldSpaceUV": true,
-					"color": [0.55, 0.5, 0.45, 1.0],
-					"surface": "Opaque",
-					"texture": "",
-					"uvScale": [2.0, 2.0],
-					"shadingType": "HalfLambert",
-					"specular": [0.0, 0.0, 0.0],
-					"shininess": 32.0,
-					"metallic": 0.0,
-					"roughness": 0.5,
-					"emissive": [0.0, 0.0, 0.0]
-				},
-				"Polygon Shape": {
-					"depth": 4.0,
-					"pointCount": 5,
-					"point0": [-2.5, -1.25],
-					"point1": [9.25, -1.25],
-					"point2": [9.25, 0.5],
-					"point3": [-2.0, 0.5],
-					"point4": [-2.25, -0.5]
+					"texture": "resources/Textures/Forest/sky.png",
+					"color": [1.0, 1.0, 1.0, 1.0],
+					"pixelsPerUnit": 11.09,
+					"pivot": [0.5, 0.5],
+					"flipX": true,
+					"flipY": false,
+					"billboard": "None",
+					"blend": "Normal",
+					"alphaClip": true,
+					"columns": 1,
+					"rows": 1,
+					"frame": 0,
+					"useRect": false,
+					"rectPosition": [0.0, 0.0],
+					"rectSize": [0.0, 0.0]
 				}
 			}
 		},
 		{
-			"id": 68,
-			"name": "Ground",
-			"parent": 0,
+			"id": 141,
+			"name": "Trees_near2",
+			"parent": 137,
 			"active": true,
 			"components": {
 				"Transform": {
-					"translation": [0.0, 0.0, 0.0],
+					"translation": [0.0, -12.2, 15.0],
 					"rotation": [0.0, 0.0, 0.0],
 					"scale": [1.0, 1.0, 1.0]
 				},
-				"Folder": {}
+				"Sprite Renderer": {
+					"enabled": true,
+					"texture": "resources/Textures/Forest/trees_near.png",
+					"color": [1.0, 1.0, 1.0, 1.0],
+					"pixelsPerUnit": 38.4,
+					"pivot": [0.5, 0.0],
+					"flipX": true,
+					"flipY": false,
+					"billboard": "None",
+					"blend": "Normal",
+					"alphaClip": true,
+					"columns": 1,
+					"rows": 1,
+					"frame": 0,
+					"useRect": false,
+					"rectPosition": [0.0, 0.0],
+					"rectSize": [0.0, 0.0]
+				}
 			}
 		},
 		{
@@ -363,52 +371,101 @@
 			}
 		},
 		{
-			"id": 71,
-			"name": "GroundC",
-			"parent": 68,
+			"id": 138,
+			"name": "Trees_near",
+			"parent": 137,
 			"active": true,
 			"components": {
 				"Transform": {
-					"translation": [19.52036, 3.3921547, 0.0],
+					"translation": [-39.5, -12.2, 15.0],
 					"rotation": [0.0, 0.0, 0.0],
 					"scale": [1.0, 1.0, 1.0]
 				},
-				"Collider": {
+				"Sprite Renderer": {
 					"enabled": true,
-					"isTrigger": false,
-					"shape": "Polygon",
-					"center": [0.0, 0.0, 0.0],
-					"physicMaterial": ""
-				},
-				"Polygon Renderer": {
-					"enabled": true,
-					"sideShade": 0.7,
-					"worldSpaceUV": true,
-					"color": [0.55, 0.5, 0.45, 1.0],
-					"surface": "Opaque",
-					"texture": "",
-					"uvScale": [2.0, 2.0],
-					"shadingType": "HalfLambert",
-					"specular": [0.0, 0.0, 0.0],
-					"shininess": 32.0,
-					"metallic": 0.0,
-					"roughness": 0.5,
-					"emissive": [0.0, 0.0, 0.0]
-				},
-				"Polygon Shape": {
-					"depth": 4.0,
-					"pointCount": 5,
-					"point0": [-2.5, -1.25],
-					"point1": [-1.0, -1.0],
-					"point2": [-0.5, 0.5],
-					"point3": [-2.0, 0.5],
-					"point4": [-2.25, -0.5]
+					"texture": "resources/Textures/Forest/trees_near.png",
+					"color": [1.0, 1.0, 1.0, 1.0],
+					"pixelsPerUnit": 38.4,
+					"pivot": [0.5, 0.0],
+					"flipX": false,
+					"flipY": false,
+					"billboard": "None",
+					"blend": "Normal",
+					"alphaClip": true,
+					"columns": 1,
+					"rows": 1,
+					"frame": 0,
+					"useRect": false,
+					"rectPosition": [0.0, 0.0],
+					"rectSize": [0.0, 0.0]
 				}
 			}
 		},
 		{
-			"id": 72,
-			"name": "JumpOrb",
+			"id": 136,
+			"name": "Trees_far",
+			"parent": 137,
+			"active": true,
+			"components": {
+				"Transform": {
+					"translation": [0.0, -28.0, 40.0],
+					"rotation": [0.0, 0.0, 0.0],
+					"scale": [1.0, 1.0, 1.0]
+				},
+				"Sprite Renderer": {
+					"enabled": true,
+					"texture": "resources/Textures/Forest/trees_far.png",
+					"color": [1.0, 1.0, 1.0, 1.0],
+					"pixelsPerUnit": 17.07,
+					"pivot": [0.5, 0.0],
+					"flipX": false,
+					"flipY": false,
+					"billboard": "None",
+					"blend": "Normal",
+					"alphaClip": true,
+					"columns": 1,
+					"rows": 1,
+					"frame": 0,
+					"useRect": false,
+					"rectPosition": [0.0, 0.0],
+					"rectSize": [0.0, 0.0]
+				}
+			}
+		},
+		{
+			"id": 133,
+			"name": "Sky",
+			"parent": 137,
+			"active": true,
+			"components": {
+				"Transform": {
+					"translation": [0.0, 16.0, 80.0],
+					"rotation": [0.0, 0.0, 0.0],
+					"scale": [1.0, 1.0, 1.0]
+				},
+				"Sprite Renderer": {
+					"enabled": true,
+					"texture": "resources/Textures/Forest/sky.png",
+					"color": [1.0, 1.0, 1.0, 1.0],
+					"pixelsPerUnit": 11.09,
+					"pivot": [0.5, 0.5],
+					"flipX": false,
+					"flipY": false,
+					"billboard": "None",
+					"blend": "Normal",
+					"alphaClip": true,
+					"columns": 1,
+					"rows": 1,
+					"frame": 0,
+					"useRect": false,
+					"rectPosition": [0.0, 0.0],
+					"rectSize": [0.0, 0.0]
+				}
+			}
+		},
+		{
+			"id": 137,
+			"name": "BackGround",
 			"parent": 0,
 			"active": true,
 			"components": {
@@ -416,210 +473,48 @@
 					"translation": [0.0, 0.0, 0.0],
 					"rotation": [0.0, 0.0, 0.0],
 					"scale": [1.0, 1.0, 1.0]
-				},
-				"Folder": {}
+				}
 			}
 		},
 		{
-			"id": 73,
-			"name": "JumpOrb1",
-			"parent": 72,
+			"id": 142,
+			"name": "Trees_near3",
+			"parent": 137,
 			"active": true,
 			"components": {
 				"Transform": {
-					"translation": [13.900778, 4.8844757, 0.0],
+					"translation": [39.5, -12.2, 15.0],
 					"rotation": [0.0, 0.0, 0.0],
 					"scale": [1.0, 1.0, 1.0]
 				},
-				"Collider": {
+				"Sprite Renderer": {
 					"enabled": true,
-					"isTrigger": true,
-					"shape": "Sphere",
-					"center": [0.0, 0.0, 0.0],
-					"physicMaterial": "",
-					"radius": 1.0
-				},
-				"JumpOrb": {
-					"Enabled": true,
-					"Spin Speed": 30.0,
-					"Pop Scale": 1.6,
-					"Pop Time": 0.25,
-					"Used Brightness": 0.25
+					"texture": "resources/Textures/Forest/trees_near.png",
+					"color": [1.0, 1.0, 1.0, 1.0],
+					"pixelsPerUnit": 38.4,
+					"pivot": [0.5, 0.0],
+					"flipX": true,
+					"flipY": false,
+					"billboard": "None",
+					"blend": "Normal",
+					"alphaClip": true,
+					"columns": 1,
+					"rows": 1,
+					"frame": 0,
+					"useRect": false,
+					"rectPosition": [0.0, 0.0],
+					"rectSize": [0.0, 0.0]
 				}
 			}
 		},
 		{
-			"id": 83,
-			"name": "Child",
-			"parent": 73,
+			"id": 144,
+			"name": "Start",
+			"parent": 148,
 			"active": true,
 			"components": {
 				"Transform": {
-					"translation": [0.0, 0.0, 0.0],
-					"rotation": [0.0, 0.0, 0.0],
-					"scale": [1.0, 1.0, 1.0]
-				}
-			}
-		},
-		{
-			"id": 75,
-			"name": "Ring",
-			"parent": 73,
-			"active": true,
-			"components": {
-				"Transform": {
-					"translation": [0.0, 0.0, 0.0],
-					"rotation": [0.0, 0.0, 0.0],
-					"scale": [2.0, 2.0, 2.0]
-				},
-				"Primitive Renderer": {
-					"enabled": true,
-					"shape": "Sphere",
-					"color": [0.15686275, 0.72156864, 0.8235294, 0.3764706],
-					"surface": "Transparent",
-					"texture": "",
-					"uvScale": [1.0, 1.0],
-					"shadingType": "Unlit",
-					"specular": [0.0, 0.0, 0.0],
-					"shininess": 32.0,
-					"metallic": 0.0,
-					"roughness": 0.5,
-					"emissive": [0.0, 0.0, 0.0]
-				}
-			}
-		},
-		{
-			"id": 76,
-			"name": "Core",
-			"parent": 73,
-			"active": true,
-			"components": {
-				"Transform": {
-					"translation": [0.0, 0.0, 0.0],
-					"rotation": [0.0, 0.0, 0.0],
-					"scale": [0.5, 0.5, 0.5]
-				},
-				"Primitive Renderer": {
-					"enabled": true,
-					"shape": "Sphere",
-					"color": [0.5411765, 0.85490197, 1.0, 1.0],
-					"surface": "Additive",
-					"texture": "",
-					"uvScale": [1.0, 1.0],
-					"shadingType": "Unlit",
-					"specular": [0.0, 0.0, 0.0],
-					"shininess": 32.0,
-					"metallic": 0.0,
-					"roughness": 0.5,
-					"emissive": [0.0, 0.0, 0.0]
-				}
-			}
-		},
-		{
-			"id": 77,
-			"name": "LaunchOrb",
-			"parent": 0,
-			"active": true,
-			"components": {
-				"Transform": {
-					"translation": [0.0, 0.0, 0.0],
-					"rotation": [0.0, 0.0, 0.0],
-					"scale": [1.0, 1.0, 1.0]
-				},
-				"Folder": {}
-			}
-		},
-		{
-			"id": 84,
-			"name": "LaunchOrb1",
-			"parent": 77,
-			"active": true,
-			"components": {
-				"Transform": {
-					"translation": [5.481357, 6.4807415, 0.0],
-					"rotation": [0.0, 0.0, 0.0],
-					"scale": [1.0, 1.0, 1.0]
-				},
-				"Collider": {
-					"enabled": true,
-					"isTrigger": true,
-					"shape": "Sphere",
-					"center": [0.0, 0.0, 0.0],
-					"physicMaterial": "",
-					"radius": 1.0
-				},
-				"LaunchOrb": {
-					"Enabled": true,
-					"Speed": 16.0,
-					"Duration": 1.5,
-					"End At Path End": true,
-					"Pulse Scale": 1.4,
-					"Pulse Time": 0.2
-				}
-			}
-		},
-		{
-			"id": 86,
-			"name": "Ring",
-			"parent": 84,
-			"active": true,
-			"components": {
-				"Transform": {
-					"translation": [0.0, 0.0, 0.0],
-					"rotation": [0.0, 0.0, 0.0],
-					"scale": [2.0, 2.0, 2.0]
-				},
-				"Primitive Renderer": {
-					"enabled": true,
-					"shape": "Sphere",
-					"color": [0.13822095, 0.94208497, 0.22512515, 0.3764706],
-					"surface": "Transparent",
-					"texture": "",
-					"uvScale": [1.0, 1.0],
-					"shadingType": "Unlit",
-					"specular": [0.0, 0.0, 0.0],
-					"shininess": 32.0,
-					"metallic": 0.0,
-					"roughness": 0.5,
-					"emissive": [0.0, 0.0, 0.0]
-				}
-			}
-		},
-		{
-			"id": 87,
-			"name": "Core",
-			"parent": 84,
-			"active": true,
-			"components": {
-				"Transform": {
-					"translation": [0.0, 0.0, 0.0],
-					"rotation": [0.0, 0.0, 0.0],
-					"scale": [0.5, 0.5, 0.5]
-				},
-				"Primitive Renderer": {
-					"enabled": true,
-					"shape": "Sphere",
-					"color": [0.5411765, 0.85490197, 1.0, 1.0],
-					"surface": "Additive",
-					"texture": "",
-					"uvScale": [1.0, 1.0],
-					"shadingType": "Unlit",
-					"specular": [0.0, 0.0, 0.0],
-					"shininess": 32.0,
-					"metallic": 0.0,
-					"roughness": 0.5,
-					"emissive": [0.0, 0.0, 0.0]
-				}
-			}
-		},
-		{
-			"id": 89,
-			"name": "GroundD",
-			"parent": 68,
-			"active": true,
-			"components": {
-				"Transform": {
-					"translation": [27.696728, 2.7539892, 0.0],
+					"translation": [-6.826412, 3.97891, 0.0],
 					"rotation": [0.0, 0.0, 0.0],
 					"scale": [1.0, 1.0, 1.0]
 				},
@@ -634,194 +529,9 @@
 					"enabled": true,
 					"sideShade": 0.7,
 					"worldSpaceUV": true,
-					"color": [0.55, 0.5, 0.45, 1.0],
+					"color": [0.5940491, 0.6293436, 0.58560544, 1.0],
 					"surface": "Opaque",
-					"texture": "",
-					"uvScale": [2.0, 2.0],
-					"shadingType": "HalfLambert",
-					"specular": [0.0, 0.0, 0.0],
-					"shininess": 32.0,
-					"metallic": 0.0,
-					"roughness": 0.5,
-					"emissive": [0.0, 0.0, 0.0]
-				},
-				"Polygon Shape": {
-					"depth": 4.0,
-					"pointCount": 5,
-					"point0": [-2.0, -0.5],
-					"point1": [2.0, -0.5],
-					"point2": [2.0, 4.0],
-					"point3": [-2.5, 2.5],
-					"point4": [-3.25, -0.25]
-				}
-			}
-		},
-		{
-			"id": 94,
-			"name": "JumpOrb2",
-			"parent": 72,
-			"active": true,
-			"components": {
-				"Transform": {
-					"translation": [22.830458, 4.2942076, 0.0],
-					"rotation": [0.0, 0.0, 0.0],
-					"scale": [1.0, 1.0, 1.0]
-				},
-				"Collider": {
-					"enabled": true,
-					"isTrigger": true,
-					"shape": "Sphere",
-					"center": [0.0, 0.0, 0.0],
-					"physicMaterial": "",
-					"radius": 1.0
-				},
-				"JumpOrb": {
-					"Enabled": true,
-					"Spin Speed": 30.0,
-					"Pop Scale": 1.6,
-					"Pop Time": 0.25,
-					"Used Brightness": 0.25
-				}
-			}
-		},
-		{
-			"id": 95,
-			"name": "Child",
-			"parent": 94,
-			"active": true,
-			"components": {
-				"Transform": {
-					"translation": [0.0, 0.0, 0.0],
-					"rotation": [0.0, 0.0, 0.0],
-					"scale": [1.0, 1.0, 1.0]
-				}
-			}
-		},
-		{
-			"id": 96,
-			"name": "Ring",
-			"parent": 94,
-			"active": true,
-			"components": {
-				"Transform": {
-					"translation": [0.0, 0.0, 0.0],
-					"rotation": [0.0, 0.0, 0.0],
-					"scale": [2.0, 2.0, 2.0]
-				},
-				"Primitive Renderer": {
-					"enabled": true,
-					"shape": "Sphere",
-					"color": [0.15686275, 0.72156864, 0.8235294, 0.3764706],
-					"surface": "Transparent",
-					"texture": "",
-					"uvScale": [1.0, 1.0],
-					"shadingType": "Unlit",
-					"specular": [0.0, 0.0, 0.0],
-					"shininess": 32.0,
-					"metallic": 0.0,
-					"roughness": 0.5,
-					"emissive": [0.0, 0.0, 0.0]
-				}
-			}
-		},
-		{
-			"id": 97,
-			"name": "Core",
-			"parent": 94,
-			"active": true,
-			"components": {
-				"Transform": {
-					"translation": [0.0, 0.0, 0.0],
-					"rotation": [0.0, 0.0, 0.0],
-					"scale": [0.5, 0.5, 0.5]
-				},
-				"Primitive Renderer": {
-					"enabled": true,
-					"shape": "Sphere",
-					"color": [0.5411765, 0.85490197, 1.0, 1.0],
-					"surface": "Additive",
-					"texture": "",
-					"uvScale": [1.0, 1.0],
-					"shadingType": "Unlit",
-					"specular": [0.0, 0.0, 0.0],
-					"shininess": 32.0,
-					"metallic": 0.0,
-					"roughness": 0.5,
-					"emissive": [0.0, 0.0, 0.0]
-				}
-			}
-		},
-		{
-			"id": 99,
-			"name": "SticktyWall",
-			"parent": 104,
-			"active": true,
-			"components": {
-				"Transform": {
-					"translation": [26.409088, 8.700274, 0.0],
-					"rotation": [0.0, 0.0, 0.0],
-					"scale": [1.0, 1.0, 1.0]
-				},
-				"Collider": {
-					"enabled": true,
-					"isTrigger": false,
-					"shape": "Polygon",
-					"center": [0.0, 0.0, 0.0],
-					"physicMaterial": ""
-				},
-				"Polygon Renderer": {
-					"enabled": true,
-					"sideShade": 0.7,
-					"worldSpaceUV": true,
-					"color": [0.05405414, 1.0, 0.0, 1.0],
-					"surface": "Opaque",
-					"texture": "",
-					"uvScale": [2.0, 2.0],
-					"shadingType": "HalfLambert",
-					"specular": [0.0, 0.0, 0.0],
-					"shininess": 32.0,
-					"metallic": 0.0,
-					"roughness": 0.5,
-					"emissive": [0.0, 0.0, 0.0]
-				},
-				"Polygon Shape": {
-					"depth": 4.0,
-					"pointCount": 4,
-					"point0": [-1.25, -3.5],
-					"point1": [3.25, -2.0],
-					"point2": [3.25, -0.5],
-					"point3": [-1.25, -0.5]
-				},
-				"StickyWall": {
-					"Enabled": true
-				}
-			}
-		},
-		{
-			"id": 100,
-			"name": "Wall1",
-			"parent": 68,
-			"active": true,
-			"components": {
-				"Transform": {
-					"translation": [27.140675, 8.732012, 0.0],
-					"rotation": [0.0, 0.0, 0.0],
-					"scale": [1.0, 1.0, 1.0]
-				},
-				"Collider": {
-					"enabled": true,
-					"isTrigger": false,
-					"shape": "Polygon",
-					"center": [0.0, 0.0, 0.0],
-					"physicMaterial": ""
-				},
-				"Polygon Renderer": {
-					"enabled": true,
-					"sideShade": 0.7,
-					"worldSpaceUV": true,
-					"color": [0.55, 0.5, 0.45, 1.0],
-					"surface": "Opaque",
-					"texture": "",
+					"texture": "resources/Textures/Forest/rock_moss.png",
 					"uvScale": [2.0, 2.0],
 					"shadingType": "HalfLambert",
 					"specular": [0.0, 0.0, 0.0],
@@ -833,25 +543,25 @@
 				"Polygon Shape": {
 					"depth": 4.0,
 					"pointCount": 8,
-					"point0": [-2.0, -0.5],
-					"point1": [2.5, -0.5],
-					"point2": [2.5, -6.5],
-					"point3": [9.0, -2.25],
-					"point4": [9.25, 2.0],
-					"point5": [5.25, 2.0],
-					"point6": [2.25, 0.75],
-					"point7": [-0.25, 0.5]
+					"point0": [-7.570418, -13.760452],
+					"point1": [5.511618, -13.554747],
+					"point2": [5.25, -5.5],
+					"point3": [3.75, -1.5],
+					"point4": [2.2003722, 0.21204543],
+					"point5": [0.4486928, 3.1555793],
+					"point6": [-0.5834975, 8.992763],
+					"point7": [-5.1562448, 9.029449]
 				}
 			}
 		},
 		{
-			"id": 101,
-			"name": "SticktyWall2",
-			"parent": 104,
+			"id": 145,
+			"name": "Start",
+			"parent": 150,
 			"active": true,
 			"components": {
 				"Transform": {
-					"translation": [18.158539, 10.318343, 0.0],
+					"translation": [0.0, 0.2174952, 0.0],
 					"rotation": [0.0, 0.0, 0.0],
 					"scale": [1.0, 1.0, 1.0]
 				},
@@ -866,9 +576,9 @@
 					"enabled": true,
 					"sideShade": 0.7,
 					"worldSpaceUV": true,
-					"color": [0.05405414, 1.0, 0.0, 1.0],
+					"color": [1.0, 1.0, 1.0, 1.0],
 					"surface": "Opaque",
-					"texture": "",
+					"texture": "resources/Textures/Forest/rock_moss.png",
 					"uvScale": [2.0, 2.0],
 					"shadingType": "HalfLambert",
 					"specular": [0.0, 0.0, 0.0],
@@ -879,25 +589,31 @@
 				},
 				"Polygon Shape": {
 					"depth": 4.0,
-					"pointCount": 4,
-					"point0": [1.0, -2.25],
-					"point1": [3.25, -2.5],
-					"point2": [3.25, -0.5],
-					"point3": [1.0, -0.5]
-				},
-				"StickyWall": {
-					"Enabled": true
+					"pointCount": 13,
+					"point0": [-1.5826976, -1.854284],
+					"point1": [-1.3216912, -9.894736],
+					"point2": [37.5, -9.5],
+					"point3": [37.5, 1.5],
+					"point4": [29.656628, 1.9188576],
+					"point5": [25.85263, 1.2990272],
+					"point6": [24.919836, 0.3689866],
+					"point7": [25.609161, -1.771288],
+					"point8": [22.6189, -1.4161441],
+					"point9": [19.25, 0.25],
+					"point10": [9.024697, 0.29460225],
+					"point11": [4.798015, 0.1194714],
+					"point12": [-2.4746845, 0.54191554]
 				}
 			}
 		},
 		{
-			"id": 103,
-			"name": "Wall2",
-			"parent": 68,
+			"id": 146,
+			"name": "BackWall",
+			"parent": 151,
 			"active": true,
 			"components": {
 				"Transform": {
-					"translation": [19.39432, 10.21626, 0.0],
+					"translation": [0.0, 0.0, 4.0],
 					"rotation": [0.0, 0.0, 0.0],
 					"scale": [1.0, 1.0, 1.0]
 				},
@@ -912,9 +628,9 @@
 					"enabled": true,
 					"sideShade": 0.7,
 					"worldSpaceUV": true,
-					"color": [0.55, 0.5, 0.45, 1.0],
+					"color": [0.36293435, 0.36293435, 0.36293435, 1.0],
 					"surface": "Opaque",
-					"texture": "",
+					"texture": "resources/Textures/Forest/rock_moss.png",
 					"uvScale": [2.0, 2.0],
 					"shadingType": "HalfLambert",
 					"specular": [0.0, 0.0, 0.0],
@@ -925,17 +641,46 @@
 				},
 				"Polygon Shape": {
 					"depth": 4.0,
-					"pointCount": 4,
-					"point0": [-2.0, -0.5],
-					"point1": [2.0, -0.5],
-					"point2": [2.0, 0.5],
-					"point3": [-2.0, 0.5]
+					"pointCount": 10,
+					"point0": [-9.582078, -4.9812202],
+					"point1": [19.0, -6.5],
+					"point2": [17.75, 2.5],
+					"point3": [19.0, 5.5],
+					"point4": [19.0, 13.25],
+					"point5": [5.0, 13.0],
+					"point6": [1.0032079, 13.268734],
+					"point7": [-1.108088, 11.262207],
+					"point8": [-4.75, 7.75],
+					"point9": [-9.75, 8.5]
 				}
 			}
 		},
 		{
-			"id": 104,
-			"name": "StickyWall",
+			"id": 147,
+			"name": "Start",
+			"parent": 152,
+			"active": true,
+			"components": {
+				"Transform": {
+					"translation": [-6.3581214, 11.299657, 1.9228423e-06],
+					"rotation": [67.5366, 90.00014, 90.00014],
+					"scale": [1.0, 1.0000001, 1.0000001]
+				},
+				"Spot Light": {
+					"color": [1.0, 1.0, 1.0],
+					"intensity": 15.0,
+					"range": 13.75,
+					"decay": 0.56,
+					"outerAngle": 36.6,
+					"innerAngle": 18.9,
+					"showIcon": true,
+					"showRange": true
+				}
+			}
+		},
+		{
+			"id": 148,
+			"name": "Wall",
 			"parent": 0,
 			"active": true,
 			"components": {
@@ -948,174 +693,291 @@
 			}
 		},
 		{
-			"id": 105,
-			"name": "Arrows",
-			"parent": 84,
-			"active": true,
-			"components": {
-				"Transform": {
-					"translation": [0.22599268, 0.19999981, 0.0],
-					"rotation": [-8.794885, 0.0, 0.0],
-					"scale": [1.0, 1.0, 1.0]
-				},
-				"Arrow Strip": {
-					"enabled": true,
-					"startOffset": 1.0,
-					"spacing": 1.5,
-					"size": [0.65, 1.33],
-					"thickness": 0.16,
-					"scrollSpeed": 2.0,
-					"fade": 0.1,
-					"pointCount": 3,
-					"point0": [-0.25, -0.25],
-					"point1": [6.0, 2.0],
-					"point2": [10.75, -0.25],
-					"color": [0.0, 0.0, 0.0, 1.0],
-					"surface": "Transparent",
-					"texture": "",
-					"uvScale": [1.0, 1.0],
-					"shadingType": "PBR",
-					"specular": [0.0, 0.0, 0.0],
-					"shininess": 32.0,
-					"metallic": 0.655,
-					"roughness": 0.5,
-					"emissive": [0.0, 0.0, 0.0]
-				}
-			}
-		},
-		{
-			"id": 107,
-			"name": "LaunchOrb2",
-			"parent": 77,
-			"active": true,
-			"components": {
-				"Transform": {
-					"translation": [11.786759, 9.414195, 0.0],
-					"rotation": [0.0, 0.0, 0.0],
-					"scale": [1.0, 1.0, 1.0]
-				},
-				"Collider": {
-					"enabled": true,
-					"isTrigger": true,
-					"shape": "Sphere",
-					"center": [0.0, 0.0, 0.0],
-					"physicMaterial": "",
-					"radius": 1.0
-				},
-				"LaunchOrb": {
-					"Enabled": true,
-					"Speed": 16.0,
-					"Duration": 1.5,
-					"End At Path End": true,
-					"Pulse Scale": 1.4,
-					"Pulse Time": 0.2
-				}
-			}
-		},
-		{
-			"id": 108,
-			"name": "Ring",
-			"parent": 107,
-			"active": true,
-			"components": {
-				"Transform": {
-					"translation": [0.0, 0.0, 0.0],
-					"rotation": [0.0, 0.0, 0.0],
-					"scale": [2.0, 2.0, 2.0]
-				},
-				"Primitive Renderer": {
-					"enabled": true,
-					"shape": "Sphere",
-					"color": [0.13822095, 0.94208497, 0.22512515, 0.3764706],
-					"surface": "Transparent",
-					"texture": "",
-					"uvScale": [1.0, 1.0],
-					"shadingType": "Unlit",
-					"specular": [0.0, 0.0, 0.0],
-					"shininess": 32.0,
-					"metallic": 0.0,
-					"roughness": 0.5,
-					"emissive": [0.0, 0.0, 0.0]
-				}
-			}
-		},
-		{
-			"id": 109,
-			"name": "Core",
-			"parent": 107,
-			"active": true,
-			"components": {
-				"Transform": {
-					"translation": [0.0, 0.0, 0.0],
-					"rotation": [0.0, 0.0, 0.0],
-					"scale": [0.5, 0.5, 0.5]
-				},
-				"Primitive Renderer": {
-					"enabled": true,
-					"shape": "Sphere",
-					"color": [0.5411765, 0.85490197, 1.0, 1.0],
-					"surface": "Additive",
-					"texture": "",
-					"uvScale": [1.0, 1.0],
-					"shadingType": "Unlit",
-					"specular": [0.0, 0.0, 0.0],
-					"shininess": 32.0,
-					"metallic": 0.0,
-					"roughness": 0.5,
-					"emissive": [0.0, 0.0, 0.0]
-				}
-			}
-		},
-		{
-			"id": 110,
-			"name": "Arrows",
-			"parent": 107,
-			"active": true,
-			"components": {
-				"Transform": {
-					"translation": [0.22599268, 0.19999981, 0.0],
-					"rotation": [-8.794885, 0.0, 0.0],
-					"scale": [1.0, 1.0, 1.0]
-				},
-				"Arrow Strip": {
-					"enabled": true,
-					"startOffset": 1.0,
-					"spacing": 1.5,
-					"size": [0.65, 1.33],
-					"thickness": 0.16,
-					"scrollSpeed": 2.0,
-					"fade": 0.1,
-					"pointCount": 3,
-					"point0": [-0.25, -0.25],
-					"point1": [2.75, 4.25],
-					"point2": [7.198534, 2.131771],
-					"color": [0.0, 0.0, 0.0, 1.0],
-					"surface": "Transparent",
-					"texture": "",
-					"uvScale": [1.0, 1.0],
-					"shadingType": "PBR",
-					"specular": [0.0, 0.0, 0.0],
-					"shininess": 32.0,
-					"metallic": 0.655,
-					"roughness": 0.5,
-					"emissive": [0.0, 0.0, 0.0]
-				}
-			}
-		},
-		{
-			"id": 112,
-			"name": "Spikes",
+			"id": 150,
+			"name": "Ground",
 			"parent": 0,
 			"active": true,
 			"components": {
 				"Transform": {
-					"translation": [8.2437725, 4.3920774, 0.0],
+					"translation": [0.0, 0.0, 0.0],
+					"rotation": [0.0, 0.0, 0.0],
+					"scale": [1.0, 1.0, 1.0]
+				},
+				"Folder": {}
+			}
+		},
+		{
+			"id": 151,
+			"name": "BackWall",
+			"parent": 0,
+			"active": true,
+			"components": {
+				"Transform": {
+					"translation": [0.0, 0.0, 0.0],
+					"rotation": [0.0, 0.0, 0.0],
+					"scale": [1.0, 1.0, 1.0]
+				},
+				"Folder": {}
+			}
+		},
+		{
+			"id": 152,
+			"name": "SpotLight",
+			"parent": 0,
+			"active": true,
+			"components": {
+				"Transform": {
+					"translation": [0.0, 0.0, 0.0],
+					"rotation": [0.0, 0.0, 0.0],
+					"scale": [1.0, 1.0, 1.0]
+				},
+				"Folder": {}
+			}
+		},
+		{
+			"id": 153,
+			"name": "PointLight",
+			"parent": 0,
+			"active": true,
+			"components": {
+				"Transform": {
+					"translation": [0.0, 0.0, 0.0],
+					"rotation": [0.0, 0.0, 0.0],
+					"scale": [1.0, 1.0, 1.0]
+				},
+				"Folder": {}
+			}
+		},
+		{
+			"id": 154,
+			"name": "Start",
+			"parent": 153,
+			"active": true,
+			"components": {
+				"Transform": {
+					"translation": [10.509149, 5.156402, 0.0],
+					"rotation": [0.0, 0.0, 0.0],
+					"scale": [1.0, 1.0, 1.0]
+				},
+				"Point Light": {
+					"color": [1.0, 1.0, 1.0],
+					"intensity": 9.0,
+					"radius": 10.0,
+					"decay": 1.0,
+					"showIcon": true,
+					"showRange": true
+				}
+			}
+		},
+		{
+			"id": 155,
+			"name": "Tutorial",
+			"parent": 0,
+			"active": true,
+			"components": {
+				"Transform": {
+					"translation": [0.0, 0.0, 0.0],
+					"rotation": [0.0, 0.0, 0.0],
+					"scale": [1.0, 1.0, 1.0]
+				},
+				"Folder": {}
+			}
+		},
+		{
+			"id": 156,
+			"name": "Text_Move",
+			"parent": 155,
+			"active": true,
+			"components": {
+				"Transform": {
+					"translation": [0.0, 150.0, -6.45],
+					"rotation": [0.0, 0.0, 0.0],
+					"scale": [1.0, 1.0, 1.0]
+				},
+				"Text": {
+					"enabled": true,
+					"text": "移動\nA      D",
+					"font": "C:/Windows/Fonts/NotoSansJP-VF.ttf",
+					"fontSize": 60.0,
+					"color": [1.0, 1.0, 1.0, 1.0],
+					"align": "Center",
+					"anchor": "Center",
+					"pivot": [0.5, 0.5],
+					"lineSpacing": 1.0,
+					"letterSpacing": 0.0,
+					"order": 0,
+					"blend": "Normal",
+					"outlineWidth": 0.0,
+					"outlineColor": [0.0, 0.0, 0.0, 1.0],
+					"shadow": false,
+					"shadowOffset": [3.0, -3.0],
+					"shadowColor": [0.0, 0.0, 0.0, 0.6],
+					"glowWidth": 0.0,
+					"glowColor": [1.0, 0.8, 0.3, 0.8],
+					"shine": false,
+					"shineColor": [1.0, 1.0, 1.0, 0.9],
+					"shineWidth": 24.0,
+					"shineDuration": 0.6,
+					"shineInterval": 2.0,
+					"motion": "None",
+					"motionAmount": 8.0,
+					"motionSpeed": 2.0,
+					"motionSpread": 0.1
+				}
+			}
+		},
+		{
+			"id": 160,
+			"name": "Event_Move",
+			"parent": 155,
+			"active": true,
+			"components": {
+				"Transform": {
+					"translation": [-1.2, 0.0, 0.0],
+					"rotation": [0.0, 0.0, 0.0],
+					"scale": [5.56, 5.57, 1.0]
+				},
+				"Collider": {
+					"enabled": true,
+					"isTrigger": true,
+					"shape": "Box",
+					"center": [0.0, 0.0, 0.0],
+					"physicMaterial": "",
+					"size": [4.0, 4.0, 4.0]
+				},
+				"Trigger Activator": {
+					"enabled": true,
+					"target": 156,
+					"source": "FollowTarget",
+					"onEnter": "Show",
+					"onExit": "Hide",
+					"once": true,
+					"hideOnStart": true,
+					"fadeInTime": 1.5,
+					"fadeOutTime": 0.4
+				}
+			}
+		},
+		{
+			"id": 161,
+			"name": "Event_Jump",
+			"parent": 155,
+			"active": true,
+			"components": {
+				"Transform": {
+					"translation": [23.567009, 1.4984307, 0.0],
+					"rotation": [0.0, 0.0, 0.0],
+					"scale": [2.97, 2.4143336, 0.43345317]
+				},
+				"Collider": {
+					"enabled": true,
+					"isTrigger": true,
+					"shape": "Box",
+					"center": [0.0, 0.0, 0.0],
+					"physicMaterial": "",
+					"size": [4.0, 4.0, 4.0]
+				},
+				"Trigger Activator": {
+					"enabled": true,
+					"target": 162,
+					"source": "FollowTarget",
+					"onEnter": "Show",
+					"onExit": "Hide",
+					"once": true,
+					"hideOnStart": true,
+					"fadeInTime": 1.5,
+					"fadeOutTime": 0.4
+				}
+			}
+		},
+		{
+			"id": 162,
+			"name": "Text_Jump",
+			"parent": 155,
+			"active": true,
+			"components": {
+				"Transform": {
+					"translation": [0.0, 150.0, -6.45],
+					"rotation": [0.0, 0.0, 0.0],
+					"scale": [1.0, 1.0, 1.0]
+				},
+				"Text": {
+					"enabled": true,
+					"text": "  ジャンプ\nSpace",
+					"font": "C:/Windows/Fonts/NotoSansJP-VF.ttf",
+					"fontSize": 60.0,
+					"color": [1.0, 1.0, 1.0, 1.0],
+					"align": "Center",
+					"anchor": "Center",
+					"pivot": [0.5, 0.5],
+					"lineSpacing": 1.0,
+					"letterSpacing": 0.0,
+					"order": 0,
+					"blend": "Normal",
+					"outlineWidth": 0.0,
+					"outlineColor": [0.0, 0.0, 0.0, 1.0],
+					"shadow": false,
+					"shadowOffset": [3.0, -3.0],
+					"shadowColor": [0.0, 0.0, 0.0, 0.6],
+					"glowWidth": 0.0,
+					"glowColor": [1.0, 0.8, 0.3, 0.8],
+					"shine": false,
+					"shineColor": [1.0, 1.0, 1.0, 0.9],
+					"shineWidth": 24.0,
+					"shineDuration": 0.6,
+					"shineInterval": 2.0,
+					"motion": "None",
+					"motionAmount": 8.0,
+					"motionSpeed": 2.0,
+					"motionSpread": 0.1
+				}
+			}
+		},
+		{
+			"id": 163,
+			"name": "Trees_near4",
+			"parent": 137,
+			"active": true,
+			"components": {
+				"Transform": {
+					"translation": [79.5, -12.21, 15.0],
+					"rotation": [0.0, 0.0, 0.0],
+					"scale": [1.0, 1.0, 1.0]
+				},
+				"Sprite Renderer": {
+					"enabled": true,
+					"texture": "resources/Textures/Forest/trees_near.png",
+					"color": [1.0, 1.0, 1.0, 1.0],
+					"pixelsPerUnit": 38.4,
+					"pivot": [0.5, 0.0],
+					"flipX": true,
+					"flipY": false,
+					"billboard": "None",
+					"blend": "Normal",
+					"alphaClip": true,
+					"columns": 1,
+					"rows": 1,
+					"frame": 0,
+					"useRect": false,
+					"rectPosition": [0.0, 0.0],
+					"rectSize": [0.0, 0.0]
+				}
+			}
+		},
+		{
+			"id": 164,
+			"name": "Ground",
+			"parent": 150,
+			"active": true,
+			"components": {
+				"Transform": {
+					"translation": [44.730804, 1.3816929, 0.0],
 					"rotation": [0.0, 0.0, 0.0],
 					"scale": [1.0, 1.0, 1.0]
 				},
 				"Collider": {
 					"enabled": true,
-					"isTrigger": true,
+					"isTrigger": false,
 					"shape": "Polygon",
 					"center": [0.0, 0.0, 0.0],
 					"physicMaterial": ""
@@ -1124,90 +986,115 @@
 					"enabled": true,
 					"sideShade": 0.7,
 					"worldSpaceUV": true,
-					"color": [0.5752896, 0.5752896, 0.5752896, 1.0],
+					"color": [1.0, 1.0, 1.0, 1.0],
 					"surface": "Opaque",
-					"texture": "",
+					"texture": "resources/Textures/Forest/rock_moss.png",
 					"uvScale": [2.0, 2.0],
-					"shadingType": "PBR",
-					"specular": [0.0, 0.0, 0.0],
-					"shininess": 32.0,
-					"metallic": 1.0,
-					"roughness": 0.24,
-					"emissive": [0.0, 0.0, 0.0]
-				},
-				"Polygon Shape": {
-					"depth": 4.0,
-					"pointCount": 5,
-					"point0": [-1.25, -0.5],
-					"point1": [0.25, -0.5],
-					"point2": [-0.25, 0.0],
-					"point3": [-0.5, -0.25],
-					"point4": [-0.75, 0.0]
-				},
-				"Spikes": {
-					"Enabled": true,
-					"Damage": 1,
-					"Bounce Speed": 8.0
-				}
-			}
-		},
-		{
-			"id": 129,
-			"name": "HotWater",
-			"parent": 0,
-			"active": true,
-			"components": {
-				"Transform": {
-					"translation": [13.606575, 1.3912715, 0.0],
-					"rotation": [0.0, 0.0, 0.0],
-					"scale": [5.861353, 2.24, 2.24]
-				},
-				"Collider": {
-					"enabled": true,
-					"isTrigger": true,
-					"shape": "Box",
-					"center": [0.0, 0.0, 0.0],
-					"physicMaterial": "",
-					"size": [1.01, 1.0, 1.0]
-				},
-				"HotWater": {
-					"Enabled": true
-				},
-				"Primitive Renderer": {
-					"enabled": true,
-					"shape": "Box",
-					"color": [0.02909914, 0.7834581, 0.94208497, 1.0],
-					"surface": "Opaque",
-					"texture": "",
-					"uvScale": [1.0, 1.0],
 					"shadingType": "HalfLambert",
 					"specular": [0.0, 0.0, 0.0],
 					"shininess": 32.0,
 					"metallic": 0.0,
 					"roughness": 0.5,
 					"emissive": [0.0, 0.0, 0.0]
+				},
+				"Polygon Shape": {
+					"depth": 4.0,
+					"pointCount": 4,
+					"point0": [-2.5, -10.25],
+					"point1": [2.25, -10.25],
+					"point2": [2.0, 0.5],
+					"point3": [-2.5, 0.5]
 				}
 			}
 		},
 		{
-			"id": 132,
-			"name": "Wind Zone",
-			"parent": 0,
+			"id": 165,
+			"name": "Ground (Copy1)",
+			"parent": 150,
 			"active": true,
 			"components": {
 				"Transform": {
-					"translation": [31.019194, 10.280268, -0.16718382],
-					"rotation": [0.0, 180.0, 0.0],
+					"translation": [52.589912, 3.8883812, 0.0],
+					"rotation": [0.0, 0.0, 0.0],
 					"scale": [1.0, 1.0, 1.0]
 				},
-				"Wind Zone": {
+				"Collider": {
 					"enabled": true,
-					"size": [8.0, 4.0, 4.0],
-					"speed": 4.0,
-					"strength": 40.0,
-					"gust": 0.495,
-					"gustFrequency": 0.5,
-					"lineAmount": 0.815
+					"isTrigger": false,
+					"shape": "Polygon",
+					"center": [0.0, 0.0, 0.0],
+					"physicMaterial": ""
+				},
+				"Polygon Renderer": {
+					"enabled": true,
+					"sideShade": 0.7,
+					"worldSpaceUV": true,
+					"color": [1.0, 1.0, 1.0, 1.0],
+					"surface": "Opaque",
+					"texture": "resources/Textures/Forest/rock_moss.png",
+					"uvScale": [2.0, 2.0],
+					"shadingType": "HalfLambert",
+					"specular": [0.0, 0.0, 0.0],
+					"shininess": 32.0,
+					"metallic": 0.0,
+					"roughness": 0.5,
+					"emissive": [0.0, 0.0, 0.0]
+				},
+				"Polygon Shape": {
+					"depth": 4.0,
+					"pointCount": 4,
+					"point0": [-2.75, -12.0],
+					"point1": [-0.9073639, -12.0113325],
+					"point2": [-1.2280273, 0.4770279],
+					"point3": [-2.75, 0.5]
+				}
+			}
+		},
+		{
+			"id": 166,
+			"name": "Ground (Copy2)",
+			"parent": 150,
+			"active": true,
+			"components": {
+				"Transform": {
+					"translation": [56.788692, 1.9726944, 0.0],
+					"rotation": [0.0, 0.0, 0.0],
+					"scale": [1.0, 1.0, 1.0]
+				},
+				"Collider": {
+					"enabled": true,
+					"isTrigger": false,
+					"shape": "Polygon",
+					"center": [0.0, 0.0, 0.0],
+					"physicMaterial": ""
+				},
+				"Polygon Renderer": {
+					"enabled": true,
+					"sideShade": 0.7,
+					"worldSpaceUV": true,
+					"color": [1.0, 1.0, 1.0, 1.0],
+					"surface": "Opaque",
+					"texture": "resources/Textures/Forest/rock_moss.png",
+					"uvScale": [2.0, 2.0],
+					"shadingType": "HalfLambert",
+					"specular": [0.0, 0.0, 0.0],
+					"shininess": 32.0,
+					"metallic": 0.0,
+					"roughness": 0.5,
+					"emissive": [0.0, 0.0, 0.0]
+				},
+				"Polygon Shape": {
+					"depth": 4.0,
+					"pointCount": 9,
+					"point0": [-2.75, -12.0],
+					"point1": [20.5, -12.0],
+					"point2": [22.75, 11.25],
+					"point3": [16.25, 11.25],
+					"point4": [13.75, 2.25],
+					"point5": [8.25, 2.25],
+					"point6": [3.023903, 0.28990066],
+					"point7": [1.160244, -0.18580115],
+					"point8": [-2.75, 0.5]
 				}
 			}
 		}

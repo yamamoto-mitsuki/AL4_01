@@ -1,0 +1,36 @@
+{
+	"version": 1,
+	"entities": [
+		{
+			"id": 135,
+			"name": "Grass",
+			"parent": 0,
+			"active": true,
+			"components": {
+				"Transform": {
+					"translation": [5.4223366, 3.7235174, 0.05],
+					"rotation": [0.0, 0.0, 0.0],
+					"scale": [1.0, 1.0, 1.0]
+				},
+				"Sprite Renderer": {
+					"enabled": true,
+					"texture": "resources/Textures/Forest/grass_fern.png",
+					"color": [1.0, 1.0, 1.0, 1.0],
+					"pixelsPerUnit": 465.0,
+					"pivot": [0.5, 0.33],
+					"flipX": false,
+					"flipY": false,
+					"billboard": "None",
+					"blend": "Normal",
+					"alphaClip": true,
+					"columns": 1,
+					"rows": 1,
+					"frame": 0,
+					"useRect": false,
+					"rectPosition": [0.0, 0.0],
+					"rectSize": [0.0, 0.0]
+				}
+			}
+		}
+	]
+}

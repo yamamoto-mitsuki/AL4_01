@@ -7,7 +7,7 @@
 /// <summary>
 /// レベル（1つのシーン）の情報と進み方。シーンに1つ、空の Entity（名前は Level）に付ける
 /// <para>番号・場所の名前（G9 で左下に出す）・下の線の高さ（これより下に落ちたら一発アウト）・次のシーンの名前を持つ</para>
-/// <para>R キー / パッドの Back で、いつでもレベルの最初からやり直せる</para>
+/// <para>R キー / パッドの Back で、いつでもレベルの最初からやり直せる。Esc / パッドの Start でポーズ画面（Pause Screen）を出す</para>
 /// </summary>
 class LevelInfo : public Script {
 public:
@@ -29,4 +29,5 @@ private:
 	std::string areaName_ = "森"; // 場所の名前
 	float killHeight_ = -10.0f;   // これより下に落ちたら一発アウト（ワールドの Y）
 	std::string nextScene_;       // ゴールの後に読むシーンの名前（resources/scenes/<名前>.scene.json。空なら、このレベルをもう一度）
+	std::string pauseScreen_ = "Pause"; // Esc で出す画面の名前（resources/ui/<名前>.uiscreen。空ならポーズしない）
 };

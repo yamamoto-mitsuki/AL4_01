@@ -369,3 +369,6 @@ FodyWeavers.xsd
 
 # ビルドの出力・中間ファイル（OutputDirs.props）
 /generated/
+
+# モデルの .obj は入れる
+!/project/Resources/**/*.obj

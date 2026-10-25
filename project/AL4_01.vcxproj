@@ -25,6 +25,7 @@
     <ClCompile Include="Source\Scripts\GoalDoor.cpp" />
     <ClCompile Include="Source\Scripts\IceCube.cpp" />
     <ClCompile Include="Source\Scripts\LevelInfo.cpp" />
+    <ClCompile Include="Source\Scripts\UI\PauseMenu.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include=".gitignore" />
@@ -41,6 +42,7 @@
     <ClInclude Include="Source\Scripts\GoalDoor.h" />
     <ClInclude Include="Source\Scripts\IceCube.h" />
     <ClInclude Include="Source\Scripts\LevelInfo.h" />
+    <ClInclude Include="Source\Scripts\UI\PauseMenu.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>18.0</VCProjectVersion>

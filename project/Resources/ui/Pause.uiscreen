@@ -1,0 +1,248 @@
+{
+	"version": 1,
+	"entities": [
+		{
+			"id": 170,
+			"name": "Pause",
+			"parent": 0,
+			"active": true,
+			"components": {
+				"Transform": {
+					"translation": [0.0, 0.0, 0.0],
+					"rotation": [0.0, 0.0, 0.0],
+					"scale": [1.0, 1.0, 1.0]
+				},
+				"PauseMenu": {
+					"Enabled": true,
+					"Screen Name": "Pause",
+					"Normal Color": [1.0, 1.0, 1.0, 1.0],
+					"Selected Color": [1.0, 0.85, 0.3, 1.0],
+					"Selected Scale": 1.15
+				},
+				"UI Screen": {
+					"pauseGame": true,
+					"showMotion": "Fade",
+					"showDuration": 0.3,
+					"showEase": "OutCubic",
+					"showStagger": 0.05,
+					"hideMotion": "Fade",
+					"hideDuration": 0.2,
+					"hideEase": "OutCubic",
+					"hideStagger": 0.0
+				}
+			}
+		},
+		{
+			"id": 171,
+			"name": "Dim",
+			"parent": 170,
+			"active": true,
+			"components": {
+				"Transform": {
+					"translation": [0.0, 0.0, 0.0],
+					"rotation": [0.0, 0.0, 0.0],
+					"scale": [1.0, 1.0, 1.0]
+				},
+				"Image": {
+					"enabled": true,
+					"texture": "",
+					"color": [0.0, 0.0, 0.0, 0.7058824],
+					"size": [1280.0, 720.0],
+					"anchor": "Center",
+					"pivot": [0.5, 0.5],
+					"fill": 1.0,
+					"order": 0,
+					"flipX": false,
+					"flipY": false,
+					"blend": "Normal",
+					"columns": 1,
+					"rows": 1,
+					"frame": 0,
+					"useRect": false,
+					"rectPosition": [0.0, 0.0],
+					"rectSize": [0.0, 0.0]
+				},
+				"UI Screen Element": {
+					"overrideShow": true,
+					"showMotion": "Fade",
+					"showDuration": 0.3,
+					"showEase": "OutQuad",
+					"overrideHide": false,
+					"delay": 0.0
+				}
+			}
+		},
+		{
+			"id": 172,
+			"name": "Pause",
+			"parent": 170,
+			"active": true,
+			"components": {
+				"Transform": {
+					"translation": [-403.0, 151.0, 0.0],
+					"rotation": [0.0, 0.0, 0.0],
+					"scale": [1.0, 1.0000005, 1.0000005]
+				},
+				"Text": {
+					"enabled": true,
+					"text": "Pause\n",
+					"font": "C:/Windows/Fonts/NotoSansJP-VF.ttf",
+					"fontSize": 128.0,
+					"color": [1.0, 1.0, 1.0, 1.0],
+					"align": "Center",
+					"anchor": "Center",
+					"pivot": [0.5, 0.5],
+					"lineSpacing": 1.0,
+					"letterSpacing": 0.0,
+					"order": 1,
+					"blend": "Normal",
+					"outlineWidth": 0.0,
+					"outlineColor": [0.0, 0.0, 0.0, 1.0],
+					"shadow": false,
+					"shadowOffset": [3.0, -3.0],
+					"shadowColor": [0.0, 0.0, 0.0, 0.6],
+					"glowWidth": 0.0,
+					"glowColor": [1.0, 0.8, 0.3, 0.8],
+					"shine": false,
+					"shineColor": [1.0, 1.0, 1.0, 0.9],
+					"shineWidth": 24.0,
+					"shineDuration": 0.6,
+					"shineInterval": 2.0,
+					"motion": "None",
+					"motionAmount": 8.0,
+					"motionSpeed": 2.0,
+					"motionSpread": 0.1
+				}
+			}
+		},
+		{
+			"id": 173,
+			"name": "Resum",
+			"parent": 170,
+			"active": true,
+			"components": {
+				"Transform": {
+					"translation": [-435.0, 28.0, 0.0],
+					"rotation": [0.0, 0.0, 0.0],
+					"scale": [1.0, 1.0, 1.0]
+				},
+				"Text": {
+					"enabled": true,
+					"text": "Resum",
+					"font": "C:/Windows/Fonts/NotoSansJP-VF.ttf",
+					"fontSize": 64.0,
+					"color": [1.0, 1.0, 1.0, 1.0],
+					"align": "Center",
+					"anchor": "Center",
+					"pivot": [0.5, 0.5],
+					"lineSpacing": 1.0,
+					"letterSpacing": 0.0,
+					"order": 0,
+					"blend": "Normal",
+					"outlineWidth": 0.0,
+					"outlineColor": [1.0, 1.0, 1.0, 1.0],
+					"shadow": false,
+					"shadowOffset": [0.0, -3.0],
+					"shadowColor": [0.0, 0.0, 0.0, 1.0],
+					"glowWidth": 0.0,
+					"glowColor": [1.0, 1.0, 1.0, 1.0],
+					"shine": true,
+					"shineColor": [0.16078432, 0.78431374, 0.15294118, 1.0],
+					"shineWidth": 72.0,
+					"shineDuration": 1.0,
+					"shineInterval": 0.3,
+					"motion": "Bounce",
+					"motionAmount": 6.0,
+					"motionSpeed": 1.0,
+					"motionSpread": 0.2
+				}
+			}
+		},
+		{
+			"id": 175,
+			"name": "Restart",
+			"parent": 170,
+			"active": true,
+			"components": {
+				"Transform": {
+					"translation": [-435.0, -100.0, 0.0],
+					"rotation": [0.0, 0.0, 0.0],
+					"scale": [1.0, 1.0, 1.0]
+				},
+				"Text": {
+					"enabled": true,
+					"text": "Restart",
+					"font": "C:/Windows/Fonts/NotoSansJP-VF.ttf",
+					"fontSize": 64.0,
+					"color": [1.0, 1.0, 1.0, 1.0],
+					"align": "Center",
+					"anchor": "Center",
+					"pivot": [0.5, 0.5],
+					"lineSpacing": 1.0,
+					"letterSpacing": 0.0,
+					"order": 0,
+					"blend": "Normal",
+					"outlineWidth": 0.0,
+					"outlineColor": [0.0, 0.0, 0.0, 1.0],
+					"shadow": false,
+					"shadowOffset": [3.0, -3.0],
+					"shadowColor": [0.0, 0.0, 0.0, 0.6],
+					"glowWidth": 0.0,
+					"glowColor": [1.0, 0.8, 0.3, 0.8],
+					"shine": false,
+					"shineColor": [1.0, 1.0, 1.0, 0.9],
+					"shineWidth": 24.0,
+					"shineDuration": 0.6,
+					"shineInterval": 2.0,
+					"motion": "None",
+					"motionAmount": 8.0,
+					"motionSpeed": 2.0,
+					"motionSpread": 0.1
+				}
+			}
+		},
+		{
+			"id": 176,
+			"name": "Title",
+			"parent": 170,
+			"active": true,
+			"components": {
+				"Transform": {
+					"translation": [-435.0, -239.0, 0.0],
+					"rotation": [0.0, 0.0, 0.0],
+					"scale": [1.0, 1.0, 1.0]
+				},
+				"Text": {
+					"enabled": true,
+					"text": "Title",
+					"font": "C:/Windows/Fonts/NotoSansJP-VF.ttf",
+					"fontSize": 64.0,
+					"color": [1.0, 1.0, 1.0, 1.0],
+					"align": "Center",
+					"anchor": "Center",
+					"pivot": [0.5, 0.5],
+					"lineSpacing": 1.0,
+					"letterSpacing": 0.0,
+					"order": 0,
+					"blend": "Normal",
+					"outlineWidth": 0.0,
+					"outlineColor": [0.0, 0.0, 0.0, 1.0],
+					"shadow": false,
+					"shadowOffset": [3.0, -3.0],
+					"shadowColor": [0.0, 0.0, 0.0, 0.6],
+					"glowWidth": 0.0,
+					"glowColor": [1.0, 0.8, 0.3, 0.8],
+					"shine": false,
+					"shineColor": [1.0, 1.0, 1.0, 0.9],
+					"shineWidth": 24.0,
+					"shineDuration": 0.6,
+					"shineInterval": 2.0,
+					"motion": "None",
+					"motionAmount": 8.0,
+					"motionSpeed": 2.0,
+					"motionSpread": 0.1
+				}
+			}
+		}
+	]
+}
