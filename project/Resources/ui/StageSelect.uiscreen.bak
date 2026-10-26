@@ -1,0 +1,278 @@
+{
+	"version": 1,
+	"entities": [
+		{
+			"id": 265,
+			"name": "StageSelect",
+			"parent": 0,
+			"active": true,
+			"components": {
+				"Transform": {
+					"translation": [0.0, 0.0, 0.0],
+					"rotation": [0.0, 0.0, 0.0],
+					"scale": [1.0, 1.0, 1.0]
+				},
+				"StageSelectMenu": {
+					"Enabled": true,
+					"Style Name": "SelectedStyle",
+					"Columns": 5,
+					"Use Mouse": true,
+					"Hit Padding": 16.0,
+					"Screen Name": "StageSelect",
+					"Cell Template": "CellTemplate",
+					"Cell Spacing": [120.0, 96.0],
+					"Cleared Color": [1.0, 1.0, 1.0, 1.0],
+					"Open Color": [1.0, 1.0, 1.0, 0.6],
+					"Locked Color": [1.0, 1.0, 1.0, 0.18],
+					"Stage Name": "StageName",
+					"Best Time": "BestTime",
+					"Best Label": "Best",
+					"No Record Text": "--:--.--",
+					"Locked Text": "Locked",
+					"Coming Text": "Coming soon",
+					"Locked Hint": "Clear the previous stage",
+					"Hint Time": 1.5
+				},
+				"UI Screen": {
+					"pauseGame": false,
+					"showMotion": "Fade",
+					"showDuration": 0.5,
+					"showEase": "OutSine",
+					"showStagger": 0.05,
+					"hideMotion": "Fade",
+					"hideDuration": 0.3,
+					"hideEase": "Linear",
+					"hideStagger": 0.0
+				}
+			}
+		},
+		{
+			"id": 266,
+			"name": "Header",
+			"parent": 265,
+			"active": true,
+			"components": {
+				"Transform": {
+					"translation": [0.0, 250.0, 0.0],
+					"rotation": [0.0, 0.0, 0.0],
+					"scale": [1.0, 1.0, 1.0]
+				},
+				"Text": {
+					"enabled": true,
+					"text": "Stage Select",
+					"font": "C:/Windows/Fonts/NotoSansJP-VF.ttf",
+					"fontSize": 72.0,
+					"color": [1.0, 1.0, 1.0, 1.0],
+					"align": "Center",
+					"anchor": "Center",
+					"pivot": [0.5, 0.5],
+					"lineSpacing": 1.0,
+					"letterSpacing": 0.0,
+					"order": 0,
+					"blend": "Normal",
+					"outlineWidth": 0.0,
+					"outlineColor": [0.0, 0.0, 0.0, 1.0],
+					"shadow": false,
+					"shadowOffset": [3.0, -3.0],
+					"shadowColor": [0.0, 0.0, 0.0, 0.6],
+					"glowWidth": 0.0,
+					"glowColor": [1.0, 0.8, 0.3, 0.8],
+					"shine": false,
+					"shineColor": [1.0, 1.0, 1.0, 0.9],
+					"shineWidth": 24.0,
+					"shineDuration": 0.6,
+					"shineInterval": 2.0,
+					"motion": "None",
+					"motionAmount": 8.0,
+					"motionSpeed": 2.0,
+					"motionSpread": 0.1
+				}
+			}
+		},
+		{
+			"id": 267,
+			"name": "CellTemplate",
+			"parent": 265,
+			"active": true,
+			"components": {
+				"Transform": {
+					"translation": [-240.0, 80.0, 0.0],
+					"rotation": [0.0, 0.0, 0.0],
+					"scale": [1.0, 1.0, 1.0]
+				},
+				"Text": {
+					"enabled": false,
+					"text": "00",
+					"font": "C:/Windows/Fonts/NotoSansJP-VF.ttf",
+					"fontSize": 48.0,
+					"color": [1.0, 1.0, 1.0, 1.0],
+					"align": "Center",
+					"anchor": "Center",
+					"pivot": [0.5, 0.5],
+					"lineSpacing": 1.0,
+					"letterSpacing": 0.0,
+					"order": 0,
+					"blend": "Normal",
+					"outlineWidth": 0.0,
+					"outlineColor": [0.0, 0.0, 0.0, 1.0],
+					"shadow": false,
+					"shadowOffset": [3.0, -3.0],
+					"shadowColor": [0.0, 0.0, 0.0, 0.6],
+					"glowWidth": 0.0,
+					"glowColor": [1.0, 0.8, 0.3, 0.8],
+					"shine": false,
+					"shineColor": [1.0, 1.0, 1.0, 0.9],
+					"shineWidth": 24.0,
+					"shineDuration": 0.6,
+					"shineInterval": 2.0,
+					"motion": "None",
+					"motionAmount": 8.0,
+					"motionSpeed": 2.0,
+					"motionSpread": 0.1
+				}
+			}
+		},
+		{
+			"id": 268,
+			"name": "Items",
+			"parent": 265,
+			"active": true,
+			"components": {
+				"Transform": {
+					"translation": [0.0, 0.0, 0.0],
+					"rotation": [0.0, 0.0, 0.0],
+					"scale": [1.0, 1.0, 1.0]
+				}
+			}
+		},
+		{
+			"id": 269,
+			"name": "StageName",
+			"parent": 265,
+			"active": true,
+			"components": {
+				"Transform": {
+					"translation": [0.0, -140.0, 0.0],
+					"rotation": [0.0, 0.0, 0.0],
+					"scale": [1.0, 1.0, 1.0]
+				},
+				"Text": {
+					"enabled": true,
+					"text": "Text",
+					"font": "C:/Windows/Fonts/NotoSansJP-VF.ttf",
+					"fontSize": 64.0,
+					"color": [1.0, 1.0, 1.0, 1.0],
+					"align": "Center",
+					"anchor": "Center",
+					"pivot": [0.5, 0.5],
+					"lineSpacing": 1.0,
+					"letterSpacing": 0.0,
+					"order": 0,
+					"blend": "Normal",
+					"outlineWidth": 0.0,
+					"outlineColor": [0.0, 0.0, 0.0, 1.0],
+					"shadow": false,
+					"shadowOffset": [3.0, -3.0],
+					"shadowColor": [0.0, 0.0, 0.0, 0.6],
+					"glowWidth": 0.0,
+					"glowColor": [1.0, 0.8, 0.3, 0.8],
+					"shine": false,
+					"shineColor": [1.0, 1.0, 1.0, 0.9],
+					"shineWidth": 24.0,
+					"shineDuration": 0.6,
+					"shineInterval": 2.0,
+					"motion": "None",
+					"motionAmount": 8.0,
+					"motionSpeed": 2.0,
+					"motionSpread": 0.1
+				}
+			}
+		},
+		{
+			"id": 270,
+			"name": "BestTime",
+			"parent": 265,
+			"active": true,
+			"components": {
+				"Transform": {
+					"translation": [-2.0, -230.0, 0.0],
+					"rotation": [0.0, 0.0, 0.0],
+					"scale": [1.0, 1.0, 1.0]
+				},
+				"Text": {
+					"enabled": true,
+					"text": "Text",
+					"font": "C:/Windows/Fonts/NotoSansJP-VF.ttf",
+					"fontSize": 36.0,
+					"color": [1.0, 1.0, 1.0, 1.0],
+					"align": "Center",
+					"anchor": "Center",
+					"pivot": [0.5, 0.5],
+					"lineSpacing": 1.0,
+					"letterSpacing": 0.0,
+					"order": 0,
+					"blend": "Normal",
+					"outlineWidth": 0.0,
+					"outlineColor": [0.0, 0.0, 0.0, 1.0],
+					"shadow": false,
+					"shadowOffset": [3.0, -3.0],
+					"shadowColor": [0.0, 0.0, 0.0, 0.6],
+					"glowWidth": 0.0,
+					"glowColor": [1.0, 0.8, 0.3, 0.8],
+					"shine": false,
+					"shineColor": [1.0, 1.0, 1.0, 0.9],
+					"shineWidth": 24.0,
+					"shineDuration": 0.6,
+					"shineInterval": 2.0,
+					"motion": "None",
+					"motionAmount": 8.0,
+					"motionSpeed": 2.0,
+					"motionSpread": 0.1
+				}
+			}
+		},
+		{
+			"id": 271,
+			"name": "SelectedStyle",
+			"parent": 265,
+			"active": true,
+			"components": {
+				"Transform": {
+					"translation": [0.0, 0.0, 0.0],
+					"rotation": [0.0, 0.0, 0.0],
+					"scale": [1.0, 1.0, 1.0]
+				},
+				"Text": {
+					"enabled": false,
+					"text": "Text",
+					"font": "",
+					"fontSize": 36.0,
+					"color": [1.0, 1.0, 1.0, 1.0],
+					"align": "Center",
+					"anchor": "Center",
+					"pivot": [0.5, 0.5],
+					"lineSpacing": 1.0,
+					"letterSpacing": 0.0,
+					"order": 0,
+					"blend": "Normal",
+					"outlineWidth": 0.0,
+					"outlineColor": [0.0, 0.0, 0.0, 1.0],
+					"shadow": false,
+					"shadowOffset": [3.0, -3.0],
+					"shadowColor": [0.0, 0.0, 0.0, 0.6],
+					"glowWidth": 10.0,
+					"glowColor": [0.09803922, 0.95686275, 0.42745098, 1.0],
+					"shine": false,
+					"shineColor": [1.0, 1.0, 1.0, 0.9],
+					"shineWidth": 24.0,
+					"shineDuration": 0.6,
+					"shineInterval": 2.0,
+					"motion": "None",
+					"motionAmount": 8.0,
+					"motionSpeed": 2.0,
+					"motionSpread": 0.1
+				}
+			}
+		}
+	]
+}

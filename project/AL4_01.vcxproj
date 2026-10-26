@@ -25,7 +25,11 @@
     <ClCompile Include="Source\Scripts\GoalDoor.cpp" />
     <ClCompile Include="Source\Scripts\IceCube.cpp" />
     <ClCompile Include="Source\Scripts\LevelInfo.cpp" />
+    <ClCompile Include="Source\Scripts\Progress\GameProgress.cpp" />
+    <ClCompile Include="Source\Scripts\UI\MenuBase.cpp" />
     <ClCompile Include="Source\Scripts\UI\PauseMenu.cpp" />
+    <ClCompile Include="Source\Scripts\UI\StageSelectMenu.cpp" />
+    <ClCompile Include="Source\Scripts\UI\TitleMenu.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include=".gitignore" />
@@ -33,6 +37,7 @@
     <None Include="Resources\scenes\GameScene.scene.json" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Source\Scripts\GameTitle.h" />
     <ClInclude Include="Source\Scripts\Gimmicks\HotWater.h" />
     <ClInclude Include="Source\Scripts\Gimmicks\JumpOrb.h" />
     <ClInclude Include="Source\Scripts\Gimmicks\JumpRing.h" />
@@ -42,7 +47,13 @@
     <ClInclude Include="Source\Scripts\GoalDoor.h" />
     <ClInclude Include="Source\Scripts\IceCube.h" />
     <ClInclude Include="Source\Scripts\LevelInfo.h" />
+    <ClInclude Include="Source\Scripts\Progress\GameProgress.h" />
+    <ClInclude Include="Source\Scripts\Progress\OutGameState.h" />
+    <ClInclude Include="Source\Scripts\Progress\StageCatalog.h" />
+    <ClInclude Include="Source\Scripts\UI\MenuBase.h" />
     <ClInclude Include="Source\Scripts\UI\PauseMenu.h" />
+    <ClInclude Include="Source\Scripts\UI\StageSelectMenu.h" />
+    <ClInclude Include="Source\Scripts\UI\TitleMenu.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>18.0</VCProjectVersion>

@@ -1,14 +1,15 @@
 #include <MyEngine/Engine.h>
+#include "Source/Scripts/GameTitle.h"
 
 int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 	WindowConfig config;
-	config.title = L"AL4_01";
+	config.title = ConvertString(std::string(kGameTitle));
 	config.width = 1280;
 	config.height = 720;
 #ifdef USE_IMGUI
 	config.isImGui = true;
 #endif
-	Engine::Initialize(config, "Level01");
+	Engine::Initialize(config, "Title");
 	while (Engine::ProcessMessage()) {
 		Engine::BeginFrame();
 		Engine::GetWindowManager()->UpdateAll();

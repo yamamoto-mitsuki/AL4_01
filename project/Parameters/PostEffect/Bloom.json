@@ -2,5 +2,10 @@
     "Enabled": 1,
     "Intensity": 0.8999999761581421,
     "Knee": 0.25,
-    "Threshold": 1.0
+    "Mode": 1,
+    "Threshold": 1.0,
+    "Weight1": 1.0,
+    "Weight2": 1.5,
+    "Weight3": 2.0,
+    "Weight4": 2.5
 }

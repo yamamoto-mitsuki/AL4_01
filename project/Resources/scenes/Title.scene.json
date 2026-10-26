@@ -1,0 +1,521 @@
+{
+	"version": 1,
+	"entities": [
+		{
+			"id": 169,
+			"name": "Main Camera",
+			"parent": 0,
+			"active": true,
+			"components": {
+				"Transform": {
+					"translation": [0.0, 1.0, -10.0],
+					"rotation": [0.0, 0.0, 0.0],
+					"scale": [1.0, 1.0, 1.0]
+				},
+				"Camera": {
+					"fovY": 45.0,
+					"nearZ": 0.1,
+					"farZ": 1000.0,
+					"priority": 0
+				},
+				"Depth Of Field": {
+					"enabled": true,
+					"focus": "Distance",
+					"focusDistance": 2.0,
+					"focusRange": 0.0,
+					"farTransition": 4.0,
+					"nearTransition": 0.0,
+					"maxBlur": 9.0
+				},
+				"Fog": {
+					"enabled": true,
+					"color": [0.7, 0.79, 0.81],
+					"startDistance": 20.0,
+					"density": 0.02,
+					"maxOpacity": 0.4,
+					"heightColor": [0.44051218, 0.5539436, 0.57915056],
+					"heightBase": -4.0,
+					"heightFalloff": 0.4,
+					"heightMaxOpacity": 0.9
+				}
+			}
+		},
+		{
+			"id": 171,
+			"name": "BackGround",
+			"parent": 0,
+			"active": true,
+			"components": {
+				"Transform": {
+					"translation": [0.0, 0.0, 0.0],
+					"rotation": [0.0, 0.0, 0.0],
+					"scale": [1.0, 1.0, 1.0]
+				}
+			}
+		},
+		{
+			"id": 172,
+			"name": "Trees_far2",
+			"parent": 171,
+			"active": true,
+			"components": {
+				"Transform": {
+					"translation": [89.5, -28.0, 40.0],
+					"rotation": [0.0, 0.0, 0.0],
+					"scale": [1.0, 1.0, 1.0]
+				},
+				"Sprite Renderer": {
+					"enabled": true,
+					"texture": "resources/Textures/Forest/trees_far.png",
+					"color": [1.0, 1.0, 1.0, 1.0],
+					"intensity": 1.0,
+					"pixelsPerUnit": 17.07,
+					"pivot": [0.5, 0.0],
+					"flipX": true,
+					"flipY": false,
+					"billboard": "None",
+					"blend": "Normal",
+					"alphaClip": true,
+					"columns": 1,
+					"rows": 1,
+					"frame": 0,
+					"useRect": false,
+					"rectPosition": [0.0, 0.0],
+					"rectSize": [0.0, 0.0]
+				}
+			}
+		},
+		{
+			"id": 173,
+			"name": "Sky2",
+			"parent": 171,
+			"active": true,
+			"components": {
+				"Transform": {
+					"translation": [159.5, 16.0, 80.0],
+					"rotation": [0.0, 0.0, 0.0],
+					"scale": [1.0, 1.0, 1.0]
+				},
+				"Sprite Renderer": {
+					"enabled": true,
+					"texture": "resources/Textures/Forest/sky.png",
+					"color": [1.0, 1.0, 1.0, 1.0],
+					"intensity": 1.0,
+					"pixelsPerUnit": 11.09,
+					"pivot": [0.5, 0.5],
+					"flipX": true,
+					"flipY": false,
+					"billboard": "None",
+					"blend": "Normal",
+					"alphaClip": true,
+					"columns": 1,
+					"rows": 1,
+					"frame": 0,
+					"useRect": false,
+					"rectPosition": [0.0, 0.0],
+					"rectSize": [0.0, 0.0]
+				}
+			}
+		},
+		{
+			"id": 174,
+			"name": "Trees_near2",
+			"parent": 171,
+			"active": true,
+			"components": {
+				"Transform": {
+					"translation": [0.0, -12.2, 15.0],
+					"rotation": [0.0, 0.0, 0.0],
+					"scale": [1.0, 1.0, 1.0]
+				},
+				"Sprite Renderer": {
+					"enabled": true,
+					"texture": "resources/Textures/Forest/trees_near.png",
+					"color": [1.0, 1.0, 1.0, 1.0],
+					"intensity": 1.0,
+					"pixelsPerUnit": 38.4,
+					"pivot": [0.5, 0.0],
+					"flipX": true,
+					"flipY": false,
+					"billboard": "None",
+					"blend": "Normal",
+					"alphaClip": true,
+					"columns": 1,
+					"rows": 1,
+					"frame": 0,
+					"useRect": false,
+					"rectPosition": [0.0, 0.0],
+					"rectSize": [0.0, 0.0]
+				}
+			}
+		},
+		{
+			"id": 175,
+			"name": "Trees_near",
+			"parent": 171,
+			"active": true,
+			"components": {
+				"Transform": {
+					"translation": [-39.5, -12.2, 15.0],
+					"rotation": [0.0, 0.0, 0.0],
+					"scale": [1.0, 1.0, 1.0]
+				},
+				"Sprite Renderer": {
+					"enabled": true,
+					"texture": "resources/Textures/Forest/trees_near.png",
+					"color": [1.0, 1.0, 1.0, 1.0],
+					"intensity": 1.0,
+					"pixelsPerUnit": 38.4,
+					"pivot": [0.5, 0.0],
+					"flipX": false,
+					"flipY": false,
+					"billboard": "None",
+					"blend": "Normal",
+					"alphaClip": true,
+					"columns": 1,
+					"rows": 1,
+					"frame": 0,
+					"useRect": false,
+					"rectPosition": [0.0, 0.0],
+					"rectSize": [0.0, 0.0]
+				}
+			}
+		},
+		{
+			"id": 176,
+			"name": "Trees_far",
+			"parent": 171,
+			"active": true,
+			"components": {
+				"Transform": {
+					"translation": [0.0, -28.0, 40.0],
+					"rotation": [0.0, 0.0, 0.0],
+					"scale": [1.0, 1.0, 1.0]
+				},
+				"Sprite Renderer": {
+					"enabled": true,
+					"texture": "resources/Textures/Forest/trees_far.png",
+					"color": [1.0, 1.0, 1.0, 1.0],
+					"intensity": 1.0,
+					"pixelsPerUnit": 17.07,
+					"pivot": [0.5, 0.0],
+					"flipX": false,
+					"flipY": false,
+					"billboard": "None",
+					"blend": "Normal",
+					"alphaClip": true,
+					"columns": 1,
+					"rows": 1,
+					"frame": 0,
+					"useRect": false,
+					"rectPosition": [0.0, 0.0],
+					"rectSize": [0.0, 0.0]
+				}
+			}
+		},
+		{
+			"id": 177,
+			"name": "Sky",
+			"parent": 171,
+			"active": true,
+			"components": {
+				"Transform": {
+					"translation": [0.0, 16.0, 80.0],
+					"rotation": [0.0, 0.0, 0.0],
+					"scale": [1.0, 1.0, 1.0]
+				},
+				"Sprite Renderer": {
+					"enabled": true,
+					"texture": "resources/Textures/Forest/sky.png",
+					"color": [1.0, 1.0, 1.0, 1.0],
+					"intensity": 1.0,
+					"pixelsPerUnit": 11.09,
+					"pivot": [0.5, 0.5],
+					"flipX": false,
+					"flipY": false,
+					"billboard": "None",
+					"blend": "Normal",
+					"alphaClip": true,
+					"columns": 1,
+					"rows": 1,
+					"frame": 0,
+					"useRect": false,
+					"rectPosition": [0.0, 0.0],
+					"rectSize": [0.0, 0.0]
+				}
+			}
+		},
+		{
+			"id": 178,
+			"name": "Trees_near3",
+			"parent": 171,
+			"active": true,
+			"components": {
+				"Transform": {
+					"translation": [39.5, -12.2, 15.0],
+					"rotation": [0.0, 0.0, 0.0],
+					"scale": [1.0, 1.0, 1.0]
+				},
+				"Sprite Renderer": {
+					"enabled": true,
+					"texture": "resources/Textures/Forest/trees_near.png",
+					"color": [1.0, 1.0, 1.0, 1.0],
+					"intensity": 1.0,
+					"pixelsPerUnit": 38.4,
+					"pivot": [0.5, 0.0],
+					"flipX": true,
+					"flipY": false,
+					"billboard": "None",
+					"blend": "Normal",
+					"alphaClip": true,
+					"columns": 1,
+					"rows": 1,
+					"frame": 0,
+					"useRect": false,
+					"rectPosition": [0.0, 0.0],
+					"rectSize": [0.0, 0.0]
+				}
+			}
+		},
+		{
+			"id": 179,
+			"name": "Trees_near4",
+			"parent": 171,
+			"active": true,
+			"components": {
+				"Transform": {
+					"translation": [79.5, -12.21, 15.0],
+					"rotation": [0.0, 0.0, 0.0],
+					"scale": [1.0, 1.0, 1.0]
+				},
+				"Sprite Renderer": {
+					"enabled": true,
+					"texture": "resources/Textures/Forest/trees_near.png",
+					"color": [1.0, 1.0, 1.0, 1.0],
+					"intensity": 1.0,
+					"pixelsPerUnit": 38.4,
+					"pivot": [0.5, 0.0],
+					"flipX": true,
+					"flipY": false,
+					"billboard": "None",
+					"blend": "Normal",
+					"alphaClip": true,
+					"columns": 1,
+					"rows": 1,
+					"frame": 0,
+					"useRect": false,
+					"rectPosition": [0.0, 0.0],
+					"rectSize": [0.0, 0.0]
+				}
+			}
+		},
+		{
+			"id": 180,
+			"name": "TitleUI",
+			"parent": 0,
+			"active": true,
+			"components": {
+				"Transform": {
+					"translation": [0.0, 0.0, 0.0],
+					"rotation": [0.0, 0.0, 0.0],
+					"scale": [1.0, 1.0, 1.0]
+				},
+				"TitleMenu": {
+					"Enabled": true,
+					"Style Name": "SelectedStyle",
+					"Columns": 1,
+					"Use Mouse": true,
+					"Hit Padding": 12.0,
+					"Stage Select Screen": "StageSelect",
+					"Logo Name": "Logo",
+					"Fade Time": 0.5
+				}
+			}
+		},
+		{
+			"id": 181,
+			"name": "Logo",
+			"parent": 180,
+			"active": true,
+			"components": {
+				"Transform": {
+					"translation": [-228.0, 218.0, 0.0],
+					"rotation": [0.0, 0.0, 0.0],
+					"scale": [1.0, 1.0, 1.0]
+				},
+				"Text": {
+					"enabled": true,
+					"text": "森の中の氷",
+					"font": "C:/Windows/Fonts/NotoSansJP-VF.ttf",
+					"fontSize": 96.0,
+					"color": [1.0, 1.0, 1.0, 1.0],
+					"align": "Center",
+					"anchor": "Center",
+					"pivot": [0.5, 0.5],
+					"lineSpacing": 1.0,
+					"letterSpacing": 0.0,
+					"order": 0,
+					"blend": "Normal",
+					"outlineWidth": 0.0,
+					"outlineColor": [0.0, 0.0, 0.0, 1.0],
+					"shadow": true,
+					"shadowOffset": [3.29, -3.0],
+					"shadowColor": [0.0, 0.0, 0.0, 0.6],
+					"glowWidth": 1.38,
+					"glowColor": [0.13198969, 0.8996139, 0.83737403, 0.8],
+					"shine": false,
+					"shineColor": [1.0, 1.0, 1.0, 0.9],
+					"shineWidth": 96.0,
+					"shineDuration": 20.0,
+					"shineInterval": 1.0,
+					"motion": "None",
+					"motionAmount": 8.0,
+					"motionSpeed": 2.0,
+					"motionSpread": 0.1
+				}
+			}
+		},
+		{
+			"id": 182,
+			"name": "Items",
+			"parent": 180,
+			"active": true,
+			"components": {
+				"Transform": {
+					"translation": [0.0, 0.0, 0.0],
+					"rotation": [0.0, 0.0, 0.0],
+					"scale": [1.0, 1.0, 1.0]
+				}
+			}
+		},
+		{
+			"id": 183,
+			"name": "Start",
+			"parent": 182,
+			"active": true,
+			"components": {
+				"Transform": {
+					"translation": [-315.0, -20.0, 0.0],
+					"rotation": [0.0, 0.0, 0.0],
+					"scale": [1.0, 1.0, 1.0]
+				},
+				"Text": {
+					"enabled": true,
+					"text": "Start",
+					"font": "C:/Windows/Fonts/NotoSansJP-VF.ttf",
+					"fontSize": 64.0,
+					"color": [1.0, 1.0, 1.0, 1.0],
+					"align": "Center",
+					"anchor": "Center",
+					"pivot": [0.5, 0.5],
+					"lineSpacing": 1.0,
+					"letterSpacing": 0.0,
+					"order": 0,
+					"blend": "Normal",
+					"outlineWidth": 0.0,
+					"outlineColor": [0.0, 0.0, 0.0, 1.0],
+					"shadow": false,
+					"shadowOffset": [3.0, -3.0],
+					"shadowColor": [0.0, 0.0, 0.0, 0.6],
+					"glowWidth": 0.0,
+					"glowColor": [1.0, 0.8, 0.3, 0.8],
+					"shine": false,
+					"shineColor": [1.0, 1.0, 1.0, 0.9],
+					"shineWidth": 24.0,
+					"shineDuration": 0.6,
+					"shineInterval": 2.0,
+					"motion": "None",
+					"motionAmount": 8.0,
+					"motionSpeed": 2.0,
+					"motionSpread": 0.1
+				}
+			}
+		},
+		{
+			"id": 184,
+			"name": "Quit",
+			"parent": 182,
+			"active": true,
+			"components": {
+				"Transform": {
+					"translation": [-315.0, -153.0, 0.0],
+					"rotation": [0.0, 0.0, 0.0],
+					"scale": [1.0, 1.0, 1.0]
+				},
+				"Text": {
+					"enabled": true,
+					"text": "Quit",
+					"font": "C:/Windows/Fonts/NotoSansJP-VF.ttf",
+					"fontSize": 64.0,
+					"color": [1.0, 1.0, 1.0, 1.0],
+					"align": "Center",
+					"anchor": "Center",
+					"pivot": [0.5, 0.5],
+					"lineSpacing": 1.0,
+					"letterSpacing": 0.0,
+					"order": 0,
+					"blend": "Normal",
+					"outlineWidth": 0.0,
+					"outlineColor": [0.0, 0.0, 0.0, 1.0],
+					"shadow": false,
+					"shadowOffset": [3.0, -3.0],
+					"shadowColor": [0.0, 0.0, 0.0, 0.6],
+					"glowWidth": 0.0,
+					"glowColor": [1.0, 0.8, 0.3, 0.8],
+					"shine": false,
+					"shineColor": [1.0, 1.0, 1.0, 0.9],
+					"shineWidth": 24.0,
+					"shineDuration": 0.6,
+					"shineInterval": 2.0,
+					"motion": "None",
+					"motionAmount": 8.0,
+					"motionSpeed": 2.0,
+					"motionSpread": 0.1
+				}
+			}
+		},
+		{
+			"id": 185,
+			"name": "SelectedStyle",
+			"parent": 180,
+			"active": true,
+			"components": {
+				"Transform": {
+					"translation": [0.0, 0.0, 0.0],
+					"rotation": [0.0, 0.0, 0.0],
+					"scale": [1.0, 1.0, 1.0]
+				},
+				"Text": {
+					"enabled": false,
+					"text": "Text",
+					"font": "",
+					"fontSize": 36.0,
+					"color": [1.0, 1.0, 1.0, 1.0],
+					"align": "Center",
+					"anchor": "Center",
+					"pivot": [0.5, 0.5],
+					"lineSpacing": 1.0,
+					"letterSpacing": 0.0,
+					"order": 0,
+					"blend": "Normal",
+					"outlineWidth": 0.0,
+					"outlineColor": [0.0, 0.0, 0.0, 1.0],
+					"shadow": false,
+					"shadowOffset": [3.0, -3.0],
+					"shadowColor": [0.0, 0.0, 0.0, 0.6],
+					"glowWidth": 0.0,
+					"glowColor": [1.0, 0.8, 0.3, 0.8],
+					"shine": false,
+					"shineColor": [1.0, 1.0, 1.0, 0.9],
+					"shineWidth": 24.0,
+					"shineDuration": 0.6,
+					"shineInterval": 2.0,
+					"motion": "None",
+					"motionAmount": 8.0,
+					"motionSpeed": 2.0,
+					"motionSpread": 0.1
+				}
+			}
+		}
+	]
+}

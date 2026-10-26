@@ -2,7 +2,7 @@
 	"version": 1,
 	"entities": [
 		{
-			"id": 170,
+			"id": 194,
 			"name": "Pause",
 			"parent": 0,
 			"active": true,
@@ -14,10 +14,12 @@
 				},
 				"PauseMenu": {
 					"Enabled": true,
+					"Style Name": "SelectedStyle",
+					"Columns": 1,
+					"Use Mouse": true,
+					"Hit Padding": 12.0,
 					"Screen Name": "Pause",
-					"Normal Color": [1.0, 1.0, 1.0, 1.0],
-					"Selected Color": [1.0, 0.85, 0.3, 1.0],
-					"Selected Scale": 1.15
+					"Title Scene": "Title"
 				},
 				"UI Screen": {
 					"pauseGame": true,
@@ -33,9 +35,9 @@
 			}
 		},
 		{
-			"id": 171,
+			"id": 195,
 			"name": "Dim",
-			"parent": 170,
+			"parent": 194,
 			"active": true,
 			"components": {
 				"Transform": {
@@ -73,19 +75,19 @@
 			}
 		},
 		{
-			"id": 172,
+			"id": 196,
 			"name": "Pause",
-			"parent": 170,
+			"parent": 194,
 			"active": true,
 			"components": {
 				"Transform": {
-					"translation": [-403.0, 151.0, 0.0],
+					"translation": [-410.0, 215.0, 0.0],
 					"rotation": [0.0, 0.0, 0.0],
 					"scale": [1.0, 1.0000005, 1.0000005]
 				},
 				"Text": {
 					"enabled": true,
-					"text": "Pause\n",
+					"text": "Pause",
 					"font": "C:/Windows/Fonts/NotoSansJP-VF.ttf",
 					"fontSize": 128.0,
 					"color": [1.0, 1.0, 1.0, 1.0],
@@ -116,9 +118,9 @@
 			}
 		},
 		{
-			"id": 173,
-			"name": "Resum",
-			"parent": 170,
+			"id": 197,
+			"name": "SelectedStyle",
+			"parent": 194,
 			"active": true,
 			"components": {
 				"Transform": {
@@ -127,7 +129,7 @@
 					"scale": [1.0, 1.0, 1.0]
 				},
 				"Text": {
-					"enabled": true,
+					"enabled": false,
 					"text": "Resum",
 					"font": "C:/Windows/Fonts/NotoSansJP-VF.ttf",
 					"fontSize": 64.0,
@@ -159,9 +161,65 @@
 			}
 		},
 		{
-			"id": 175,
+			"id": 198,
+			"name": "Items",
+			"parent": 194,
+			"active": true,
+			"components": {
+				"Transform": {
+					"translation": [0.0, 0.0, 0.0],
+					"rotation": [0.0, 0.0, 0.0],
+					"scale": [1.0, 1.0, 1.0]
+				}
+			}
+		},
+		{
+			"id": 199,
+			"name": "Resume",
+			"parent": 198,
+			"active": true,
+			"components": {
+				"Transform": {
+					"translation": [-435.0, 28.0, 0.0],
+					"rotation": [0.0, 0.0, 0.0],
+					"scale": [1.0, 1.0, 1.0]
+				},
+				"Text": {
+					"enabled": true,
+					"text": "Resume",
+					"font": "C:/Windows/Fonts/NotoSansJP-VF.ttf",
+					"fontSize": 64.0,
+					"color": [1.0, 1.0, 1.0, 1.0],
+					"align": "Center",
+					"anchor": "Center",
+					"pivot": [0.5, 0.5],
+					"lineSpacing": 1.0,
+					"letterSpacing": 0.0,
+					"order": 0,
+					"blend": "Normal",
+					"outlineWidth": 0.0,
+					"outlineColor": [1.0, 1.0, 1.0, 1.0],
+					"shadow": false,
+					"shadowOffset": [0.0, -3.0],
+					"shadowColor": [0.0, 0.0, 0.0, 1.0],
+					"glowWidth": 0.0,
+					"glowColor": [1.0, 1.0, 1.0, 1.0],
+					"shine": false,
+					"shineColor": [0.16078432, 0.78431374, 0.15294118, 1.0],
+					"shineWidth": 72.0,
+					"shineDuration": 1.0,
+					"shineInterval": 0.3,
+					"motion": "None",
+					"motionAmount": 6.0,
+					"motionSpeed": 1.0,
+					"motionSpread": 0.2
+				}
+			}
+		},
+		{
+			"id": 200,
 			"name": "Restart",
-			"parent": 170,
+			"parent": 198,
 			"active": true,
 			"components": {
 				"Transform": {
@@ -202,9 +260,9 @@
 			}
 		},
 		{
-			"id": 176,
+			"id": 201,
 			"name": "Title",
-			"parent": 170,
+			"parent": 198,
 			"active": true,
 			"components": {
 				"Transform": {

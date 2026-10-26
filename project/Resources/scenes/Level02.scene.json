@@ -88,9 +88,26 @@
 					"Jump Cut": 0.5,
 					"Coyote Time": 0.1,
 					"Jump Buffer": 0.1,
+					"Wall Jump Speed": 6.0,
+					"Wall Regrab Time": 0.2,
+					"Launch Gather Time": 0.1,
+					"Launch Jump Lock": 0.3,
+					"Launch Jump Keep": 0.5,
+					"Launch Spin Speed": 720.0,
 					"Max HP": 3,
 					"Restart Delay": 1.0,
 					"Clear Time": 0.6,
+					"Crack Small Texture": "",
+					"Crack Large Texture": "",
+					"Hurt Flash Time": 0.15,
+					"Hurt Shake Angle": 10.0,
+					"Hurt Shake Time": 0.3,
+					"Shard Count": 8,
+					"Shard Size": 0.3,
+					"Shard Speed": 7.0,
+					"Melt Time": 0.6,
+					"Melt Sink Speed": 0.6,
+					"Wind Wobble Angle": 8.0,
 					"Cube Size": 1.0,
 					"Tilt Angle": 12.0,
 					"Tilt Speed": 12.0,
@@ -103,6 +120,7 @@
 					"useGravity": true,
 					"gravityScale": 1.0,
 					"drag": 0.0,
+					"windScale": 1.0,
 					"isKinematic": false,
 					"collideWithRigidbodies": false,
 					"freezePositionX": false,
@@ -127,6 +145,7 @@
 					"enabled": true,
 					"shape": "Box",
 					"color": [0.15294118, 0.38039216, 0.78431374, 0.6156863],
+					"intensity": 1.0,
 					"surface": "Transparent",
 					"texture": "",
 					"uvScale": [1.0, 1.0],
@@ -154,41 +173,7 @@
 					"enabled": true,
 					"shape": "Box",
 					"color": [0.60419494, 0.6743964, 0.8108108, 1.0],
-					"surface": "Opaque",
-					"texture": "",
-					"uvScale": [1.0, 1.0],
-					"shadingType": "HalfLambert",
-					"specular": [0.0, 0.0, 0.0],
-					"shininess": 32.0,
-					"metallic": 0.0,
-					"roughness": 0.5,
-					"emissive": [0.0, 0.0, 0.0]
-				}
-			}
-		},
-		{
-			"id": 59,
-			"name": "GroundA",
-			"parent": 0,
-			"active": true,
-			"components": {
-				"Transform": {
-					"translation": [5.0, 0.0, 0.0],
-					"rotation": [0.0, 0.0, 0.0],
-					"scale": [20.0, 2.0, 4.0]
-				},
-				"Collider": {
-					"enabled": true,
-					"isTrigger": false,
-					"shape": "Box",
-					"center": [0.0, 0.0, 0.0],
-					"physicMaterial": "",
-					"size": [1.0, 1.0, 1.0]
-				},
-				"Primitive Renderer": {
-					"enabled": true,
-					"shape": "Box",
-					"color": [0.0, 0.6745098, 0.0, 1.0],
+					"intensity": 1.0,
 					"surface": "Opaque",
 					"texture": "",
 					"uvScale": [1.0, 1.0],
@@ -224,6 +209,7 @@
 					"enabled": true,
 					"shape": "Box",
 					"color": [0.0, 0.6745098, 0.0, 1.0],
+					"intensity": 1.0,
 					"surface": "Opaque",
 					"texture": "",
 					"uvScale": [1.0, 1.0],
@@ -259,6 +245,7 @@
 					"enabled": true,
 					"shape": "Box",
 					"color": [0.0, 0.6745098, 0.0, 1.0],
+					"intensity": 1.0,
 					"surface": "Opaque",
 					"texture": "",
 					"uvScale": [1.0, 1.0],
@@ -298,6 +285,7 @@
 					"enabled": true,
 					"shape": "Box",
 					"color": [0.83137256, 0.8980392, 0.46666667, 0.87058824],
+					"intensity": 1.0,
 					"surface": "Additive",
 					"texture": "",
 					"uvScale": [1.0, 1.0],
@@ -326,7 +314,442 @@
 					"Number": 2,
 					"Area Name": "海辺",
 					"Kill Height": -10.0,
-					"Next Scene": ""
+					"Pause Screen": "Pause",
+					"Title Scene": "Title"
+				}
+			}
+		},
+		{
+			"id": 59,
+			"name": "GroundA",
+			"parent": 0,
+			"active": true,
+			"components": {
+				"Transform": {
+					"translation": [5.0, 0.0, 0.0],
+					"rotation": [0.0, 0.0, 0.0],
+					"scale": [20.0, 2.0, 4.0]
+				},
+				"Collider": {
+					"enabled": true,
+					"isTrigger": false,
+					"shape": "Box",
+					"center": [0.0, 0.0, 0.0],
+					"physicMaterial": "",
+					"size": [1.0, 1.0, 1.0]
+				},
+				"Primitive Renderer": {
+					"enabled": true,
+					"shape": "Box",
+					"color": [0.0, 0.6745098, 0.0, 1.0],
+					"intensity": 1.0,
+					"surface": "Opaque",
+					"texture": "",
+					"uvScale": [1.0, 1.0],
+					"shadingType": "HalfLambert",
+					"specular": [0.0, 0.0, 0.0],
+					"shininess": 32.0,
+					"metallic": 0.0,
+					"roughness": 0.5,
+					"emissive": [0.0, 0.0, 0.0]
+				}
+			}
+		},
+		{
+			"id": 168,
+			"name": "JumpOrb",
+			"parent": 0,
+			"active": true,
+			"components": {
+				"Transform": {
+					"translation": [5.2258825, 3.4656446, 0.0],
+					"rotation": [0.0, 0.0, 0.0],
+					"scale": [1.0, 1.0, 1.0]
+				},
+				"Collider": {
+					"enabled": true,
+					"isTrigger": true,
+					"shape": "Sphere",
+					"center": [0.0, 0.0, 0.0],
+					"physicMaterial": "",
+					"radius": 1.0
+				},
+				"JumpOrb": {
+					"Enabled": true,
+					"Spin Speed": 30.0,
+					"Pop Scale": 1.6,
+					"Pop Time": 0.25,
+					"Used Brightness": 0.25
+				}
+			}
+		},
+		{
+			"id": 169,
+			"name": "Ring",
+			"parent": 168,
+			"active": true,
+			"components": {
+				"Transform": {
+					"translation": [0.0, 0.0, 0.0],
+					"rotation": [0.0, 0.0, 0.0],
+					"scale": [2.0, 2.0, 2.0]
+				},
+				"Primitive Renderer": {
+					"enabled": true,
+					"shape": "Sphere",
+					"color": [0.15686275, 0.72156864, 0.8235294, 0.19607843],
+					"intensity": 1.0,
+					"surface": "Transparent",
+					"texture": "",
+					"uvScale": [1.0, 1.0],
+					"shadingType": "Unlit",
+					"specular": [0.0, 0.0, 0.0],
+					"shininess": 32.0,
+					"metallic": 0.0,
+					"roughness": 0.5,
+					"emissive": [0.0, 0.0, 0.0]
+				}
+			}
+		},
+		{
+			"id": 170,
+			"name": "Core",
+			"parent": 168,
+			"active": true,
+			"components": {
+				"Transform": {
+					"translation": [0.0, 0.0, 0.0],
+					"rotation": [0.0, 0.0, 0.0],
+					"scale": [0.5, 0.5, 0.5]
+				},
+				"Primitive Renderer": {
+					"enabled": true,
+					"shape": "Sphere",
+					"color": [0.5411765, 0.85490197, 1.0, 0.10980392],
+					"intensity": 1.0,
+					"surface": "Additive",
+					"texture": "",
+					"uvScale": [1.0, 1.0],
+					"shadingType": "Unlit",
+					"specular": [0.0, 0.0, 0.0],
+					"shininess": 32.0,
+					"metallic": 0.0,
+					"roughness": 0.5,
+					"emissive": [0.0, 0.0, 0.0]
+				}
+			}
+		},
+		{
+			"id": 171,
+			"name": "Particle System",
+			"parent": 168,
+			"active": true,
+			"components": {
+				"Transform": {
+					"translation": [0.0, 0.0, 0.0],
+					"rotation": [0.0, 0.0, 0.0],
+					"scale": [1.0, 1.0, 1.0]
+				},
+				"Particle System": {
+					"enabled": true,
+					"playOnStart": true,
+					"looping": true,
+					"duration": 1.0,
+					"rateOverTime": 40.0,
+					"burstCount": 0,
+					"maxParticles": 256,
+					"shape": "Circle",
+					"radius": 0.3,
+					"coneAngle": 25.0,
+					"boxSize": [1.0, 1.0, 1.0],
+					"fromSurface": true,
+					"lifetime": [0.8, 1.2],
+					"speed": [1.0, 2.0],
+					"size": [0.1, 0.2],
+					"colorA": [1.0, 1.0, 1.0, 1.0],
+					"colorB": [1.0, 1.0, 1.0, 1.0],
+					"intensity": 1.0,
+					"gravity": [0.0, 0.0, 0.0],
+					"drag": 0.0,
+					"endSizeRate": 1.0,
+					"endColor": [1.0, 1.0, 1.0, 0.0],
+					"ease": "Linear",
+					"converge": true,
+					"convergeEase": "InQuad",
+					"texture": "",
+					"blend": "Add",
+					"space": "World",
+					"useFog": true,
+					"useDepthOfField": false
+				}
+			}
+		},
+		{
+			"id": 181,
+			"name": "BackGround",
+			"parent": 0,
+			"active": true,
+			"components": {
+				"Transform": {
+					"translation": [0.0, 0.0, 0.0],
+					"rotation": [0.0, 0.0, 0.0],
+					"scale": [1.0, 1.0, 1.0]
+				}
+			}
+		},
+		{
+			"id": 182,
+			"name": "Trees_far2",
+			"parent": 181,
+			"active": true,
+			"components": {
+				"Transform": {
+					"translation": [89.5, -28.0, 40.0],
+					"rotation": [0.0, 0.0, 0.0],
+					"scale": [1.0, 1.0, 1.0]
+				},
+				"Sprite Renderer": {
+					"enabled": true,
+					"texture": "resources/Textures/Forest/trees_far.png",
+					"color": [1.0, 1.0, 1.0, 1.0],
+					"intensity": 1.0,
+					"pixelsPerUnit": 17.07,
+					"pivot": [0.5, 0.0],
+					"flipX": true,
+					"flipY": false,
+					"billboard": "None",
+					"blend": "Normal",
+					"alphaClip": true,
+					"columns": 1,
+					"rows": 1,
+					"frame": 0,
+					"useRect": false,
+					"rectPosition": [0.0, 0.0],
+					"rectSize": [0.0, 0.0]
+				}
+			}
+		},
+		{
+			"id": 183,
+			"name": "Sky2",
+			"parent": 181,
+			"active": true,
+			"components": {
+				"Transform": {
+					"translation": [159.5, 16.0, 80.0],
+					"rotation": [0.0, 0.0, 0.0],
+					"scale": [1.0, 1.0, 1.0]
+				},
+				"Sprite Renderer": {
+					"enabled": true,
+					"texture": "resources/Textures/Forest/sky.png",
+					"color": [1.0, 1.0, 1.0, 1.0],
+					"intensity": 1.0,
+					"pixelsPerUnit": 11.09,
+					"pivot": [0.5, 0.5],
+					"flipX": true,
+					"flipY": false,
+					"billboard": "None",
+					"blend": "Normal",
+					"alphaClip": true,
+					"columns": 1,
+					"rows": 1,
+					"frame": 0,
+					"useRect": false,
+					"rectPosition": [0.0, 0.0],
+					"rectSize": [0.0, 0.0]
+				}
+			}
+		},
+		{
+			"id": 184,
+			"name": "Trees_near2",
+			"parent": 181,
+			"active": true,
+			"components": {
+				"Transform": {
+					"translation": [0.0, -12.2, 15.0],
+					"rotation": [0.0, 0.0, 0.0],
+					"scale": [1.0, 1.0, 1.0]
+				},
+				"Sprite Renderer": {
+					"enabled": true,
+					"texture": "resources/Textures/Forest/trees_near.png",
+					"color": [1.0, 1.0, 1.0, 1.0],
+					"intensity": 1.0,
+					"pixelsPerUnit": 38.4,
+					"pivot": [0.5, 0.0],
+					"flipX": true,
+					"flipY": false,
+					"billboard": "None",
+					"blend": "Normal",
+					"alphaClip": true,
+					"columns": 1,
+					"rows": 1,
+					"frame": 0,
+					"useRect": false,
+					"rectPosition": [0.0, 0.0],
+					"rectSize": [0.0, 0.0]
+				}
+			}
+		},
+		{
+			"id": 185,
+			"name": "Trees_near",
+			"parent": 181,
+			"active": true,
+			"components": {
+				"Transform": {
+					"translation": [-39.5, -12.2, 15.0],
+					"rotation": [0.0, 0.0, 0.0],
+					"scale": [1.0, 1.0, 1.0]
+				},
+				"Sprite Renderer": {
+					"enabled": true,
+					"texture": "resources/Textures/Forest/trees_near.png",
+					"color": [1.0, 1.0, 1.0, 1.0],
+					"intensity": 1.0,
+					"pixelsPerUnit": 38.4,
+					"pivot": [0.5, 0.0],
+					"flipX": false,
+					"flipY": false,
+					"billboard": "None",
+					"blend": "Normal",
+					"alphaClip": true,
+					"columns": 1,
+					"rows": 1,
+					"frame": 0,
+					"useRect": false,
+					"rectPosition": [0.0, 0.0],
+					"rectSize": [0.0, 0.0]
+				}
+			}
+		},
+		{
+			"id": 186,
+			"name": "Trees_far",
+			"parent": 181,
+			"active": true,
+			"components": {
+				"Transform": {
+					"translation": [0.0, -28.0, 40.0],
+					"rotation": [0.0, 0.0, 0.0],
+					"scale": [1.0, 1.0, 1.0]
+				},
+				"Sprite Renderer": {
+					"enabled": true,
+					"texture": "resources/Textures/Forest/trees_far.png",
+					"color": [1.0, 1.0, 1.0, 1.0],
+					"intensity": 1.0,
+					"pixelsPerUnit": 17.07,
+					"pivot": [0.5, 0.0],
+					"flipX": false,
+					"flipY": false,
+					"billboard": "None",
+					"blend": "Normal",
+					"alphaClip": true,
+					"columns": 1,
+					"rows": 1,
+					"frame": 0,
+					"useRect": false,
+					"rectPosition": [0.0, 0.0],
+					"rectSize": [0.0, 0.0]
+				}
+			}
+		},
+		{
+			"id": 187,
+			"name": "Sky",
+			"parent": 181,
+			"active": true,
+			"components": {
+				"Transform": {
+					"translation": [0.0, 16.0, 80.0],
+					"rotation": [0.0, 0.0, 0.0],
+					"scale": [1.0, 1.0, 1.0]
+				},
+				"Sprite Renderer": {
+					"enabled": true,
+					"texture": "resources/Textures/Forest/sky.png",
+					"color": [1.0, 1.0, 1.0, 1.0],
+					"intensity": 1.0,
+					"pixelsPerUnit": 11.09,
+					"pivot": [0.5, 0.5],
+					"flipX": false,
+					"flipY": false,
+					"billboard": "None",
+					"blend": "Normal",
+					"alphaClip": true,
+					"columns": 1,
+					"rows": 1,
+					"frame": 0,
+					"useRect": false,
+					"rectPosition": [0.0, 0.0],
+					"rectSize": [0.0, 0.0]
+				}
+			}
+		},
+		{
+			"id": 188,
+			"name": "Trees_near3",
+			"parent": 181,
+			"active": true,
+			"components": {
+				"Transform": {
+					"translation": [39.5, -12.2, 15.0],
+					"rotation": [0.0, 0.0, 0.0],
+					"scale": [1.0, 1.0, 1.0]
+				},
+				"Sprite Renderer": {
+					"enabled": true,
+					"texture": "resources/Textures/Forest/trees_near.png",
+					"color": [1.0, 1.0, 1.0, 1.0],
+					"intensity": 1.0,
+					"pixelsPerUnit": 38.4,
+					"pivot": [0.5, 0.0],
+					"flipX": true,
+					"flipY": false,
+					"billboard": "None",
+					"blend": "Normal",
+					"alphaClip": true,
+					"columns": 1,
+					"rows": 1,
+					"frame": 0,
+					"useRect": false,
+					"rectPosition": [0.0, 0.0],
+					"rectSize": [0.0, 0.0]
+				}
+			}
+		},
+		{
+			"id": 189,
+			"name": "Trees_near4",
+			"parent": 181,
+			"active": true,
+			"components": {
+				"Transform": {
+					"translation": [79.5, -12.21, 15.0],
+					"rotation": [0.0, 0.0, 0.0],
+					"scale": [1.0, 1.0, 1.0]
+				},
+				"Sprite Renderer": {
+					"enabled": true,
+					"texture": "resources/Textures/Forest/trees_near.png",
+					"color": [1.0, 1.0, 1.0, 1.0],
+					"intensity": 1.0,
+					"pixelsPerUnit": 38.4,
+					"pivot": [0.5, 0.0],
+					"flipX": true,
+					"flipY": false,
+					"billboard": "None",
+					"blend": "Normal",
+					"alphaClip": true,
+					"columns": 1,
+					"rows": 1,
+					"frame": 0,
+					"useRect": false,
+					"rectPosition": [0.0, 0.0],
+					"rectSize": [0.0, 0.0]
 				}
 			}
 		}

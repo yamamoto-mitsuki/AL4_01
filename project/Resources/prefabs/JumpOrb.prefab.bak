@@ -8,7 +8,7 @@
 			"active": true,
 			"components": {
 				"Transform": {
-					"translation": [4.7622237, 5.554048, 0.0],
+					"translation": [12.020381, 5.703765, 0.0],
 					"rotation": [0.0, 0.0, 0.0],
 					"scale": [1.0, 1.0, 1.0]
 				},
@@ -19,19 +19,6 @@
 					"center": [0.0, 0.0, 0.0],
 					"physicMaterial": "",
 					"radius": 1.0
-				}
-			}
-		},
-		{
-			"id": 74,
-			"name": "JumoOrb",
-			"parent": 73,
-			"active": true,
-			"components": {
-				"Transform": {
-					"translation": [0.0, 0.0, 0.0],
-					"rotation": [0.0, 0.0, 0.0],
-					"scale": [1.0, 1.0, 1.0]
 				},
 				"JumpOrb": {
 					"Enabled": true,

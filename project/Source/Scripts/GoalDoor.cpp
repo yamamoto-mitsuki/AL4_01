@@ -22,6 +22,10 @@ void GoalDoor::OnTriggerEnter(GameObject other) {
 	// --- クリア：キューブを扉へ吸い込ませて、時間を数え始める ---
 	cube->Clear(GetWorldPosition(transform));
 	isCleared_ = true;
+	// --- レベルにクリアを知らせる（時間を止めて、進み具合に記録する）---
+	if (LevelInfo* level = LevelInfo::Find()) {
+		level->Clear();
+	}
 }
 
 //=============================================================================

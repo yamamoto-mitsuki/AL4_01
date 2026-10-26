@@ -372,3 +372,6 @@ FodyWeavers.xsd
 
 # モデルの .obj は入れる
 !/project/Resources/**/*.obj
+
+# 遊んだ記録（GameProgress）
+/project/saves/

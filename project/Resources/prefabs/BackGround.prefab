@@ -15,13 +15,44 @@
 			}
 		},
 		{
-			"id": 133,
-			"name": "Sky",
+			"id": 140,
+			"name": "Trees_far2",
 			"parent": 137,
 			"active": true,
 			"components": {
 				"Transform": {
-					"translation": [0.0, 16.0, 80.0],
+					"translation": [89.5, -28.0, 40.0],
+					"rotation": [0.0, 0.0, 0.0],
+					"scale": [1.0, 1.0, 1.0]
+				},
+				"Sprite Renderer": {
+					"enabled": true,
+					"texture": "resources/Textures/Forest/trees_far.png",
+					"color": [1.0, 1.0, 1.0, 1.0],
+					"pixelsPerUnit": 17.07,
+					"pivot": [0.5, 0.0],
+					"flipX": true,
+					"flipY": false,
+					"billboard": "None",
+					"blend": "Normal",
+					"alphaClip": true,
+					"columns": 1,
+					"rows": 1,
+					"frame": 0,
+					"useRect": false,
+					"rectPosition": [0.0, 0.0],
+					"rectSize": [0.0, 0.0]
+				}
+			}
+		},
+		{
+			"id": 139,
+			"name": "Sky2",
+			"parent": 137,
+			"active": true,
+			"components": {
+				"Transform": {
+					"translation": [159.5, 16.0, 80.0],
 					"rotation": [0.0, 0.0, 0.0],
 					"scale": [1.0, 1.0, 1.0]
 				},
@@ -31,6 +62,68 @@
 					"color": [1.0, 1.0, 1.0, 1.0],
 					"pixelsPerUnit": 11.09,
 					"pivot": [0.5, 0.5],
+					"flipX": true,
+					"flipY": false,
+					"billboard": "None",
+					"blend": "Normal",
+					"alphaClip": true,
+					"columns": 1,
+					"rows": 1,
+					"frame": 0,
+					"useRect": false,
+					"rectPosition": [0.0, 0.0],
+					"rectSize": [0.0, 0.0]
+				}
+			}
+		},
+		{
+			"id": 141,
+			"name": "Trees_near2",
+			"parent": 137,
+			"active": true,
+			"components": {
+				"Transform": {
+					"translation": [0.0, -12.2, 15.0],
+					"rotation": [0.0, 0.0, 0.0],
+					"scale": [1.0, 1.0, 1.0]
+				},
+				"Sprite Renderer": {
+					"enabled": true,
+					"texture": "resources/Textures/Forest/trees_near.png",
+					"color": [1.0, 1.0, 1.0, 1.0],
+					"pixelsPerUnit": 38.4,
+					"pivot": [0.5, 0.0],
+					"flipX": true,
+					"flipY": false,
+					"billboard": "None",
+					"blend": "Normal",
+					"alphaClip": true,
+					"columns": 1,
+					"rows": 1,
+					"frame": 0,
+					"useRect": false,
+					"rectPosition": [0.0, 0.0],
+					"rectSize": [0.0, 0.0]
+				}
+			}
+		},
+		{
+			"id": 138,
+			"name": "Trees_near",
+			"parent": 137,
+			"active": true,
+			"components": {
+				"Transform": {
+					"translation": [-39.5, -12.2, 15.0],
+					"rotation": [0.0, 0.0, 0.0],
+					"scale": [1.0, 1.0, 1.0]
+				},
+				"Sprite Renderer": {
+					"enabled": true,
+					"texture": "resources/Textures/Forest/trees_near.png",
+					"color": [1.0, 1.0, 1.0, 1.0],
+					"pixelsPerUnit": 38.4,
+					"pivot": [0.5, 0.0],
 					"flipX": false,
 					"flipY": false,
 					"billboard": "None",
@@ -77,22 +170,22 @@
 			}
 		},
 		{
-			"id": 138,
-			"name": "Trees_near",
+			"id": 133,
+			"name": "Sky",
 			"parent": 137,
 			"active": true,
 			"components": {
 				"Transform": {
-					"translation": [0.0, -12.2, 15.0],
+					"translation": [0.0, 16.0, 80.0],
 					"rotation": [0.0, 0.0, 0.0],
 					"scale": [1.0, 1.0, 1.0]
 				},
 				"Sprite Renderer": {
 					"enabled": true,
-					"texture": "resources/Textures/Forest/trees_near.png",
+					"texture": "resources/Textures/Forest/sky.png",
 					"color": [1.0, 1.0, 1.0, 1.0],
-					"pixelsPerUnit": 38.4,
-					"pivot": [0.5, 0.0],
+					"pixelsPerUnit": 11.09,
+					"pivot": [0.5, 0.5],
 					"flipX": false,
 					"flipY": false,
 					"billboard": "None",
@@ -108,52 +201,21 @@
 			}
 		},
 		{
-			"id": 139,
-			"name": "Sky2",
+			"id": 142,
+			"name": "Trees_near3",
 			"parent": 137,
 			"active": true,
 			"components": {
 				"Transform": {
-					"translation": [159.5, 16.0, 80.0],
+					"translation": [39.5, -12.2, 15.0],
 					"rotation": [0.0, 0.0, 0.0],
 					"scale": [1.0, 1.0, 1.0]
 				},
 				"Sprite Renderer": {
 					"enabled": true,
-					"texture": "resources/Textures/Forest/sky.png",
+					"texture": "resources/Textures/Forest/trees_near.png",
 					"color": [1.0, 1.0, 1.0, 1.0],
-					"pixelsPerUnit": 11.09,
-					"pivot": [0.5, 0.5],
-					"flipX": true,
-					"flipY": false,
-					"billboard": "None",
-					"blend": "Normal",
-					"alphaClip": true,
-					"columns": 1,
-					"rows": 1,
-					"frame": 0,
-					"useRect": false,
-					"rectPosition": [0.0, 0.0],
-					"rectSize": [0.0, 0.0]
-				}
-			}
-		},
-		{
-			"id": 140,
-			"name": "Trees_far2",
-			"parent": 137,
-			"active": true,
-			"components": {
-				"Transform": {
-					"translation": [89.5, -28.0, 40.0],
-					"rotation": [0.0, 0.0, 0.0],
-					"scale": [1.0, 1.0, 1.0]
-				},
-				"Sprite Renderer": {
-					"enabled": true,
-					"texture": "resources/Textures/Forest/trees_far.png",
-					"color": [1.0, 1.0, 1.0, 1.0],
-					"pixelsPerUnit": 17.07,
+					"pixelsPerUnit": 38.4,
 					"pivot": [0.5, 0.0],
 					"flipX": true,
 					"flipY": false,
@@ -170,13 +232,13 @@
 			}
 		},
 		{
-			"id": 141,
-			"name": "Trees_near2",
+			"id": 163,
+			"name": "Trees_near4",
 			"parent": 137,
 			"active": true,
 			"components": {
 				"Transform": {
-					"translation": [39.5, -12.2, 15.0],
+					"translation": [79.5, -12.21, 15.0],
 					"rotation": [0.0, 0.0, 0.0],
 					"scale": [1.0, 1.0, 1.0]
 				},

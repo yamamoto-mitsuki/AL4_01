@@ -1,0 +1,90 @@
+{
+	"version": 1,
+	"entities": [
+		{
+			"id": 64,
+			"name": "Goal",
+			"parent": 0,
+			"active": true,
+			"components": {
+				"Transform": {
+					"translation": [68.995735, 5.7276907, 0.0],
+					"rotation": [0.0, 0.0, 0.0],
+					"scale": [1.5, 3.0, 1.0]
+				},
+				"Collider": {
+					"enabled": true,
+					"isTrigger": true,
+					"shape": "Box",
+					"center": [0.0, 0.0, 0.0],
+					"physicMaterial": "",
+					"size": [1.0, 1.0, 1.0]
+				},
+				"GoalDoor": {
+					"Enabled": true,
+					"Next Level Delay": 1.0
+				},
+				"Primitive Renderer": {
+					"enabled": true,
+					"shape": "Box",
+					"color": [0.83137256, 0.8980392, 0.46666667, 0.87058824],
+					"intensity": 1.26,
+					"surface": "Additive",
+					"texture": "",
+					"uvScale": [1.0, 1.0],
+					"shadingType": "Unlit",
+					"specular": [0.0, 0.0, 0.0],
+					"shininess": 32.0,
+					"metallic": 0.0,
+					"roughness": 0.5,
+					"emissive": [0.0, 0.0, 0.0]
+				}
+			}
+		},
+		{
+			"id": 168,
+			"name": "Particle System",
+			"parent": 64,
+			"active": true,
+			"components": {
+				"Transform": {
+					"translation": [0.0, 0.0, 0.0],
+					"rotation": [0.0, 0.0, 0.0],
+					"scale": [0.6666667, 0.33333334, 1.0]
+				},
+				"Particle System": {
+					"enabled": true,
+					"playOnStart": true,
+					"looping": true,
+					"duration": 1.0,
+					"rateOverTime": 50.0,
+					"burstCount": 0,
+					"maxParticles": 256,
+					"shape": "Sphere",
+					"radius": 2.0,
+					"coneAngle": 25.0,
+					"boxSize": [1.0, 1.0, 1.0],
+					"fromSurface": false,
+					"lifetime": [0.5, 1.0],
+					"speed": [0.75, 0.75],
+					"size": [0.3, 0.3],
+					"colorA": [1.0, 1.0, 0.0, 1.0],
+					"colorB": [0.7799228, 0.62744015, 0.13249652, 1.0],
+					"intensity": 3.0,
+					"gravity": [0.0, 0.0, 0.0],
+					"drag": 0.0,
+					"endSizeRate": 1.0,
+					"endColor": [1.0, 1.0, 1.0, 0.0],
+					"ease": "Linear",
+					"converge": false,
+					"convergeEase": "InQuad",
+					"texture": "",
+					"blend": "Add",
+					"space": "World",
+					"useFog": true,
+					"useDepthOfField": false
+				}
+			}
+		}
+	]
+}
