@@ -1,0 +1,51 @@
+{
+	"version": 1,
+	"entities": [
+		{
+			"id": 99,
+			"name": "SticktyWall",
+			"parent": 0,
+			"active": true,
+			"components": {
+				"Transform": {
+					"translation": [26.409088, 8.700274, 0.0],
+					"rotation": [0.0, 0.0, 0.0],
+					"scale": [1.0, 1.0, 1.0]
+				},
+				"Collider": {
+					"enabled": true,
+					"isTrigger": false,
+					"shape": "Polygon",
+					"center": [0.0, 0.0, 0.0],
+					"physicMaterial": ""
+				},
+				"Polygon Renderer": {
+					"enabled": true,
+					"sideShade": 0.7,
+					"worldSpaceUV": true,
+					"color": [0.05405414, 1.0, 0.0, 1.0],
+					"surface": "Opaque",
+					"texture": "",
+					"uvScale": [2.0, 2.0],
+					"shadingType": "HalfLambert",
+					"specular": [0.0, 0.0, 0.0],
+					"shininess": 32.0,
+					"metallic": 0.0,
+					"roughness": 0.5,
+					"emissive": [0.0, 0.0, 0.0]
+				},
+				"Polygon Shape": {
+					"depth": 4.0,
+					"pointCount": 4,
+					"point0": [-1.25, -3.5],
+					"point1": [3.25, -2.0],
+					"point2": [3.25, -0.5],
+					"point3": [-1.25, -0.5]
+				},
+				"StickyWall": {
+					"Enabled": true
+				}
+			}
+		}
+	]
+}

@@ -817,7 +817,7 @@
 				},
 				"Text": {
 					"enabled": true,
-					"text": "移動\nA      D",
+					"text": "Move\n    A D / Left Stick",
 					"font": "C:/Windows/Fonts/NotoSansJP-VF.ttf",
 					"fontSize": 60.0,
 					"color": [1.0, 1.0, 1.0, 1.0],
@@ -924,7 +924,7 @@
 				},
 				"Text": {
 					"enabled": true,
-					"text": "  ジャンプ\nSpace",
+					"text": "Jump\nSpace / A",
 					"font": "C:/Windows/Fonts/NotoSansJP-VF.ttf",
 					"fontSize": 60.0,
 					"color": [1.0, 1.0, 1.0, 1.0],
