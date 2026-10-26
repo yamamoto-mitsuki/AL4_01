@@ -221,8 +221,8 @@
 					"Number": 1,
 					"Area Name": "森",
 					"Kill Height": -10.0,
-					"Next Scene": "Level02",
-					"Pause Screen": "Pause"
+					"Pause Screen": "Pause",
+					"Title Scene": "Title"
 				}
 			}
 		},
@@ -247,7 +247,15 @@
 				},
 				"GoalDoor": {
 					"Enabled": true,
-					"Next Level Delay": 1.0
+					"Clear Screen": "Clear",
+					"Screen Delay": 1.0,
+					"Particle Name": "ClearParticle",
+					"Blur Time": 1.4,
+					"Blur Focus Distance": 2.0,
+					"Blur Focus Range": 0.0,
+					"Blur Far Transition": 4.0,
+					"Blur Near Transition": 0.0,
+					"Blur Max": 20.0
 				},
 				"Primitive Renderer": {
 					"enabled": true,
@@ -1146,6 +1154,51 @@
 					"colorB": [0.7799228, 0.62744015, 0.13249652, 1.0],
 					"intensity": 3.0,
 					"gravity": [0.0, 0.0, 0.0],
+					"drag": 0.0,
+					"endSizeRate": 1.0,
+					"endColor": [1.0, 1.0, 1.0, 0.0],
+					"ease": "Linear",
+					"converge": false,
+					"convergeEase": "InQuad",
+					"texture": "",
+					"blend": "Add",
+					"space": "World",
+					"useFog": true,
+					"useDepthOfField": false
+				}
+			}
+		},
+		{
+			"id": 169,
+			"name": "ClearParticle",
+			"parent": 64,
+			"active": true,
+			"components": {
+				"Transform": {
+					"translation": [0.0, 0.0, 0.0],
+					"rotation": [0.0, 0.0, 0.0],
+					"scale": [1.0, 1.0, 1.0]
+				},
+				"Particle System": {
+					"enabled": true,
+					"playOnStart": false,
+					"looping": true,
+					"duration": 1.0,
+					"rateOverTime": 50.0,
+					"burstCount": 0,
+					"maxParticles": 256,
+					"shape": "Box",
+					"radius": 0.5,
+					"coneAngle": 25.0,
+					"boxSize": [1.48, 2.0, 1.0],
+					"fromSurface": false,
+					"lifetime": [1.5, 2.0],
+					"speed": [1.0, 2.0],
+					"size": [0.1, 0.2],
+					"colorA": [0.81703055, 0.976834, 0.27532384, 1.0],
+					"colorB": [1.0, 1.0, 1.0, 1.0],
+					"intensity": 5.0,
+					"gravity": [0.0, 2.0, 0.0],
 					"drag": 0.0,
 					"endSizeRate": 1.0,
 					"endColor": [1.0, 1.0, 1.0, 0.0],

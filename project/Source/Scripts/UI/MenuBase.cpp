@@ -1,5 +1,6 @@
 #include "MenuBase.h"
 
+#include <cmath>
 #include <algorithm>
 
 #include <MyEngine/ECS/EntityManager.h>
@@ -77,6 +78,8 @@ void MenuBase::Fields(ComponentUI& ui) {
 	ui.Field("Columns", columns_, AtLeast(1.0f).Tip("横に並べる数。1：縦の並び（端から反対の端へ回る）／2 以上：格子（←→ で1つ、↑↓ で Columns 個とぶ。端で止まる）"));
 	ui.Field("Use Mouse", useMouse_, Tip("マウスでも選ぶ・決める"));
 	ui.Field("Hit Padding", hitPadding_, AtLeast(0.0f).Tip("マウスの当たりを、文字のかたまりより上下左右に広げる（ピクセル）。項目に Image があれば、その形で当たるので効かない"));
+	ui.Field("Selected Offset", selectedOffset_, Tip("選んだ項目を、この分だけゆっくりずらす（ピクセル。右・上が＋）。(0, 0) ならずらさない。例：(16, 0) で少し右へ"));
+	ui.Field("Slide Time", slideTime_, AtLeast(0.01f).Tip("ずれる・戻るのにかかる秒数の目安。小さいほどすばやい"));
 }
 
 //=============================================================================
@@ -126,6 +129,7 @@ void MenuBase::Update() {
 
 	// --- 見た目・選んだ項目が変わったら知らせる ---
 	ApplyLook(items);
+	ApplySlide(items);
 	if (selected_ != notifiedSelected_) {
 		notifiedSelected_ = selected_;
 		OnSelect(selected_);
@@ -163,8 +167,14 @@ bool MenuBase::MoveByInput(int count, const Vector2& stick) {
 	if (up && selected_ - columns_ >= 0) {
 		selected_ -= columns_;
 	}
-	if (down && selected_ + columns_ < count) {
-		selected_ += columns_;
+	if (down) {
+		const int lastRow = (count - 1) / columns_;
+		if (selected_ + columns_ < count) {
+			selected_ += columns_;
+		} else if (selected_ / columns_ < lastRow) {
+			// 真下に項目が無い（下の段が短い）：下の段の一番後ろへ（マスの下に置いた Back へ、どの列からでも行ける）
+			selected_ = count - 1;
+		}
 	}
 	return selected_ != before;
 }
@@ -265,5 +275,35 @@ void MenuBase::ApplyLook(const std::vector<Handle<Entity>>& items) {
 		} else {
 			originalStyles_[i]->ApplyTo(*text);
 		}
+	}
+}
+
+void MenuBase::ApplySlide(const std::vector<Handle<Entity>>& items) {
+	// --- ずらさない画面（Selected Offset が 0）は、位置に触らない ---
+	if (selectedOffset_.x == 0.0f && selectedOffset_.y == 0.0f) {
+		return;
+	}
+	// --- 項目の数が変わったら、覚えた位置を忘れる（ApplyLook と同じ）---
+	if (basePositions_.size() != items.size()) {
+		basePositions_.assign(items.size(), std::nullopt);
+		slideAmounts_.assign(items.size(), 0.0f);
+	}
+	// 1フレームで、目標までの残りのこの割合だけ近づく（指数の近づけ方。フレームの速さが変わっても、同じ秒数で同じだけ動く）
+	// 止めない時間で数える（ポーズ画面でも動く）
+	const float rate = 1.0f - std::exp(-Time::GetUnscaleDeltaTime() / slideTime_);
+	for (size_t i = 0; i < items.size(); ++i) {
+		TransformComponent* itemTransform = EntityManager::Get<TransformComponent>(items[i]);
+		if (itemTransform == nullptr) {
+			continue;
+		}
+		// --- 元の位置は、最初のフレームに覚える（ずらした位置を元と思わないように、ここ以外では覚えない）---
+		if (!basePositions_[i]) {
+			basePositions_[i] = itemTransform->translation;
+		}
+		// --- 選んだ項目は 1 へ、外れた項目は 0 へ近づけて、その割合だけずらす ---
+		const float target = (static_cast<int>(i) == selected_) ? 1.0f : 0.0f;
+		slideAmounts_[i] += (target - slideAmounts_[i]) * rate;
+		const Vector3& base = *basePositions_[i];
+		itemTransform->translation = {base.x + selectedOffset_.x * slideAmounts_[i], base.y + selectedOffset_.y * slideAmounts_[i], base.z};
 	}
 }

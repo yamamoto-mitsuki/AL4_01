@@ -10,6 +10,7 @@ SCRIPT(JumpOrb, "Gimmick");
 // Inspector に出す・保存する値
 //=============================================================================
 void JumpOrb::Fields(ComponentUI& ui) {
+	JumpRing::Fields(ui);
 	ui.Label("キューブが触れている間、空中でもう一度跳べる。使ったら、円から一度出るまで使えない");
 	ui.Field("Spin Speed", spinSpeed_, Tip("子の Ring が回る速さ（度/秒。マイナスで逆回り）"));
 	ui.Field("Pop Scale", popScale_, AtLeast(1.0f).Tip("使ったとき、子の Ring がこの倍まで広がって消える"));

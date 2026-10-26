@@ -2,7 +2,7 @@
 	"version": 1,
 	"entities": [
 		{
-			"id": 265,
+			"id": 201,
 			"name": "StageSelect",
 			"parent": 0,
 			"active": true,
@@ -20,6 +20,7 @@
 					"Hit Padding": 16.0,
 					"Screen Name": "StageSelect",
 					"Cell Template": "CellTemplate",
+					"Back Name": "Back",
 					"Cell Spacing": [120.0, 96.0],
 					"Cleared Color": [1.0, 1.0, 1.0, 1.0],
 					"Open Color": [1.0, 1.0, 1.0, 0.6],
@@ -47,9 +48,9 @@
 			}
 		},
 		{
-			"id": 266,
+			"id": 202,
 			"name": "Header",
-			"parent": 265,
+			"parent": 201,
 			"active": true,
 			"components": {
 				"Transform": {
@@ -90,9 +91,9 @@
 			}
 		},
 		{
-			"id": 267,
+			"id": 203,
 			"name": "CellTemplate",
-			"parent": 265,
+			"parent": 201,
 			"active": true,
 			"components": {
 				"Transform": {
@@ -133,9 +134,9 @@
 			}
 		},
 		{
-			"id": 268,
+			"id": 204,
 			"name": "Items",
-			"parent": 265,
+			"parent": 201,
 			"active": true,
 			"components": {
 				"Transform": {
@@ -146,9 +147,9 @@
 			}
 		},
 		{
-			"id": 269,
+			"id": 205,
 			"name": "StageName",
-			"parent": 265,
+			"parent": 201,
 			"active": true,
 			"components": {
 				"Transform": {
@@ -189,9 +190,9 @@
 			}
 		},
 		{
-			"id": 270,
+			"id": 206,
 			"name": "BestTime",
-			"parent": 265,
+			"parent": 201,
 			"active": true,
 			"components": {
 				"Transform": {
@@ -232,9 +233,9 @@
 			}
 		},
 		{
-			"id": 271,
+			"id": 207,
 			"name": "SelectedStyle",
-			"parent": 265,
+			"parent": 201,
 			"active": true,
 			"components": {
 				"Transform": {
@@ -262,6 +263,49 @@
 					"shadowColor": [0.0, 0.0, 0.0, 0.6],
 					"glowWidth": 10.0,
 					"glowColor": [0.09803922, 0.95686275, 0.42745098, 1.0],
+					"shine": false,
+					"shineColor": [1.0, 1.0, 1.0, 0.9],
+					"shineWidth": 24.0,
+					"shineDuration": 0.6,
+					"shineInterval": 2.0,
+					"motion": "None",
+					"motionAmount": 8.0,
+					"motionSpeed": 2.0,
+					"motionSpread": 0.1
+				}
+			}
+		},
+		{
+			"id": 208,
+			"name": "Back",
+			"parent": 201,
+			"active": true,
+			"components": {
+				"Transform": {
+					"translation": [-370.0, -260.0, 0.0],
+					"rotation": [0.0, 0.0, 0.0],
+					"scale": [1.0, 1.0, 1.0]
+				},
+				"Text": {
+					"enabled": true,
+					"text": "Back",
+					"font": "C:/Windows/Fonts/NotoSansJP-VF.ttf",
+					"fontSize": 48.0,
+					"color": [1.0, 1.0, 1.0, 0.7411765],
+					"align": "Center",
+					"anchor": "Center",
+					"pivot": [0.5, 0.5],
+					"lineSpacing": 1.0,
+					"letterSpacing": 0.0,
+					"order": 0,
+					"blend": "Normal",
+					"outlineWidth": 0.0,
+					"outlineColor": [0.0, 0.0, 0.0, 1.0],
+					"shadow": false,
+					"shadowOffset": [3.0, -3.0],
+					"shadowColor": [0.0, 0.0, 0.0, 0.6],
+					"glowWidth": 0.0,
+					"glowColor": [1.0, 0.8, 0.3, 0.8],
 					"shine": false,
 					"shineColor": [1.0, 1.0, 1.0, 0.9],
 					"shineWidth": 24.0,

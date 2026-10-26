@@ -1,0 +1,38 @@
+#pragma once
+#include <MyEngine/Core/Handle.h>
+#include <MyEngine/ECS/Entity.h>
+
+
+/// <summary>
+/// シーンの被写界深度（Depth Of Field）の値を、今の値から決めた値へ、ゆっくり動かす（クリアの瞬間に、ゲームの絵をぼかしていく）
+/// <para>Script のメンバーに持って、Begin で始め、毎フレーム Update を呼ぶ。Component ではない（保存しない）</para>
+/// <para>ピントの合わせ方は Distance に切り替える。FollowTarget なら、今ピントが合っている奥行きから始める（切り替えた瞬間に、ぼけ方が跳ばないように）</para>
+/// <para>シーンを読み直すと、Depth Of Field もファイルの値に戻る（戻す処理は要らない）</para>
+/// </summary>
+class DepthOfFieldFade {
+public:
+	/// <summary>
+	/// 動かす値（Depth Of Field Component の同じ名前の値）
+	/// </summary>
+	struct Settings {
+		float focusDistance = 2.0f;  // ピントの合う奥行き（m）
+		float focusRange = 0.0f;     // ぼけない幅（m）
+		float farTransition = 4.0f;  // 奥が一番ぼけるまでの奥行き（m）
+		float nearTransition = 0.0f; // 手前が一番ぼけるまでの奥行き（m）
+		float maxBlur = 20.0f;       // 一番ぼけた所の半径（ピクセル）
+	};
+
+	// 今の値から to へ、duration 秒で動かし始める。シーンに Depth Of Field が無ければ false（何もしない）
+	bool Begin(const Settings& to, float duration);
+	// 毎フレーム（deltaTime は、ゲームと同じに止まる時間でも、止めない時間でもよい）
+	void Update(float deltaTime);
+	bool IsPlaying() const { return isPlaying_; }
+
+private:
+	Handle<Entity> entity_;  // 動かす Depth Of Field の Entity（エンジンが使うのと同じ、有効な物の最初の1つ）
+	Settings from_;          // 始めの値
+	Settings to_;            // 終わりの値
+	float duration_ = 1.0f;  // 動かす秒数
+	float elapsed_ = 0.0f;   // 始めてからの秒数
+	bool isPlaying_ = false; // 動かしている途中
+};

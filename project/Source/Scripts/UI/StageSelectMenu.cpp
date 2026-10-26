@@ -25,6 +25,7 @@ void StageSelectMenu::Fields(ComponentUI& ui) {
 	ui.Label("マスは、ステージの一覧（StageCatalog.h）の数だけ、Cell Template を写して Items の下に作る（並べ方は Columns と Cell Spacing）");
 	ui.Field("Screen Name", screenName_, Tip("この画面の名前（resources/ui/<名前>.uiscreen）。閉じるときに使う"));
 	ui.Field("Cell Template", templateName_, Tip("マスの見本の Text の名前（一番上の直下の子）。Text の Enabled は外して置く。この位置が1つ目（左上）のマスになる"));
+	ui.Field("Back Name", backName_, Tip("タイトルへ戻る項目の Text の名前（一番上の直下の子。Items の中には置かない）。マスの一番下の段で ↓ を押すと選べる。無ければ戻るキーだけ"));
 	ui.Field("Cell Spacing", cellSpacing_, Tip("マスとマスの間（ピクセル）。x：右へ、y：下へ"));
 	ui.Field("Cleared Color", clearedColor_, Tip("クリアしたマスの色"));
 	ui.Field("Open Color", openColor_, Tip("遊べるが、まだクリアしていないマスの色"));
@@ -103,10 +104,13 @@ void StageSelectMenu::OnUpdate() {
 //=============================================================================
 void StageSelectMenu::OnSelect(int index) {
 	hintTimer_ = 0.0f;
-	const size_t stage = static_cast<size_t>(index);
-	if (stage >= kStageCount) {
+	// --- Back：ステージの2行は消しておく（どのステージも選んでいないので）---
+	if (IsBackIndex(index)) {
+		SetText(stageNameName_, "");
+		SetText(bestTimeName_, "");
 		return;
 	}
+	const size_t stage = static_cast<size_t>(index);
 	// --- 名前 ---
 	SetText(stageNameName_, std::string(kStages[stage].title));
 	// --- タイム（遊べない・シーンが無いときは、その言葉）---
@@ -121,6 +125,9 @@ void StageSelectMenu::OnSelect(int index) {
 }
 
 bool StageSelectMenu::CanDecide(int index) const {
+	if (IsBackIndex(index)) {
+		return true; // Back はいつでも
+	}
 	const size_t stage = static_cast<size_t>(index);
 	return GameProgress::IsUnlocked(stage) && HasStageScene(stage);
 }
@@ -134,6 +141,11 @@ void StageSelectMenu::OnDecideRejected(int index) {
 }
 
 void StageSelectMenu::Decide(int index, const std::string& /*itemName*/) {
+	// --- Back：戻るキーと同じ（閉じてタイトルへ）---
+	if (IsBackIndex(index)) {
+		OnCancel();
+		return;
+	}
 	const size_t stage = static_cast<size_t>(index);
 	gOutGame.lastStage = stage;
 	isDecided_ = SceneTransition::LoadScene(std::string(kStages[stage].scene));
@@ -143,6 +155,20 @@ void StageSelectMenu::OnCancel() {
 	UIScreen::Close(screenName_); // 閉じると、タイトルの項目がまた動く
 	isDecided_ = true;
 }
+
+//=============================================================================
+// 項目（マスの後ろに Back）
+//=============================================================================
+std::vector<Handle<Entity>> StageSelectMenu::CollectItems() const {
+	std::vector<Handle<Entity>> items = MenuBase::CollectItems(); // マス（Items の子。一覧の数だけ）
+	// Back は Items の外に置く（Items の中だと、コードで作ったマスより前に並んで、番号がずれるので）
+	if (const GameObject back = gameObject.FindChild(backName_); back && back.IsActiveInHierarchy()) {
+		items.push_back(back.handle);
+	}
+	return items;
+}
+
+bool StageSelectMenu::IsBackIndex(int index) { return static_cast<size_t>(index) >= kStageCount; }
 
 //=============================================================================
 // 文字

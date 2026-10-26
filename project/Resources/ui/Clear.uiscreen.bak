@@ -1,0 +1,14 @@
+{
+	"version": 1,
+	"entities": [
+		{
+			"id": 1,
+			"name": "NewUIScreen",
+			"parent": 0,
+			"active": true,
+			"components": {
+				"UI Screen": {}
+			}
+		}
+	]
+}

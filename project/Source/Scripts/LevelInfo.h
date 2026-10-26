@@ -37,8 +37,10 @@ public:
 
 	// 次のステージがあるか（一覧の最後でない・シーンがある）
 	bool HasNextLevel() const;
-	// 次のステージへ（幕）。無ければタイトルへ
-	void LoadNextLevel() const;
+	// 次のステージへ（幕）。無ければタイトルへ。幕を始められたら true（もう幕の途中なら false）
+	bool LoadNextLevel() const;
+	// タイトルへ（幕。Title Scene のシーン）。幕を始められたら true
+	bool LoadTitle() const;
 	// 今のシーンの LevelInfo（無ければ nullptr）。ポインタは使い捨て（フレームをまたいで持たない）
 	static LevelInfo* Find() { return FindObjectOfType<LevelInfo>(); }
 

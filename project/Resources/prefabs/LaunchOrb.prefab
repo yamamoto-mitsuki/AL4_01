@@ -2,13 +2,13 @@
 	"version": 1,
 	"entities": [
 		{
-			"id": 84,
+			"id": 217,
 			"name": "LaunchOrb",
 			"parent": 0,
 			"active": true,
 			"components": {
 				"Transform": {
-					"translation": [5.481357, 6.4807415, 0.0],
+					"translation": [39.773212, 4.1069627, 0.0],
 					"rotation": [0.0, 0.0, 0.0],
 					"scale": [1.0, 1.0, 1.0]
 				},
@@ -22,6 +22,8 @@
 				},
 				"LaunchOrb": {
 					"Enabled": true,
+					"Gather Particle": "GatherParticle",
+					"Burst Particle": "BurstParticle",
 					"Speed": 16.0,
 					"Duration": 1.5,
 					"End At Path End": true,
@@ -31,9 +33,9 @@
 			}
 		},
 		{
-			"id": 86,
+			"id": 218,
 			"name": "Ring",
-			"parent": 84,
+			"parent": 217,
 			"active": true,
 			"components": {
 				"Transform": {
@@ -45,6 +47,7 @@
 					"enabled": true,
 					"shape": "Sphere",
 					"color": [0.13822095, 0.94208497, 0.22512515, 0.3764706],
+					"intensity": 1.0,
 					"surface": "Transparent",
 					"texture": "",
 					"uvScale": [1.0, 1.0],
@@ -58,20 +61,21 @@
 			}
 		},
 		{
-			"id": 87,
+			"id": 219,
 			"name": "Core",
-			"parent": 84,
+			"parent": 217,
 			"active": true,
 			"components": {
 				"Transform": {
-					"translation": [0.0, 0.0, 0.0],
+					"translation": [-3.8146973e-06, 0.0, 0.0],
 					"rotation": [0.0, 0.0, 0.0],
-					"scale": [0.5, 0.5, 0.5]
+					"scale": [0.2, 0.2, 0.2]
 				},
 				"Primitive Renderer": {
 					"enabled": true,
 					"shape": "Sphere",
 					"color": [0.5411765, 0.85490197, 1.0, 1.0],
+					"intensity": 1.0,
 					"surface": "Additive",
 					"texture": "",
 					"uvScale": [1.0, 1.0],
@@ -85,9 +89,9 @@
 			}
 		},
 		{
-			"id": 105,
+			"id": 220,
 			"name": "Arrows",
-			"parent": 84,
+			"parent": 217,
 			"active": true,
 			"components": {
 				"Transform": {
@@ -105,9 +109,10 @@
 					"fade": 0.1,
 					"pointCount": 3,
 					"point0": [-0.25, -0.25],
-					"point1": [6.0, 2.0],
-					"point2": [10.75, -0.25],
+					"point1": [6.8070908, 3.7868214],
+					"point2": [14.566433, 2.2285895],
 					"color": [0.0, 0.0, 0.0, 1.0],
+					"intensity": 1.0,
 					"surface": "Transparent",
 					"texture": "",
 					"uvScale": [1.0, 1.0],
@@ -117,6 +122,96 @@
 					"metallic": 0.655,
 					"roughness": 0.5,
 					"emissive": [0.0, 0.0, 0.0]
+				}
+			}
+		},
+		{
+			"id": 252,
+			"name": "GatherParticle",
+			"parent": 217,
+			"active": true,
+			"components": {
+				"Transform": {
+					"translation": [0.0, 0.0, 0.0],
+					"rotation": [0.0, 0.0, 0.0],
+					"scale": [1.0, 1.0, 1.0]
+				},
+				"Particle System": {
+					"enabled": true,
+					"playOnStart": true,
+					"looping": true,
+					"duration": 1.0,
+					"rateOverTime": 40.0,
+					"burstCount": 0,
+					"maxParticles": 256,
+					"shape": "Circle",
+					"radius": 0.5,
+					"coneAngle": 25.0,
+					"boxSize": [1.0, 1.0, 1.0],
+					"fromSurface": true,
+					"lifetime": [0.8, 1.2],
+					"speed": [1.0, 2.0],
+					"size": [0.1, 0.2],
+					"colorA": [0.05882353, 0.9411765, 0.15686275, 1.0],
+					"colorB": [0.54901963, 0.9607843, 0.7058824, 1.0],
+					"intensity": 4.53,
+					"gravity": [0.0, 0.0, 0.0],
+					"drag": 0.0,
+					"endSizeRate": 1.0,
+					"endColor": [1.0, 1.0, 1.0, 0.0],
+					"ease": "Linear",
+					"converge": true,
+					"convergeEase": "InQuad",
+					"texture": "",
+					"blend": "Add",
+					"space": "World",
+					"useFog": true,
+					"useDepthOfField": false
+				}
+			}
+		},
+		{
+			"id": 253,
+			"name": "BurstParticle",
+			"parent": 217,
+			"active": true,
+			"components": {
+				"Transform": {
+					"translation": [0.0, 0.0, 0.0],
+					"rotation": [0.0, 0.0, 0.0],
+					"scale": [1.0, 1.0, 1.0]
+				},
+				"Particle System": {
+					"enabled": true,
+					"playOnStart": false,
+					"looping": false,
+					"duration": 0.2,
+					"rateOverTime": 0.0,
+					"burstCount": 50,
+					"maxParticles": 256,
+					"shape": "Sphere",
+					"radius": 0.3,
+					"coneAngle": 3.0,
+					"boxSize": [1.0, 1.0, 1.0],
+					"fromSurface": false,
+					"lifetime": [0.4, 0.8],
+					"speed": [8.0, 12.0],
+					"size": [0.1, 0.2],
+					"colorA": [0.05882353, 0.9411765, 0.15686275, 1.0],
+					"colorB": [0.54901963, 0.9607843, 0.7058824, 1.0],
+					"intensity": 5.0,
+					"gravity": [0.0, -10.0, 0.0],
+					"drag": 2.14,
+					"endSizeRate": 0.95,
+					"endColor": [1.0, 1.0, 1.0, 0.0],
+					"ease": "Linear",
+					"converge": false,
+					"convergeEase": "InQuad",
+					"texture": "",
+					"blend": "Add",
+					"space": "World",
+					"useFog": true,
+					"useDepthOfField": false
 				}
 			}
 		}

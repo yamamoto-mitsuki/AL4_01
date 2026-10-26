@@ -12,12 +12,11 @@ SCRIPT(LaunchOrb, "Gimmick");
 // Inspector に出す・保存する値
 //=============================================================================
 void LaunchOrb::Fields(ComponentUI& ui) {
+	JumpRing::Fields(ui);
 	ui.Label("キューブが輪の中でジャンプすると、線の始まりに寄ってから、子の Arrows（Arrow Strip）の線に沿って吹っ飛ぶ。Arrows が無ければ、この Entity の右（Rotation の Z で回る）へまっすぐ");
 	ui.Field("Speed", speed_, AtLeast(0.0f).Tip("飛ぶ速さ（m/s。線に沿って）"));
 	ui.Field("Duration", duration_, AtLeast(0.0f).Tip("吹っ飛びの長さ（秒）。何にもぶつからなければ、この秒数で普通の空中に戻る（重力が戻る）"));
-	ui.Field(
-	    "End At Path End", endAtPathEnd_,
-	    Tip("付ける：線の終わりで吹っ飛びをやめて、その勢いのまま普通の空中へ（曲がった線の先で放り出す）／外す：線の終わりの後は、終わりの向きへまっすぐ（Duration まで）"));
+	ui.Field("End At Path End", endAtPathEnd_, Tip("付ける：線の終わりで吹っ飛びをやめて、その勢いのまま普通の空中へ（曲がった線の先で放り出す）／外す：線の終わりの後は、終わりの向きへまっすぐ（Duration まで）"));
 	ui.Field("Pulse Scale", pulseScale_, AtLeast(1.0f).Tip("使ったとき、子の Ring がこの倍にふくらむ"));
 	ui.Field("Pulse Time", pulseTime_, AtLeast(0.01f).Tip("ふくらんだ Ring が戻るまでの秒数"));
 }

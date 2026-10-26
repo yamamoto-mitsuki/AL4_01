@@ -2,7 +2,7 @@
 	"version": 1,
 	"entities": [
 		{
-			"id": 265,
+			"id": 186,
 			"name": "StageSelect",
 			"parent": 0,
 			"active": true,
@@ -20,6 +20,7 @@
 					"Hit Padding": 16.0,
 					"Screen Name": "StageSelect",
 					"Cell Template": "CellTemplate",
+					"Back Name": "Back",
 					"Cell Spacing": [120.0, 96.0],
 					"Cleared Color": [1.0, 1.0, 1.0, 1.0],
 					"Open Color": [1.0, 1.0, 1.0, 0.6],
@@ -47,9 +48,9 @@
 			}
 		},
 		{
-			"id": 266,
+			"id": 187,
 			"name": "Header",
-			"parent": 265,
+			"parent": 186,
 			"active": true,
 			"components": {
 				"Transform": {
@@ -90,9 +91,9 @@
 			}
 		},
 		{
-			"id": 267,
+			"id": 188,
 			"name": "CellTemplate",
-			"parent": 265,
+			"parent": 186,
 			"active": true,
 			"components": {
 				"Transform": {
@@ -133,9 +134,9 @@
 			}
 		},
 		{
-			"id": 268,
+			"id": 189,
 			"name": "Items",
-			"parent": 265,
+			"parent": 186,
 			"active": true,
 			"components": {
 				"Transform": {
@@ -146,9 +147,9 @@
 			}
 		},
 		{
-			"id": 269,
+			"id": 190,
 			"name": "StageName",
-			"parent": 265,
+			"parent": 186,
 			"active": true,
 			"components": {
 				"Transform": {
@@ -189,9 +190,9 @@
 			}
 		},
 		{
-			"id": 270,
+			"id": 191,
 			"name": "BestTime",
-			"parent": 265,
+			"parent": 186,
 			"active": true,
 			"components": {
 				"Transform": {
@@ -232,9 +233,9 @@
 			}
 		},
 		{
-			"id": 271,
+			"id": 192,
 			"name": "SelectedStyle",
-			"parent": 265,
+			"parent": 186,
 			"active": true,
 			"components": {
 				"Transform": {

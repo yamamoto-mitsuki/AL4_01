@@ -5,7 +5,7 @@
 - エンジン：`MyEngine_v1/project/MyEngine/UI/UIScreen.h`・`Components/UIScreenComponent.h`・`Scene/SceneTransition.h`・`Components/TextComponent.h`・`Systems/SpriteRenderSystem.h`（`CalcScreenQuad`・`IsInsideQuad`）・`Systems/TextRenderSystem.h`（`CalcTextSize`）・`Components/DepthOfFieldComponent.h`・`Time/EngineTime.h`（`HitStop`）・`Window/WindowManager.h`（`GetMainHWND`）
 - ゲーム：`Source/Scripts/UI/PauseMenu.*`・`LevelInfo.*`・`GoalDoor.*`・`IceCube.h`（`Clear`・`IsPlayable`）
 
-> 写経用のコードは段階ごとに別の md：**段階1 → [OutGame1.md](OutGame1.md)**。段階2 からは、前の段階を写して動いたのを確かめてから書く。
+> 写経用のコードは段階ごとに別の md：**段階1 → [OutGame1.md](OutGame1.md)・段階2 → [OutGame2.md](OutGame2.md)・段階3 → [OutGame3.md](OutGame3.md)**。前の段階を写して動いたのを確かめてから書く。
 
 ---
 
@@ -48,13 +48,14 @@
  ▼
 [Title シーン]  背景はステージの背景をぼかして止めたまま
  │  Start ──→ ┌ StageSelect 画面（UI Screen。Title の上に重ねる。シーンは替えない）┐
- │              │  選ぶ・決める：そのステージへ（幕）   戻る：閉じてタイトルの項目へ   │
+ │              │  選ぶ・決める：そのステージへ（幕）                                  │
+ │              │  Back（画面の下）・戻るキー：閉じてタイトルの項目へ                  │
  │              └───────────────────────────────────────────┘
  │  Quit  ──→ 終了（エディタではログだけ）
  ▼
 [Level01〜 シーン]  遊んだ時間を数える（ポーズ中・幕の間は数えない）
  ├ Esc ──→ Pause 画面：つづける / やりなおす / タイトルへ
- └ ゴールの扉に触れる → クリアの演出（6章）→ Clear 画面：Next / Title
+ └ ゴールの扉に触れる → 粒が昇る・絵が強くぼける（6章。幕なし）→ Clear 画面（同じシーンに重ねる）：Next / Title
        Next  → 次のステージ（幕）。最後のステージ・次のシーンが無いときは出さない
        Title → Title シーン（幕）。ステージ選択は開かない（Q1）
 ```
@@ -199,9 +200,12 @@ inline OutGameState gOutGame;
 │                                      │
 │                  Stage 01                        │  ← 選んでいるステージの名前
 │                 Best  0:32.45                    │  ← 1位のタイムだけ（無ければ --:--.--）
+│                                      │
+│                    Back                          │  ← タイトルへ戻る（段階3 で足した。少し薄い）
 └──────────────────────────────────────┘
 ```
 （作業用コピーで、この形の画面を出して確かめた）
+- **Back**（段階3）：前は戻るキー（Esc・B・右クリック）だけで、画面に出ていないので戻り方が分からなかった（ユーザーの不満）。マスの一番下の段で ↓ を押すと Back を選べる・クリックでも戻れる。Back を選んでいる間は下の2行を空にする。
 - マスは2桁の数字の Text だけ。違いは明るさだけ（Cleared / Open / Locked Color）。
 - 遊べないマスで決めると、タイムの行がしばらく「Clear the previous stage」になる（震わせない）。シーンがまだ無いマスは「Coming soon」。
 - ステージ選択が出ている間、タイトルの文字（ロゴ・Start・Quit）は Alpha Group で 0.5 秒かけて消え、閉じると戻る。
@@ -218,8 +222,9 @@ inline OutGameState gOutGame;
 | `OnSelect(i)` | 下の2行に名前と1位のタイム |
 | `CanDecide(i)` | 遊べる、かつシーンがある |
 | `OnDecideRejected(i)` | 遊べないマスなら、タイムの行を 1.5 秒「Clear the previous stage」に |
-| `Decide(i)` | `gOutGame.lastStage = i` → `SceneTransition::LoadScene(kStages[i].scene)` |
+| `Decide(i)` | `gOutGame.lastStage = i` → `SceneTransition::LoadScene(kStages[i].scene)`。Back なら `OnCancel` |
 | `OnCancel` | `UIScreen::Close("StageSelect")` |
+| `CollectItems`（段階3） | マス（Items の子）の後ろに Back（Items の外の Text）を足す。Items の中に置くと、コードで作るマスより前に並んで番号がずれるので |
 
 ---
 
@@ -227,35 +232,40 @@ inline OutGameState gOutGame;
 
 ### 6.1 演出の流れ（時間は止めない時間で数える。数字は Inspector で直せる）
 
-「やった！」ではなく、**森が静かになって、記録がふっと浮かぶ**感じ。
+「やった！」ではなく、**森が静かになって、光の粒が空へ昇り、記録がふっと浮かぶ**感じ。
+
+ユーザーの希望（2026-10-26）：**ゴールの粒は上へふわふわ昇る**。**クリア画面は画面遷移（幕）なしで、背景が強くぼけて出る**。
 
 | 時間 | 起きること | 作り |
 |---|---|---|
-| 0.0 | 扉に触れる。ゴールのパーティクルが飛ぶ・タイムが止まる・キューブが扉へ吸い込まれる（今のまま） | 今の GoalDoor・Particle System。LevelInfo::Clear（段階2 で入れた） |
-| 0.0〜1.4 | **ゲームの絵がゆっくりぼけていく**（InOutSine）。音があれば BGM も少し下げる | Depth Of Field の値を「全部ぼけ」へ動かす |
-| 1.0 | Clear 画面が開く。**「Stage 01」**（小さく・字間を広く）がフェードしながら 12px 上がってくる | UI Screen の出し方（Slide＋Fade、Stagger） |
-| 1.3 | **タイム「0:32.45」**（大きく・細く）がフェードで出る。数え上げはしない | 同上（Stagger で少し遅れる） |
-| 1.7 | 1位なら **「New Best」**（小さく・氷色のうっすらした Glow）。1位でなければ「Best  0:30.12」（薄く） | ClearMenu が文字と色を書く |
-| 2.1 | **「Next」「Title」**がゆっくり出る。ここから入力を受ける | UI Screen Element の Delay |
-| いつでも | 決めるキー・クリックで、演出を最後まで飛ばす（待たせない） | ClearMenu |
+| 0.0 | 扉に触れる。タイムが止まる・キューブが扉へ吸い込まれる（今のまま）。**扉のまわりから光の粒が出て、ふわふわ昇り始める**（クリア画面の間も昇り続ける） | Goal の子の ClearParticle（Particle System。上向きの Gravity＋Drag で、一定のゆっくりした速さで昇る）を GoalDoor が Play |
+| 0.0〜1.4 | **ゲームの絵が強くぼけていく**（InOutSine）。遊ぶ面も背景も全部。粒と扉は、くっきりのまま | DepthOfFieldFade：Depth Of Field を「2m 先にピント・Max Blur 20」へ動かす |
+| 1.0 | **幕なし**で Clear 画面が同じシーンに重なる。**「Stage 01」**（小さく・字間を広く）がフェードしながら 12px 上がってくる | UI Screen（Pause Game なし・Slide 12px＋Fade 0.8 秒・Stagger 0.25） |
+| 1.25 | **タイム「0:32.45」**（大きく・細く）。数え上げはしない | 同上 |
+| 1.5 | 1位なら **「New Best」**（小さく・氷色のうっすらした Glow）。1位でなければ「Best  0:30.12」（薄く） | ClearMenu が文字と色を書く |
+| 1.75 | **「Next」「Title」**（横に並ぶ）。2.0 から入力を受ける | ClearMenu の Input Delay（開いてから 1 秒） |
 
 - 使わない物：ヒットストップ・「！」・大きくなる／縮む・跳ねる・数え上げ・画面を暗くする Image（見た目の決まり）。
 - 最後のステージ（次が無い）なら「Next」を出さない。
+- **演出を飛ばすのはやめた**：UI Screen の出す動きを途中で終わらせる関数がエンジンに無い（エンジンは変えない）。全部出るまで約 1.6 秒・入力は 1 秒からなので、待たせる感じは少ない。
+- 粒1つ1つの左右のゆらゆらは Particle System に無い（エンジンの機能が要る）。今は「横にふわっと散ってから、まっすぐ昇る」。
 
 ### 6.2 Entity（Clear.uiscreen）
 | Entity | Component | メモ |
 |---|---|---|
-| Clear（一番上） | UI Screen（Pause Game を外す・出し方 Slide＋Fade・Stagger 0.3）・`ClearMenu` | |
+| Clear（一番上） | UI Screen（Pause Game を外す・出し方 Slide 12px＋Fade・Stagger 0.25）・`ClearMenu`（Columns 2） | |
 | ├ StageText | Text「Stage 01」 | ClearMenu が一覧の名前を書く |
 | ├ TimeText | Text「0:00.00」 | ClearMenu が LevelInfo のタイムを書く |
 | ├ RecordText | Text「New Best」／「Best  0:30.12」 | ClearMenu が書く |
-| ├ Items → Next・Title | Text「Next」「Title」 | UI Screen Element（Delay 1.1） |
+| ├ Items → Next・Title | Text「Next」「Title」 | 横に並べる |
 | └ SelectedStyle | Text（Enabled を外す） | |
 
 ### 6.3 変える所
-- `GoalDoor`：触れた瞬間にぼかし始める。Delay（1.0 秒）の後に `UIScreen::Open("Clear")`（今の LoadNextLevel の代わり）。
-- `ClearMenu`：文字を書く・Next（`LevelInfo::LoadNextLevel`）・Title（`LoadScene("Title")`）・演出を飛ばす。最後のステージなら Next を `SetActive(false)`。
-- `LevelInfo` は段階2 で済み（時間・記録・クリア後は Esc と R を見ない・一覧の次へ）。
+- `GoalDoor`：触れた瞬間に ClearParticle を Play・ぼかし始める。Screen Delay（1.0 秒）の後に `UIScreen::Open("Clear")`（今の LoadNextLevel の代わり。画面が無ければ今までどおり次へ）。
+- `DepthOfFieldFade`（新）：被写界深度を今の値からぼけきった値へ動かす。FollowTarget のときは、今のピントの奥行きを測ってから Distance に切り替える（跳ばない）。
+- `ClearMenu`（新）：文字を書く・Next（`LevelInfo::LoadNextLevel`）・Title（`LevelInfo::LoadTitle`）。最後のステージなら Next を `SetActive(false)`。
+- `LevelInfo`：`LoadNextLevel` が成功を返す・`LoadTitle` を足す。
+- 各 Level の Main Camera に Depth Of Field が要る（Level02 には無かった）。
 
 ---
 
@@ -265,7 +275,8 @@ inline OutGameState gOutGame;
 |---|---|---|---|
 | **1** | GameTitle・MenuBase・PauseMenu（派生に）・TitleMenu・main.cpp・Title シーン | ポーズが今までどおり（マウスでも）・タイトルへで Title・Quit で終わる（製品版） | [OutGame1.md](OutGame1.md) |
 | **2** | StageCatalog・GameProgress・OutGameState・FormatTime・LevelInfo（一覧の次・時間・クリアの記録）・GoalDoor（1行）・MenuBase（小さい直し）・TitleMenu（文字を消す・F1/F2）・StageSelect.uiscreen・StageSelectMenu | 遊べる所だけ入れる・1位のタイム・F1 / F2・ゴールで記録が増える | [OutGame2.md](OutGame2.md) |
-| **3** | GoalDoor・Clear.uiscreen・ClearMenu・静かな演出 | ゴール → 演出 → Next／Title・New Best・演出を飛ばせる | 段階2 の後 |
+| **3** | MenuBase（2か所）・StageSelectMenu（Back）・LevelInfo（2か所）・DepthOfFieldFade・GoalDoor・ClearMenu・Clear.uiscreen・ClearParticle | Back で戻れる・ゴール → 粒が昇る・強くぼける → Next／Title・New Best | [OutGame3.md](OutGame3.md) |
+| 仕上げ1 | タイトルの選んだ項目（薄い・光る・右へ 16px）・円の粒（ふだん吸い寄せ・使うと花火のようにはじけて落ちる）・ゴールの粒の名前の直し | 選んだ項目が分かる・円がはじける・毎回ゴールの粒が昇る | [Polish1.md](Polish1.md) |
 | 4（仕上げ） | 効果音（選ぶ・決める・入れない・クリア。小さく柔らかい音）・ロゴがゆっくり浮かぶ・ステージの名前 | | 好みで |
 
 ---
@@ -282,7 +293,8 @@ inline OutGameState gOutGame;
 | エディタの起動 | main.cpp の "Title" が効かない | エディタは前回開いていたシーンから始まる（エンジンの決まり）。"Title" が効くのは製品版 |
 | 保存ファイルが壊れた | 読めない | 何もクリアしていない扱い・ログに警告 |
 | シーンがまだ無いステージ | LoadScene が失敗 | ステージ選択で「じゅんびちゅう」・クリア画面の Next を出さない |
-| 演出の途中で決める | 待たされる | 決めるキーで演出を最後へ飛ばす（項目は次の決めるキーで選ぶ） |
+| 演出の途中で決める | 見えない項目を決めてしまう | 開いてから Input Delay（1 秒）は入力を受けない（飛ばすのは、エンジンに関数が無いのでやめた） |
+| Depth Of Field の無いシーンでゴール | ぼけない | Console に警告。Main Camera に付ける（Level02 に無かった） |
 
 ---
 
@@ -303,3 +315,6 @@ inline OutGameState gOutGame;
 | — | 一気に作らず、段階に分ける（7章） |
 | — | 世界観はおしゃれで静か：「！」なし・英語の短い言葉・フェードとわずかなスライドだけ（0章の見た目の決まり）。クリア画面の演出もそれに合わせた（6章） |
 | — | ゲームの名前は「森の中の氷」（ユーザーが GameTitle.h に入れた） |
+| — | ゴールの演出：パーティクルが上へふわふわ昇る（6.1） |
+| — | クリア画面：画面遷移（幕）なしで、背景が強くぼけて、その上に出る（6.1） |
+| — | ステージ選択からタイトルへ戻れるように、画面に Back を出す（5.1） |

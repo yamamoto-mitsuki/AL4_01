@@ -75,8 +75,10 @@ bool LevelInfo::HasNextLevel() const {
 	return next < kStageCount && SceneManager::HasScene(std::string(kStages[next].scene));
 }
 
-void LevelInfo::LoadNextLevel() const {
+bool LevelInfo::LoadNextLevel() const {
 	// 次が無ければ（最後のステージ・まだ作っていない）タイトルへ
 	const std::string scene = HasNextLevel() ? std::string(kStages[GetStageIndex() + 1].scene) : titleScene_;
-	SceneTransition::LoadScene(scene);
+	return SceneTransition::LoadScene(scene);
 }
+
+bool LevelInfo::LoadTitle() const { return SceneTransition::LoadScene(titleScene_); }
