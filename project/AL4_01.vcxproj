@@ -16,8 +16,18 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Source\Scripts\Audio\GameAudio.cpp" />
     <ClCompile Include="Source\Scripts\Effects\DepthOfFieldFade.cpp" />
+    <ClCompile Include="Source\Scripts\Effects\DistanceTrail.cpp" />
+    <ClCompile Include="Source\Scripts\Effects\GameRumble.cpp" />
+    <ClCompile Include="Source\Scripts\Effects\WindParticles.cpp" />
+    <ClCompile Include="Source\Scripts\Effects\AmbientParticles.cpp" />
+    <ClCompile Include="Source\Scripts\Effects\TimeOfDay.cpp" />
+    <ClCompile Include="Source\Scripts\Effects\DayTimeLook.cpp" />
+    <ClCompile Include="Source\Scripts\Effects\TimeOfDayCycle.cpp" />
+    <ClCompile Include="Source\Scripts\Gimmicks\SecretCrystal.cpp" />
     <ClCompile Include="Source\Scripts\Gimmicks\HotWater.cpp" />
+    <ClCompile Include="Source\Scripts\Gimmicks\Checkpoint.cpp" />
     <ClCompile Include="Source\Scripts\Gimmicks\JumpOrb.cpp" />
     <ClCompile Include="Source\Scripts\Gimmicks\JumpRing.cpp" />
     <ClCompile Include="Source\Scripts\Gimmicks\LaunchOrb.cpp" />
@@ -27,9 +37,14 @@
     <ClCompile Include="Source\Scripts\IceCube.cpp" />
     <ClCompile Include="Source\Scripts\LevelInfo.cpp" />
     <ClCompile Include="Source\Scripts\Progress\GameProgress.cpp" />
+    <ClCompile Include="Source\Scripts\Progress\GameSettings.cpp" />
     <ClCompile Include="Source\Scripts\UI\ClearMenu.cpp" />
+    <ClCompile Include="Source\Scripts\UI\TextHider.cpp" />
+    <ClCompile Include="Source\Scripts\UI\StageIntro.cpp" />
     <ClCompile Include="Source\Scripts\UI\MenuBase.cpp" />
     <ClCompile Include="Source\Scripts\UI\PauseMenu.cpp" />
+    <ClCompile Include="Source\Scripts\UI\SettingItems.cpp" />
+    <ClCompile Include="Source\Scripts\UI\SettingsMenu.cpp" />
     <ClCompile Include="Source\Scripts\UI\StageSelectMenu.cpp" />
     <ClCompile Include="Source\Scripts\UI\TitleMenu.cpp" />
   </ItemGroup>
@@ -39,9 +54,19 @@
     <None Include="Resources\scenes\GameScene.scene.json" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Source\Scripts\Audio\GameAudio.h" />
     <ClInclude Include="Source\Scripts\Effects\DepthOfFieldFade.h" />
+    <ClInclude Include="Source\Scripts\Effects\DistanceTrail.h" />
+    <ClInclude Include="Source\Scripts\Effects\GameRumble.h" />
+    <ClInclude Include="Source\Scripts\Effects\WindParticles.h" />
+    <ClInclude Include="Source\Scripts\Effects\AmbientParticles.h" />
+    <ClInclude Include="Source\Scripts\Effects\TimeOfDay.h" />
+    <ClInclude Include="Source\Scripts\Effects\DayTimeLook.h" />
+    <ClInclude Include="Source\Scripts\Effects\TimeOfDayCycle.h" />
+    <ClInclude Include="Source\Scripts\Gimmicks\SecretCrystal.h" />
     <ClInclude Include="Source\Scripts\GameTitle.h" />
     <ClInclude Include="Source\Scripts\Gimmicks\HotWater.h" />
+    <ClInclude Include="Source\Scripts\Gimmicks\Checkpoint.h" />
     <ClInclude Include="Source\Scripts\Gimmicks\JumpOrb.h" />
     <ClInclude Include="Source\Scripts\Gimmicks\JumpRing.h" />
     <ClInclude Include="Source\Scripts\Gimmicks\LaunchOrb.h" />
@@ -51,11 +76,17 @@
     <ClInclude Include="Source\Scripts\IceCube.h" />
     <ClInclude Include="Source\Scripts\LevelInfo.h" />
     <ClInclude Include="Source\Scripts\Progress\GameProgress.h" />
+    <ClInclude Include="Source\Scripts\Progress\GameSettings.h" />
+    <ClInclude Include="Source\Scripts\Progress\CheckpointState.h" />
     <ClInclude Include="Source\Scripts\Progress\OutGameState.h" />
     <ClInclude Include="Source\Scripts\Progress\StageCatalog.h" />
     <ClInclude Include="Source\Scripts\UI\ClearMenu.h" />
+    <ClInclude Include="Source\Scripts\UI\TextHider.h" />
+    <ClInclude Include="Source\Scripts\UI\StageIntro.h" />
     <ClInclude Include="Source\Scripts\UI\MenuBase.h" />
     <ClInclude Include="Source\Scripts\UI\PauseMenu.h" />
+    <ClInclude Include="Source\Scripts\UI\SettingItems.h" />
+    <ClInclude Include="Source\Scripts\UI\SettingsMenu.h" />
     <ClInclude Include="Source\Scripts\UI\StageSelectMenu.h" />
     <ClInclude Include="Source\Scripts\UI\TitleMenu.h" />
   </ItemGroup>

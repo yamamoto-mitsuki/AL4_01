@@ -1,0 +1,342 @@
+{
+	"version": 1,
+	"entities": [
+		{
+			"id": 1,
+			"name": "Checkpoint",
+			"parent": 0,
+			"active": true,
+			"components": {
+				"Transform": {
+					"translation": [0.0, 0.0, 0.0],
+					"rotation": [0.0, 0.0, 0.0],
+					"scale": [1.0, 1.0, 1.0]
+				},
+				"Collider": {
+					"enabled": true,
+					"isTrigger": true,
+					"shape": "Box",
+					"center": [0.0, 1.4, 0.0],
+					"physicMaterial": "",
+					"size": [1.6, 2.8, 2.0]
+				},
+				"Checkpoint": {
+					"Enabled": true,
+					"Order": 1,
+					"Spawn Offset": [0.0, 0.6, 0.0],
+					"Lit Color": [0.62, 0.86, 1.0, 0.9],
+					"Lit Intensity": 3.0,
+					"Color Time": 0.6,
+					"Flash Intensity": 12.0,
+					"Pop Scale": 1.8,
+					"Pop Time": 0.5,
+					"Hit Stop": 0.07,
+					"Rumble Power": 1.0,
+					"Rumble Time": 0.35,
+					"Idle Spin Speed": 25.0,
+					"Lit Spin Speed": 80.0,
+					"Spin Boost": 8.0,
+					"Bob Height": 0.12,
+					"Bob Speed": 2.0
+				}
+			}
+		},
+		{
+			"id": 2,
+			"name": "Base",
+			"parent": 1,
+			"active": true,
+			"components": {
+				"Transform": {
+					"translation": [0.0, 0.1, 0.0],
+					"rotation": [0.0, 0.0, 0.0],
+					"scale": [1.0, 0.2, 0.8]
+				},
+				"Primitive Renderer": {
+					"enabled": true,
+					"shape": "Box",
+					"color": [0.38, 0.41, 0.46, 1.0],
+					"intensity": 1.0,
+					"surface": "Opaque",
+					"texture": "",
+					"uvScale": [1.0, 1.0],
+					"shadingType": "HalfLambert",
+					"specular": [0.0, 0.0, 0.0],
+					"shininess": 32.0,
+					"metallic": 0.0,
+					"roughness": 0.5,
+					"emissive": [0.0, 0.0, 0.0]
+				}
+			}
+		},
+		{
+			"id": 3,
+			"name": "Crystal",
+			"parent": 1,
+			"active": true,
+			"components": {
+				"Transform": {
+					"translation": [0.0, 1.45, 0.0],
+					"rotation": [0.0, 0.0, 0.0],
+					"scale": [1.0, 1.5, 1.0]
+				}
+			}
+		},
+		{
+			"id": 4,
+			"name": "Gem",
+			"parent": 3,
+			"active": true,
+			"components": {
+				"Transform": {
+					"translation": [0.0, 0.0, 0.0],
+					"rotation": [0.0, 0.0, 45.0],
+					"scale": [0.5, 0.5, 0.5]
+				},
+				"Primitive Renderer": {
+					"enabled": true,
+					"shape": "Box",
+					"color": [0.5, 0.56, 0.64, 0.5],
+					"intensity": 0.9,
+					"surface": "Transparent",
+					"texture": "",
+					"uvScale": [1.0, 1.0],
+					"shadingType": "HalfLambert",
+					"specular": [0.0, 0.0, 0.0],
+					"shininess": 32.0,
+					"metallic": 0.0,
+					"roughness": 0.5,
+					"emissive": [0.0, 0.0, 0.0]
+				}
+			}
+		},
+		{
+			"id": 5,
+			"name": "Core",
+			"parent": 3,
+			"active": true,
+			"components": {
+				"Transform": {
+					"translation": [0.0, 0.0, 0.0],
+					"rotation": [0.0, 0.0, 0.0],
+					"scale": [0.26, 0.17333333, 0.26]
+				},
+				"Primitive Renderer": {
+					"enabled": true,
+					"shape": "Sphere",
+					"color": [0.75, 0.92, 1.0, 1.0],
+					"intensity": 3.0,
+					"surface": "Additive",
+					"texture": "",
+					"uvScale": [1.0, 1.0],
+					"shadingType": "Unlit",
+					"specular": [0.0, 0.0, 0.0],
+					"shininess": 32.0,
+					"metallic": 0.0,
+					"roughness": 0.5,
+					"emissive": [0.0, 0.0, 0.0]
+				}
+			}
+		},
+		{
+			"id": 6,
+			"name": "AuraParticle",
+			"parent": 1,
+			"active": true,
+			"components": {
+				"Transform": {
+					"translation": [0.0, 1.45, 0.0],
+					"rotation": [0.0, 0.0, 0.0],
+					"scale": [1.0, 1.0, 1.0]
+				},
+				"Particle System": {
+					"enabled": true,
+					"playOnStart": false,
+					"looping": true,
+					"duration": 1.0,
+					"rateOverTime": 32.0,
+					"burstCount": 0,
+					"maxParticles": 256,
+					"shape": "Circle",
+					"radius": 0.75,
+					"coneAngle": 25.0,
+					"boxSize": [1.0, 1.0, 1.0],
+					"fromSurface": true,
+					"lifetime": [1.0, 1.8],
+					"speed": [0.1, 0.35],
+					"size": [0.06, 0.14],
+					"colorA": [0.55, 0.82, 1.0, 1.0],
+					"colorB": [0.92, 0.98, 1.0, 1.0],
+					"intensity": 4.5,
+					"gravity": [0.0, 0.9, 0.0],
+					"drag": 0.6,
+					"endSizeRate": 0.2,
+					"endColor": [1.0, 1.0, 1.0, 0.0],
+					"ease": "Linear",
+					"converge": false,
+					"convergeEase": "InQuad",
+					"startRotation": [0.0, 0.0],
+					"angularVelocity": [0.0, 0.0],
+					"randomSpinDirection": false,
+					"alignToVelocity": false,
+					"stretch": 1.0,
+					"texture": "",
+					"blend": "Add",
+					"space": "World",
+					"useFog": false,
+					"useDepthOfField": false
+				}
+			}
+		},
+		{
+			"id": 7,
+			"name": "BurstParticle",
+			"parent": 1,
+			"active": true,
+			"components": {
+				"Transform": {
+					"translation": [0.0, 1.45, 0.0],
+					"rotation": [0.0, 0.0, 0.0],
+					"scale": [1.0, 1.0, 1.0]
+				},
+				"Particle System": {
+					"enabled": true,
+					"playOnStart": false,
+					"looping": false,
+					"duration": 0.2,
+					"rateOverTime": 0.0,
+					"burstCount": 140,
+					"maxParticles": 512,
+					"shape": "Sphere",
+					"radius": 0.3,
+					"coneAngle": 25.0,
+					"boxSize": [1.0, 1.0, 1.0],
+					"fromSurface": false,
+					"lifetime": [0.5, 1.1],
+					"speed": [8.0, 16.0],
+					"size": [0.1, 0.24],
+					"colorA": [0.55, 0.82, 1.0, 1.0],
+					"colorB": [0.92, 0.98, 1.0, 1.0],
+					"intensity": 7.0,
+					"gravity": [0.0, -4.0, 0.0],
+					"drag": 3.0,
+					"endSizeRate": 0.3,
+					"endColor": [1.0, 1.0, 1.0, 0.0],
+					"ease": "OutQuad",
+					"converge": false,
+					"convergeEase": "InQuad",
+					"startRotation": [0.0, 0.0],
+					"angularVelocity": [0.0, 0.0],
+					"randomSpinDirection": false,
+					"alignToVelocity": false,
+					"stretch": 1.0,
+					"texture": "",
+					"blend": "Add",
+					"space": "World",
+					"useFog": false,
+					"useDepthOfField": false
+				}
+			}
+		},
+		{
+			"id": 8,
+			"name": "ShockParticle",
+			"parent": 1,
+			"active": true,
+			"components": {
+				"Transform": {
+					"translation": [0.0, 1.45, 0.0],
+					"rotation": [0.0, 0.0, 0.0],
+					"scale": [1.0, 1.0, 1.0]
+				},
+				"Particle System": {
+					"enabled": true,
+					"playOnStart": false,
+					"looping": false,
+					"duration": 0.2,
+					"rateOverTime": 0.0,
+					"burstCount": 72,
+					"maxParticles": 256,
+					"shape": "Circle",
+					"radius": 0.4,
+					"coneAngle": 25.0,
+					"boxSize": [1.0, 1.0, 1.0],
+					"fromSurface": true,
+					"lifetime": [0.35, 0.55],
+					"speed": [12.0, 14.0],
+					"size": [0.05, 0.08],
+					"colorA": [0.55, 0.82, 1.0, 1.0],
+					"colorB": [0.92, 0.98, 1.0, 1.0],
+					"intensity": 8.0,
+					"gravity": [0.0, 0.0, 0.0],
+					"drag": 4.0,
+					"endSizeRate": 0.5,
+					"endColor": [1.0, 1.0, 1.0, 0.0],
+					"ease": "Linear",
+					"converge": false,
+					"convergeEase": "InQuad",
+					"startRotation": [0.0, 0.0],
+					"angularVelocity": [0.0, 0.0],
+					"randomSpinDirection": false,
+					"alignToVelocity": true,
+					"stretch": 8.0,
+					"texture": "",
+					"blend": "Add",
+					"space": "World",
+					"useFog": false,
+					"useDepthOfField": false
+				}
+			}
+		},
+		{
+			"id": 9,
+			"name": "ChargeParticle",
+			"parent": 1,
+			"active": true,
+			"components": {
+				"Transform": {
+					"translation": [0.0, 1.45, 0.0],
+					"rotation": [0.0, 0.0, 0.0],
+					"scale": [1.0, 1.0, 1.0]
+				},
+				"Particle System": {
+					"enabled": true,
+					"playOnStart": false,
+					"looping": true,
+					"duration": 1.0,
+					"rateOverTime": 160.0,
+					"burstCount": 0,
+					"maxParticles": 512,
+					"shape": "Circle",
+					"radius": 3.0,
+					"coneAngle": 25.0,
+					"boxSize": [1.0, 1.0, 1.0],
+					"fromSurface": true,
+					"lifetime": [0.3, 0.5],
+					"speed": [1.0, 2.0],
+					"size": [0.08, 0.16],
+					"colorA": [0.55, 0.82, 1.0, 1.0],
+					"colorB": [0.92, 0.98, 1.0, 1.0],
+					"intensity": 5.0,
+					"gravity": [0.0, 0.0, 0.0],
+					"drag": 0.0,
+					"endSizeRate": 0.4,
+					"endColor": [1.0, 1.0, 1.0, 1.0],
+					"ease": "Linear",
+					"converge": true,
+					"convergeEase": "InQuad",
+					"startRotation": [0.0, 0.0],
+					"angularVelocity": [0.0, 0.0],
+					"randomSpinDirection": false,
+					"alignToVelocity": false,
+					"stretch": 1.0,
+					"texture": "",
+					"blend": "Add",
+					"space": "World",
+					"useFog": false,
+					"useDepthOfField": false
+				}
+			}
+		}
+	]
+}

@@ -25,6 +25,8 @@ public:
 protected:
 	// 使った瞬間に呼ぶ（輪が広がる・ふくらむなどの見た目を始める。派生クラスで書く）
 	virtual void OnUse() {}
+	// 使ったときにコントローラーが震える秒数（緑の円は吹っ飛ぶので長くする。強さはどの輪も同じ）
+	virtual float GetRumbleTime() const;
 	// 使ったか（見た目を変えるのに使う）
 	bool IsUsed() const { return isUsed_; }
 

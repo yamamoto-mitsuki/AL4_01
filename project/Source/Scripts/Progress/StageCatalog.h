@@ -25,6 +25,9 @@ inline constexpr auto kStages = std::to_array<StageEntry>({
     {"Level08", "Stage 08"},
     {"Level09", "Stage 09"},
     {"Level10", "Stage 10"},
+    {"Level11", "Stage 11"},
+    {"Level12", "Stage 12"},
+    {"Level13", "Stage 13"},
 });
 
 // ステージの数

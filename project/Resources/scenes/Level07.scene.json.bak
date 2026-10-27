@@ -104,7 +104,6 @@
 					"Gravity": 30.0,
 					"Fall Gravity Multiplier": 1.5,
 					"Max Fall Speed": 20.0,
-					"Jump Cut": 0.5,
 					"Coyote Time": 0.1,
 					"Jump Buffer": 0.1,
 					"Wall Jump Speed": 6.0,
@@ -115,7 +114,12 @@
 					"Launch Spin Speed": 720.0,
 					"Max HP": 3,
 					"Restart Delay": 1.0,
+					"Fall Restart Delay": 0.2,
+					"Restart Fade Time": 0.5,
 					"Clear Time": 0.6,
+					"Appear Time": 0.18,
+					"Appear Stretch": 0.6,
+					"Appear Hop Height": 1.2,
 					"Crack Small Texture": "resources/Textures/IceCube/ice_crack_small.png",
 					"Crack Large Texture": "resources/Textures/IceCube/ice_crack_large.png",
 					"Hurt Flash Time": 0.15,
@@ -725,6 +729,11 @@
 					"ease": "Linear",
 					"converge": false,
 					"convergeEase": "InQuad",
+					"startRotation": [0.0, 0.0],
+					"angularVelocity": [0.0, 0.0],
+					"randomSpinDirection": false,
+					"alignToVelocity": false,
+					"stretch": 1.0,
 					"texture": "",
 					"blend": "Add",
 					"space": "World",
@@ -770,6 +779,11 @@
 					"ease": "Linear",
 					"converge": false,
 					"convergeEase": "InQuad",
+					"startRotation": [0.0, 0.0],
+					"angularVelocity": [0.0, 0.0],
+					"randomSpinDirection": false,
+					"alignToVelocity": false,
+					"stretch": 1.0,
 					"texture": "",
 					"blend": "Add",
 					"space": "World",
@@ -901,6 +915,11 @@
 					"ease": "Linear",
 					"converge": true,
 					"convergeEase": "InQuad",
+					"startRotation": [0.0, 0.0],
+					"angularVelocity": [0.0, 0.0],
+					"randomSpinDirection": false,
+					"alignToVelocity": false,
+					"stretch": 1.0,
 					"texture": "",
 					"blend": "Add",
 					"space": "World",
@@ -946,6 +965,11 @@
 					"ease": "Linear",
 					"converge": false,
 					"convergeEase": "InQuad",
+					"startRotation": [0.0, 0.0],
+					"angularVelocity": [0.0, 0.0],
+					"randomSpinDirection": false,
+					"alignToVelocity": false,
+					"stretch": 1.0,
 					"texture": "",
 					"blend": "Add",
 					"space": "World",
@@ -1333,6 +1357,11 @@
 					"ease": "Linear",
 					"converge": true,
 					"convergeEase": "InQuad",
+					"startRotation": [0.0, 0.0],
+					"angularVelocity": [0.0, 0.0],
+					"randomSpinDirection": false,
+					"alignToVelocity": false,
+					"stretch": 1.0,
 					"texture": "",
 					"blend": "Add",
 					"space": "World",
@@ -1378,6 +1407,11 @@
 					"ease": "Linear",
 					"converge": false,
 					"convergeEase": "InQuad",
+					"startRotation": [0.0, 0.0],
+					"angularVelocity": [0.0, 0.0],
+					"randomSpinDirection": false,
+					"alignToVelocity": false,
+					"stretch": 1.0,
 					"texture": "",
 					"blend": "Add",
 					"space": "World",
@@ -1528,6 +1562,875 @@
 					"point6": [5.0, 1.0],
 					"point7": [2.0, 0.5],
 					"point8": [-2.0, 0.5]
+				}
+			}
+		},
+		{
+			"id": 1174,
+			"name": "FootTrail",
+			"parent": 56,
+			"active": true,
+			"components": {
+				"Transform": {
+					"translation": [0.0, -0.45, 0.0],
+					"rotation": [0.0, 0.0, 0.0],
+					"scale": [1.0, 1.0, 1.0]
+				},
+				"DistanceTrail": {
+					"Enabled": true,
+					"Per Meter": 18.0,
+					"Min Speed": 1.5,
+					"Max Step": 3.0,
+					"Ground Only": true
+				},
+				"Particle System": {
+					"enabled": true,
+					"playOnStart": false,
+					"looping": false,
+					"duration": 1.0,
+					"rateOverTime": 0.0,
+					"burstCount": 0,
+					"maxParticles": 256,
+					"shape": "Cone",
+					"radius": 0.35,
+					"coneAngle": 40.0,
+					"boxSize": [1.0, 1.0, 1.0],
+					"fromSurface": false,
+					"lifetime": [0.45, 0.8],
+					"speed": [1.6, 2.8],
+					"size": [0.05, 0.11],
+					"colorA": [0.35, 0.72, 1.0, 0.9],
+					"colorB": [0.85, 0.95, 1.0, 0.75],
+					"intensity": 1.4,
+					"gravity": [0.0, -6.0, 0.0],
+					"drag": 1.5,
+					"endSizeRate": 0.25,
+					"endColor": [1.0, 1.0, 1.0, 0.0],
+					"ease": "InQuad",
+					"converge": false,
+					"convergeEase": "InQuad",
+					"startRotation": [0.0, 0.0],
+					"angularVelocity": [0.0, 0.0],
+					"randomSpinDirection": false,
+					"alignToVelocity": false,
+					"stretch": 1.0,
+					"texture": "",
+					"blend": "Add",
+					"space": "World",
+					"useFog": true,
+					"useDepthOfField": false
+				}
+			}
+		},
+		{
+			"id": 1175,
+			"name": "AmbientParticles",
+			"parent": 0,
+			"active": true,
+			"components": {
+				"Transform": {
+					"translation": [0.0, 0.0, 0.0],
+					"rotation": [0.0, 0.0, 0.0],
+					"scale": [1.0, 1.0, 1.0]
+				},
+				"AmbientParticles": {
+					"Enabled": true,
+					"Depth": [6.0, 26.0],
+					"Margin": 1.2,
+					"Drift": [0.15, -0.25, 0.0],
+					"Sway": [0.5, 0.2],
+					"Sway Period": 7.0,
+					"Follow Rate": 0.6,
+					"Prewarm": 0.5
+				},
+				"Particle System": {
+					"enabled": true,
+					"playOnStart": true,
+					"looping": true,
+					"duration": 1.0,
+					"rateOverTime": 64.0,
+					"burstCount": 0,
+					"maxParticles": 1024,
+					"shape": "Box",
+					"radius": 0.5,
+					"coneAngle": 25.0,
+					"boxSize": [40.0, 22.0, 20.0],
+					"fromSurface": false,
+					"lifetime": [7.0, 12.0],
+					"speed": [0.0, 0.3],
+					"size": [0.05, 0.14],
+					"colorA": [0.78, 0.9, 1.0, 0.85],
+					"colorB": [1.0, 0.96, 0.82, 0.7],
+					"intensity": 3.2,
+					"gravity": [0.0, 0.0, 0.0],
+					"drag": 0.6,
+					"endSizeRate": 0.5,
+					"endColor": [1.0, 1.0, 1.0, 0.0],
+					"ease": "InSine",
+					"converge": false,
+					"convergeEase": "InQuad",
+					"startRotation": [0.0, 0.0],
+					"angularVelocity": [0.0, 0.0],
+					"randomSpinDirection": false,
+					"alignToVelocity": false,
+					"stretch": 1.0,
+					"texture": "",
+					"blend": "Add",
+					"space": "World",
+					"useFog": true,
+					"useDepthOfField": false
+				}
+			}
+		},
+		{
+			"id": 1235,
+			"name": "AmbientParticlesLarge",
+			"parent": 0,
+			"active": true,
+			"components": {
+				"Transform": {
+					"translation": [0.0, 0.0, 0.0],
+					"rotation": [0.0, 0.0, 0.0],
+					"scale": [1.0, 1.0, 1.0]
+				},
+				"AmbientParticles": {
+					"Enabled": true,
+					"Depth": [8.0, 30.0],
+					"Margin": 1.2,
+					"Drift": [0.1, -0.15, 0.0],
+					"Sway": [0.6, 0.25],
+					"Sway Period": 9.0,
+					"Follow Rate": 0.6,
+					"Prewarm": 0.5
+				},
+				"Particle System": {
+					"enabled": true,
+					"playOnStart": true,
+					"looping": true,
+					"duration": 1.0,
+					"rateOverTime": 9.0,
+					"burstCount": 0,
+					"maxParticles": 256,
+					"shape": "Box",
+					"radius": 0.5,
+					"coneAngle": 25.0,
+					"boxSize": [40.0, 22.0, 20.0],
+					"fromSurface": false,
+					"lifetime": [8.0, 13.0],
+					"speed": [0.0, 0.3],
+					"size": [0.2, 0.36],
+					"colorA": [0.78, 0.9, 1.0, 0.6],
+					"colorB": [1.0, 0.95, 0.8, 0.5],
+					"intensity": 4.0,
+					"gravity": [0.0, 0.0, 0.0],
+					"drag": 0.6,
+					"endSizeRate": 0.5,
+					"endColor": [1.0, 1.0, 1.0, 0.0],
+					"ease": "InSine",
+					"converge": false,
+					"convergeEase": "InQuad",
+					"startRotation": [0.0, 0.0],
+					"angularVelocity": [0.0, 0.0],
+					"randomSpinDirection": false,
+					"alignToVelocity": false,
+					"stretch": 1.0,
+					"texture": "",
+					"blend": "Add",
+					"space": "World",
+					"useFog": true,
+					"useDepthOfField": false
+				}
+			}
+		},
+		{
+			"id": 1226,
+			"name": "Checkpoint",
+			"parent": 0,
+			"active": true,
+			"components": {
+				"Transform": {
+					"translation": [27.976383, 4.0431676, 0.0],
+					"rotation": [0.0, 0.0, 0.0],
+					"scale": [1.0, 1.0, 1.0]
+				},
+				"Checkpoint": {
+					"Enabled": true,
+					"Order": 1,
+					"Spawn Offset": [0.0, 0.6, 0.0],
+					"Lit Color": [0.62, 0.86, 1.0, 0.9],
+					"Lit Intensity": 3.0,
+					"Color Time": 0.6,
+					"Flash Intensity": 12.0,
+					"Pop Scale": 1.8,
+					"Pop Time": 0.5,
+					"Hit Stop": 0.07,
+					"Rumble Power": 1.0,
+					"Rumble Time": 0.35,
+					"Idle Spin Speed": 25.0,
+					"Lit Spin Speed": 80.0,
+					"Spin Boost": 8.0,
+					"Bob Height": 0.12,
+					"Bob Speed": 2.0
+				},
+				"Collider": {
+					"enabled": true,
+					"isTrigger": true,
+					"shape": "Box",
+					"center": [0.0, 1.4, 0.0],
+					"physicMaterial": "",
+					"size": [1.6, 2.8, 2.0]
+				}
+			}
+		},
+		{
+			"id": 1227,
+			"name": "Base",
+			"parent": 1226,
+			"active": true,
+			"components": {
+				"Transform": {
+					"translation": [0.0, 0.1, 0.0],
+					"rotation": [0.0, 0.0, 0.0],
+					"scale": [1.0, 0.2, 0.8]
+				},
+				"Primitive Renderer": {
+					"enabled": true,
+					"shape": "Box",
+					"color": [0.38, 0.41, 0.46, 1.0],
+					"intensity": 1.0,
+					"surface": "Opaque",
+					"texture": "",
+					"uvScale": [1.0, 1.0],
+					"shadingType": "HalfLambert",
+					"specular": [0.0, 0.0, 0.0],
+					"shininess": 32.0,
+					"metallic": 0.0,
+					"roughness": 0.5,
+					"emissive": [0.0, 0.0, 0.0]
+				}
+			}
+		},
+		{
+			"id": 1228,
+			"name": "Crystal",
+			"parent": 1226,
+			"active": true,
+			"components": {
+				"Transform": {
+					"translation": [0.0, 1.45, 0.0],
+					"rotation": [0.0, 0.0, 0.0],
+					"scale": [1.0, 1.5, 1.0]
+				}
+			}
+		},
+		{
+			"id": 1229,
+			"name": "Gem",
+			"parent": 1228,
+			"active": true,
+			"components": {
+				"Transform": {
+					"translation": [0.0, 0.0, 0.0],
+					"rotation": [0.0, 0.0, 45.0],
+					"scale": [0.5, 0.5, 0.5]
+				},
+				"Primitive Renderer": {
+					"enabled": true,
+					"shape": "Box",
+					"color": [0.5, 0.56, 0.64, 0.5],
+					"intensity": 0.9,
+					"surface": "Transparent",
+					"texture": "",
+					"uvScale": [1.0, 1.0],
+					"shadingType": "HalfLambert",
+					"specular": [0.0, 0.0, 0.0],
+					"shininess": 32.0,
+					"metallic": 0.0,
+					"roughness": 0.5,
+					"emissive": [0.0, 0.0, 0.0]
+				}
+			}
+		},
+		{
+			"id": 1230,
+			"name": "Core",
+			"parent": 1228,
+			"active": true,
+			"components": {
+				"Transform": {
+					"translation": [0.0, 0.0, 0.0],
+					"rotation": [0.0, 0.0, 0.0],
+					"scale": [0.26, 0.17333333, 0.26]
+				},
+				"Primitive Renderer": {
+					"enabled": true,
+					"shape": "Sphere",
+					"color": [0.75, 0.92, 1.0, 1.0],
+					"intensity": 3.0,
+					"surface": "Additive",
+					"texture": "",
+					"uvScale": [1.0, 1.0],
+					"shadingType": "Unlit",
+					"specular": [0.0, 0.0, 0.0],
+					"shininess": 32.0,
+					"metallic": 0.0,
+					"roughness": 0.5,
+					"emissive": [0.0, 0.0, 0.0]
+				}
+			}
+		},
+		{
+			"id": 1231,
+			"name": "AuraParticle",
+			"parent": 1226,
+			"active": true,
+			"components": {
+				"Transform": {
+					"translation": [0.0, 1.45, 0.0],
+					"rotation": [0.0, 0.0, 0.0],
+					"scale": [1.0, 1.0, 1.0]
+				},
+				"Particle System": {
+					"enabled": true,
+					"playOnStart": false,
+					"looping": true,
+					"duration": 1.0,
+					"rateOverTime": 32.0,
+					"burstCount": 0,
+					"maxParticles": 256,
+					"shape": "Circle",
+					"radius": 0.75,
+					"coneAngle": 25.0,
+					"boxSize": [1.0, 1.0, 1.0],
+					"fromSurface": true,
+					"lifetime": [1.0, 1.8],
+					"speed": [0.1, 0.35],
+					"size": [0.06, 0.14],
+					"colorA": [0.55, 0.82, 1.0, 1.0],
+					"colorB": [0.92, 0.98, 1.0, 1.0],
+					"intensity": 4.5,
+					"gravity": [0.0, 0.9, 0.0],
+					"drag": 0.6,
+					"endSizeRate": 0.2,
+					"endColor": [1.0, 1.0, 1.0, 0.0],
+					"ease": "Linear",
+					"converge": false,
+					"convergeEase": "InQuad",
+					"startRotation": [0.0, 0.0],
+					"angularVelocity": [0.0, 0.0],
+					"randomSpinDirection": false,
+					"alignToVelocity": false,
+					"stretch": 1.0,
+					"texture": "",
+					"blend": "Add",
+					"space": "World",
+					"useFog": false,
+					"useDepthOfField": false
+				}
+			}
+		},
+		{
+			"id": 1232,
+			"name": "BurstParticle",
+			"parent": 1226,
+			"active": true,
+			"components": {
+				"Transform": {
+					"translation": [0.0, 1.45, 0.0],
+					"rotation": [0.0, 0.0, 0.0],
+					"scale": [1.0, 1.0, 1.0]
+				},
+				"Particle System": {
+					"enabled": true,
+					"playOnStart": false,
+					"looping": false,
+					"duration": 0.2,
+					"rateOverTime": 0.0,
+					"burstCount": 140,
+					"maxParticles": 512,
+					"shape": "Sphere",
+					"radius": 0.3,
+					"coneAngle": 25.0,
+					"boxSize": [1.0, 1.0, 1.0],
+					"fromSurface": false,
+					"lifetime": [0.5, 1.1],
+					"speed": [8.0, 16.0],
+					"size": [0.1, 0.24],
+					"colorA": [0.55, 0.82, 1.0, 1.0],
+					"colorB": [0.92, 0.98, 1.0, 1.0],
+					"intensity": 7.0,
+					"gravity": [0.0, -4.0, 0.0],
+					"drag": 3.0,
+					"endSizeRate": 0.3,
+					"endColor": [1.0, 1.0, 1.0, 0.0],
+					"ease": "OutQuad",
+					"converge": false,
+					"convergeEase": "InQuad",
+					"startRotation": [0.0, 0.0],
+					"angularVelocity": [0.0, 0.0],
+					"randomSpinDirection": false,
+					"alignToVelocity": false,
+					"stretch": 1.0,
+					"texture": "",
+					"blend": "Add",
+					"space": "World",
+					"useFog": false,
+					"useDepthOfField": false
+				}
+			}
+		},
+		{
+			"id": 1233,
+			"name": "ShockParticle",
+			"parent": 1226,
+			"active": true,
+			"components": {
+				"Transform": {
+					"translation": [0.0, 1.45, 0.0],
+					"rotation": [0.0, 0.0, 0.0],
+					"scale": [1.0, 1.0, 1.0]
+				},
+				"Particle System": {
+					"enabled": true,
+					"playOnStart": false,
+					"looping": false,
+					"duration": 0.2,
+					"rateOverTime": 0.0,
+					"burstCount": 72,
+					"maxParticles": 256,
+					"shape": "Circle",
+					"radius": 0.4,
+					"coneAngle": 25.0,
+					"boxSize": [1.0, 1.0, 1.0],
+					"fromSurface": true,
+					"lifetime": [0.35, 0.55],
+					"speed": [12.0, 14.0],
+					"size": [0.05, 0.08],
+					"colorA": [0.55, 0.82, 1.0, 1.0],
+					"colorB": [0.92, 0.98, 1.0, 1.0],
+					"intensity": 8.0,
+					"gravity": [0.0, 0.0, 0.0],
+					"drag": 4.0,
+					"endSizeRate": 0.5,
+					"endColor": [1.0, 1.0, 1.0, 0.0],
+					"ease": "Linear",
+					"converge": false,
+					"convergeEase": "InQuad",
+					"startRotation": [0.0, 0.0],
+					"angularVelocity": [0.0, 0.0],
+					"randomSpinDirection": false,
+					"alignToVelocity": true,
+					"stretch": 8.0,
+					"texture": "",
+					"blend": "Add",
+					"space": "World",
+					"useFog": false,
+					"useDepthOfField": false
+				}
+			}
+		},
+		{
+			"id": 1234,
+			"name": "ChargeParticle",
+			"parent": 1226,
+			"active": true,
+			"components": {
+				"Transform": {
+					"translation": [0.0, 1.45, 0.0],
+					"rotation": [0.0, 0.0, 0.0],
+					"scale": [1.0, 1.0, 1.0]
+				},
+				"Particle System": {
+					"enabled": true,
+					"playOnStart": false,
+					"looping": true,
+					"duration": 1.0,
+					"rateOverTime": 160.0,
+					"burstCount": 0,
+					"maxParticles": 512,
+					"shape": "Circle",
+					"radius": 3.0,
+					"coneAngle": 25.0,
+					"boxSize": [1.0, 1.0, 1.0],
+					"fromSurface": true,
+					"lifetime": [0.3, 0.5],
+					"speed": [1.0, 2.0],
+					"size": [0.08, 0.16],
+					"colorA": [0.55, 0.82, 1.0, 1.0],
+					"colorB": [0.92, 0.98, 1.0, 1.0],
+					"intensity": 5.0,
+					"gravity": [0.0, 0.0, 0.0],
+					"drag": 0.0,
+					"endSizeRate": 0.4,
+					"endColor": [1.0, 1.0, 1.0, 1.0],
+					"ease": "Linear",
+					"converge": true,
+					"convergeEase": "InQuad",
+					"startRotation": [0.0, 0.0],
+					"angularVelocity": [0.0, 0.0],
+					"randomSpinDirection": false,
+					"alignToVelocity": false,
+					"stretch": 1.0,
+					"texture": "",
+					"blend": "Add",
+					"space": "World",
+					"useFog": false,
+					"useDepthOfField": false
+				}
+			}
+		},
+		{
+			"id": 1236,
+			"name": "StartPoint",
+			"parent": 0,
+			"active": true,
+			"components": {
+				"Transform": {
+					"translation": [0.00, 0.41, 0.0],
+					"rotation": [0.0, 0.0, 0.0],
+					"scale": [1.0, 1.0, 1.0]
+				},
+				"Collider": {
+					"enabled": true,
+					"isTrigger": true,
+					"shape": "Box",
+					"center": [0.0, 1.4, 0.0],
+					"physicMaterial": "",
+					"size": [1.6, 2.8, 2.0]
+				},
+				"Checkpoint": {
+					"Enabled": true,
+					"Is Start": true,
+					"Order": 1,
+					"Spawn Offset": [0.0, 0.6, 0.0],
+					"Lit Color": [0.62, 0.86, 1.0, 0.9],
+					"Lit Intensity": 3.0,
+					"Color Time": 0.6,
+					"Flash Intensity": 12.0,
+					"Pop Scale": 1.8,
+					"Pop Time": 0.5,
+					"Hit Stop": 0.07,
+					"Rumble Power": 1.0,
+					"Rumble Time": 0.35,
+					"Idle Spin Speed": 25.0,
+					"Lit Spin Speed": 80.0,
+					"Spin Boost": 8.0,
+					"Bob Height": 0.12,
+					"Bob Speed": 2.0
+				}
+			}
+		},
+		{
+			"id": 1237,
+			"name": "Base",
+			"parent": 1236,
+			"active": true,
+			"components": {
+				"Transform": {
+					"translation": [0.0, 0.1, 0.0],
+					"rotation": [0.0, 0.0, 0.0],
+					"scale": [1.0, 0.2, 0.8]
+				},
+				"Primitive Renderer": {
+					"enabled": true,
+					"shape": "Box",
+					"color": [0.38, 0.41, 0.46, 1.0],
+					"intensity": 1.0,
+					"surface": "Opaque",
+					"texture": "",
+					"uvScale": [1.0, 1.0],
+					"shadingType": "HalfLambert",
+					"specular": [0.0, 0.0, 0.0],
+					"shininess": 32.0,
+					"metallic": 0.0,
+					"roughness": 0.5,
+					"emissive": [0.0, 0.0, 0.0]
+				}
+			}
+		},
+		{
+			"id": 1238,
+			"name": "Crystal",
+			"parent": 1236,
+			"active": true,
+			"components": {
+				"Transform": {
+					"translation": [0.0, 1.45, 0.0],
+					"rotation": [0.0, 0.0, 0.0],
+					"scale": [1.0, 1.5, 1.0]
+				}
+			}
+		},
+		{
+			"id": 1239,
+			"name": "Gem",
+			"parent": 1238,
+			"active": true,
+			"components": {
+				"Transform": {
+					"translation": [0.0, 0.0, 0.0],
+					"rotation": [0.0, 0.0, 45.0],
+					"scale": [0.5, 0.5, 0.5]
+				},
+				"Primitive Renderer": {
+					"enabled": true,
+					"shape": "Box",
+					"color": [0.5, 0.56, 0.64, 0.5],
+					"intensity": 0.9,
+					"surface": "Transparent",
+					"texture": "",
+					"uvScale": [1.0, 1.0],
+					"shadingType": "HalfLambert",
+					"specular": [0.0, 0.0, 0.0],
+					"shininess": 32.0,
+					"metallic": 0.0,
+					"roughness": 0.5,
+					"emissive": [0.0, 0.0, 0.0]
+				}
+			}
+		},
+		{
+			"id": 1240,
+			"name": "Core",
+			"parent": 1238,
+			"active": true,
+			"components": {
+				"Transform": {
+					"translation": [0.0, 0.0, 0.0],
+					"rotation": [0.0, 0.0, 0.0],
+					"scale": [0.26, 0.17333333, 0.26]
+				},
+				"Primitive Renderer": {
+					"enabled": true,
+					"shape": "Sphere",
+					"color": [0.75, 0.92, 1.0, 1.0],
+					"intensity": 3.0,
+					"surface": "Additive",
+					"texture": "",
+					"uvScale": [1.0, 1.0],
+					"shadingType": "Unlit",
+					"specular": [0.0, 0.0, 0.0],
+					"shininess": 32.0,
+					"metallic": 0.0,
+					"roughness": 0.5,
+					"emissive": [0.0, 0.0, 0.0]
+				}
+			}
+		},
+		{
+			"id": 1241,
+			"name": "AuraParticle",
+			"parent": 1236,
+			"active": true,
+			"components": {
+				"Transform": {
+					"translation": [0.0, 1.45, 0.0],
+					"rotation": [0.0, 0.0, 0.0],
+					"scale": [1.0, 1.0, 1.0]
+				},
+				"Particle System": {
+					"enabled": true,
+					"playOnStart": false,
+					"looping": true,
+					"duration": 1.0,
+					"rateOverTime": 32.0,
+					"burstCount": 0,
+					"maxParticles": 256,
+					"shape": "Circle",
+					"radius": 0.75,
+					"coneAngle": 25.0,
+					"boxSize": [1.0, 1.0, 1.0],
+					"fromSurface": true,
+					"lifetime": [1.0, 1.8],
+					"speed": [0.1, 0.35],
+					"size": [0.06, 0.14],
+					"colorA": [0.55, 0.82, 1.0, 1.0],
+					"colorB": [0.92, 0.98, 1.0, 1.0],
+					"intensity": 4.5,
+					"gravity": [0.0, 0.9, 0.0],
+					"drag": 0.6,
+					"endSizeRate": 0.2,
+					"endColor": [1.0, 1.0, 1.0, 0.0],
+					"ease": "Linear",
+					"converge": false,
+					"convergeEase": "InQuad",
+					"startRotation": [0.0, 0.0],
+					"angularVelocity": [0.0, 0.0],
+					"randomSpinDirection": false,
+					"alignToVelocity": false,
+					"stretch": 1.0,
+					"texture": "",
+					"blend": "Add",
+					"space": "World",
+					"useFog": false,
+					"useDepthOfField": false
+				}
+			}
+		},
+		{
+			"id": 1242,
+			"name": "BurstParticle",
+			"parent": 1236,
+			"active": true,
+			"components": {
+				"Transform": {
+					"translation": [0.0, 1.45, 0.0],
+					"rotation": [0.0, 0.0, 0.0],
+					"scale": [1.0, 1.0, 1.0]
+				},
+				"Particle System": {
+					"enabled": true,
+					"playOnStart": false,
+					"looping": false,
+					"duration": 0.2,
+					"rateOverTime": 0.0,
+					"burstCount": 140,
+					"maxParticles": 512,
+					"shape": "Sphere",
+					"radius": 0.3,
+					"coneAngle": 25.0,
+					"boxSize": [1.0, 1.0, 1.0],
+					"fromSurface": false,
+					"lifetime": [0.5, 1.1],
+					"speed": [8.0, 16.0],
+					"size": [0.1, 0.24],
+					"colorA": [0.55, 0.82, 1.0, 1.0],
+					"colorB": [0.92, 0.98, 1.0, 1.0],
+					"intensity": 7.0,
+					"gravity": [0.0, -4.0, 0.0],
+					"drag": 3.0,
+					"endSizeRate": 0.3,
+					"endColor": [1.0, 1.0, 1.0, 0.0],
+					"ease": "OutQuad",
+					"converge": false,
+					"convergeEase": "InQuad",
+					"startRotation": [0.0, 0.0],
+					"angularVelocity": [0.0, 0.0],
+					"randomSpinDirection": false,
+					"alignToVelocity": false,
+					"stretch": 1.0,
+					"texture": "",
+					"blend": "Add",
+					"space": "World",
+					"useFog": false,
+					"useDepthOfField": false
+				}
+			}
+		},
+		{
+			"id": 1243,
+			"name": "ShockParticle",
+			"parent": 1236,
+			"active": true,
+			"components": {
+				"Transform": {
+					"translation": [0.0, 1.45, 0.0],
+					"rotation": [0.0, 0.0, 0.0],
+					"scale": [1.0, 1.0, 1.0]
+				},
+				"Particle System": {
+					"enabled": true,
+					"playOnStart": false,
+					"looping": false,
+					"duration": 0.2,
+					"rateOverTime": 0.0,
+					"burstCount": 72,
+					"maxParticles": 256,
+					"shape": "Circle",
+					"radius": 0.4,
+					"coneAngle": 25.0,
+					"boxSize": [1.0, 1.0, 1.0],
+					"fromSurface": true,
+					"lifetime": [0.35, 0.55],
+					"speed": [12.0, 14.0],
+					"size": [0.05, 0.08],
+					"colorA": [0.55, 0.82, 1.0, 1.0],
+					"colorB": [0.92, 0.98, 1.0, 1.0],
+					"intensity": 8.0,
+					"gravity": [0.0, 0.0, 0.0],
+					"drag": 4.0,
+					"endSizeRate": 0.5,
+					"endColor": [1.0, 1.0, 1.0, 0.0],
+					"ease": "Linear",
+					"converge": false,
+					"convergeEase": "InQuad",
+					"startRotation": [0.0, 0.0],
+					"angularVelocity": [0.0, 0.0],
+					"randomSpinDirection": false,
+					"alignToVelocity": true,
+					"stretch": 8.0,
+					"texture": "",
+					"blend": "Add",
+					"space": "World",
+					"useFog": false,
+					"useDepthOfField": false
+				}
+			}
+		},
+		{
+			"id": 1244,
+			"name": "ChargeParticle",
+			"parent": 1236,
+			"active": true,
+			"components": {
+				"Transform": {
+					"translation": [0.0, 1.45, 0.0],
+					"rotation": [0.0, 0.0, 0.0],
+					"scale": [1.0, 1.0, 1.0]
+				},
+				"Particle System": {
+					"enabled": true,
+					"playOnStart": false,
+					"looping": true,
+					"duration": 1.0,
+					"rateOverTime": 160.0,
+					"burstCount": 0,
+					"maxParticles": 512,
+					"shape": "Circle",
+					"radius": 3.0,
+					"coneAngle": 25.0,
+					"boxSize": [1.0, 1.0, 1.0],
+					"fromSurface": true,
+					"lifetime": [0.3, 0.5],
+					"speed": [1.0, 2.0],
+					"size": [0.08, 0.16],
+					"colorA": [0.55, 0.82, 1.0, 1.0],
+					"colorB": [0.92, 0.98, 1.0, 1.0],
+					"intensity": 5.0,
+					"gravity": [0.0, 0.0, 0.0],
+					"drag": 0.0,
+					"endSizeRate": 0.4,
+					"endColor": [1.0, 1.0, 1.0, 1.0],
+					"ease": "Linear",
+					"converge": true,
+					"convergeEase": "InQuad",
+					"startRotation": [0.0, 0.0],
+					"angularVelocity": [0.0, 0.0],
+					"randomSpinDirection": false,
+					"alignToVelocity": false,
+					"stretch": 1.0,
+					"texture": "",
+					"blend": "Add",
+					"space": "World",
+					"useFog": false,
+					"useDepthOfField": false
+				}
+			}
+		},
+		{
+			"id": 1245,
+			"name": "TimeOfDay",
+			"parent": 0,
+			"active": true,
+			"components": {
+				"Transform": {
+					"translation": [0.0, 0.0, 0.0],
+					"rotation": [0.0, 0.0, 0.0],
+					"scale": [1.0, 1.0, 1.0]
+				},
+				"TimeOfDay": {
+					"Enabled": true,
+					"Time": "Noon"
 				}
 			}
 		}

@@ -8,6 +8,8 @@
 /// <summary>
 /// クリア画面。resources/ui/Clear.uiscreen の一番上の Entity に付ける（ゴールの扉 GoalDoor が出す。シーンは替えない・ゲームも止めない）
 /// <para>開いたとき、子の Text に書く：Stage Text（ステージの名前）・Time Text（遊んだ時間）・Record Text（New Best か、前の1位のタイム）</para>
+/// <para>隠し結晶：Crystals（一番上の直下の子。結晶の図形の Image と、数の Text を入れる）の Count Text に「取った数 / 置いてある数」を書く。
+/// 取った数は、今回のクリアで記録した後の数（前に取った物も入る）。結晶の無いステージでは Crystals ごと消す</para>
 /// <para>項目の名前で何をするか決める：Next（次のステージへ。次が無ければ、項目ごと消す）/ Title（タイトルへ）</para>
 /// <para>文字がゆっくり出てくる間（Input Delay 秒）は、入力を受けない（見えないうちに決めてしまわないように）</para>
 /// </summary>
@@ -30,6 +32,8 @@ private:
 	std::string stageTextName_ = "StageText";   // ステージの名前
 	std::string timeTextName_ = "TimeText";     // 遊んだ時間
 	std::string recordTextName_ = "RecordText"; // New Best か、前の1位のタイム
+	std::string crystalsName_ = "Crystals";     // 隠し結晶の図形と数を入れた物（結晶の無いステージでは消す）
+	std::string crystalCountName_ = "Count";    // 隠し結晶の数を書く Text（Crystals の子）
 	// --- 言葉 ---
 	std::string newBestText_ = "New Best"; // 1位になった（初めてのクリアも）
 	std::string bestLabel_ = "Best";       // 1位でなかったときに、前の1位のタイムの前に付ける言葉

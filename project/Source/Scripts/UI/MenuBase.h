@@ -38,6 +38,11 @@ protected:
 	virtual void OnSelect(int /*index*/) {}
 	// 入力を受けない（上に別の画面が開いているなど）。幕の間は、これとは別に受けない
 	virtual bool IsInputBlocked() const { return false; }
+	// 最後の項目を、格子（Columns が 2 以上）の外の下に置いた項目として扱うか（ステージ選択の Back）
+	// true なら：格子の一番下の段で ↓ → その項目へ（どの列からでも）。その項目で ↑ → 来たマスへ戻る。←→ では行かない
+	virtual bool HasFooterItem() const { return false; }
+	// 縦の並び（Columns が 1）で ←→ を押した。direction は -1（左）か +1（右）。設定画面の音量などを変える。何もしない画面は書かない
+	virtual void OnAdjust(int /*index*/, int /*direction*/) {}
 
 	// ===== 派生クラスから使う =====
 	// 項目の並び（子の Items の、有効な子。Hierarchy の上から順）
@@ -82,6 +87,8 @@ private:
 
 	// キー・パッド・スティックで、選ぶ項目を動かす（動かしたら true）
 	bool MoveByInput(int count, const Vector2& stick);
+	// ←→（キー・十字・スティックを倒した瞬間）。-1：左 / +1：右 / 0：押していない
+	int ReadHorizontal(const Vector2& stick) const;
 	// マウスが乗っている項目（無ければ -1）
 	int FindItemUnderMouse(const std::vector<Handle<Entity>>& items) const;
 	// 項目の上にマウスがあるか（Image があれば、その形。無ければ Text の文字のかたまり＋Hit Padding）
@@ -104,6 +111,7 @@ private:
 	// ===== 実行中だけの値 =====
 	int selected_ = 0;                                     // 選んでいる項目（上から 0, 1, …）
 	int notifiedSelected_ = -1;                            // 最後に OnSelect で知らせた項目（変わったときだけ知らせる）
+	int footerReturn_ = 0;                                 // 格子の下の項目（HasFooterItem）で ↑ を押したときに戻るマス（↓ で入ったときのマス）
 	bool isReady_ = false;                                 // 入力を受けてよい（最初の1フレームは受けない。この画面を開いた Enter で、そのまま決めないように）
 	Vector2 previousStick_ = {0.0f, 0.0f};                 // 前のフレームのスティック（倒した瞬間だけ動かす）
 	std::vector<std::optional<TextStyle>> originalStyles_; // 項目の元の飾り（Text が付いている項目の分だけ覚える。外れた項目をこれに戻す）

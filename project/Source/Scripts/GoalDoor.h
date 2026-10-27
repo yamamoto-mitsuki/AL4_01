@@ -27,6 +27,9 @@ private:
 	// --- ぼかし（被写界深度。触れた瞬間から、今の値をこの値へ動かす）---
 	float blurTime_ = 1.4f;             // ぼけきるまでの秒数
 	DepthOfFieldFade::Settings blurTo_; // ぼけきった時の値（初めは、カメラの 2m 先より奥が全部ぼける）
+	// --- コントローラーの振動（触れた瞬間に、一定の強さで）---
+	float rumblePower_ = 0.8f; // 強さ（0〜1）
+	float rumbleTime_ = 0.5f;  // 震える秒数（クリア画面が出る前に止まるように、Screen Delay より短く）
 
 	// ===== 実行中だけの値（保存しない）=====
 	bool isCleared_ = false;         // キューブが触れた

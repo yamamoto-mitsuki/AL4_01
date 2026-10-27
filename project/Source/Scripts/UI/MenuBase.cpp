@@ -8,6 +8,8 @@
 #include <MyEngine/Systems/SpriteRenderSystem.h>
 #include <MyEngine/Systems/TextRenderSystem.h>
 
+#include "Source/Scripts/Audio/GameAudio.h"
+
 namespace {
 // 上・下・左・右・決める・戻るのキー（キーボードとパッドのどちらでも）
 bool IsUpTriggered() { return InputManager::IsKeyTriggered(DIK_UP) || InputManager::IsKeyTriggered(DIK_W) || InputManager::IsButtonTriggered(GamepadButton::DpadUp); }
@@ -116,8 +118,19 @@ void MenuBase::Update() {
 			TryDecide(items, selected_);
 		} else {
 			// --- 選ぶ（キー・スティック。マウスは動かしたときだけ。止まったマウスがキーで選んだ所を取り戻さないように）---
+			const int before = selected_;
 			if (!MoveByInput(count, stick) && hovered >= 0 && isMouseMoved) {
 				selected_ = hovered;
+			}
+			// 選んだ項目が変わったときだけ鳴らす（端で止まった・同じ項目の上でマウスを動かしただけなら鳴らさない）
+			if (selected_ != before) {
+				GameAudio::PlaySe(Se::UiMove);
+			}
+			// --- 縦の並びの ←→：選んでいる項目の値を変える（格子では ←→ が選ぶのに使われるので呼ばない）---
+			if (columns_ <= 1) {
+				if (const int direction = ReadHorizontal(stick); direction != 0) {
+					OnAdjust(selected_, direction);
+				}
 			}
 			// --- 決める ---
 			if (IsDecideTriggered()) {
@@ -156,27 +169,54 @@ bool MenuBase::MoveByInput(int count, const Vector2& stick) {
 		}
 		return selected_ != before;
 	}
+	// --- 格子の下の項目（HasFooterItem。ステージ選択の Back）：最後の1つは格子に入れない ---
+	const bool hasFooter = HasFooterItem() && count >= 2;
+	const int gridCount = hasFooter ? count - 1 : count; // 格子に並んでいる項目の数
+	const int footer = count - 1;                         // 格子の下の項目の番号（hasFooter のときだけ使う）
+	if (selected_ < gridCount) {
+		footerReturn_ = selected_; // 最後にいたマス（マウスで下の項目へ移ったときも、↑ でここへ戻る）
+	}
+	if (hasFooter && selected_ == footer) {
+		// 格子の下の項目を選んでいる：↑ で、来たマスへ戻る（←→・↓ は何もしない）
+		if (up) {
+			selected_ = std::clamp(footerReturn_, 0, gridCount - 1);
+		}
+		return selected_ != before;
+	}
 	// --- 格子：端で止まる（5列の右端から次の段へとぶと、どこにいるか分からなくなるので）---
 	const int column = selected_ % columns_;
 	if (left && column > 0) {
 		--selected_;
 	}
-	if (right && column < columns_ - 1 && selected_ + 1 < count) {
+	if (right && column < columns_ - 1 && selected_ + 1 < gridCount) {
 		++selected_;
 	}
 	if (up && selected_ - columns_ >= 0) {
 		selected_ -= columns_;
 	}
 	if (down) {
-		const int lastRow = (count - 1) / columns_;
-		if (selected_ + columns_ < count) {
+		const int lastRow = (gridCount - 1) / columns_;
+		if (selected_ + columns_ < gridCount) {
 			selected_ += columns_;
 		} else if (selected_ / columns_ < lastRow) {
-			// 真下に項目が無い（下の段が短い）：下の段の一番後ろへ（マスの下に置いた Back へ、どの列からでも行ける）
-			selected_ = count - 1;
+			// 真下に項目が無い（下の段が短い）：下の段の一番後ろへ
+			selected_ = gridCount - 1;
+		} else if (hasFooter) {
+			// 一番下の段：格子の下の項目へ（どの列からでも行ける。↑ で戻るマスは footerReturn_ が覚えている）
+			selected_ = footer;
 		}
 	}
 	return selected_ != before;
+}
+
+int MenuBase::ReadHorizontal(const Vector2& stick) const {
+	if (IsLeftTriggered() || IsStickTriggered(stick.x, previousStick_.x, -1.0f)) {
+		return -1;
+	}
+	if (IsRightTriggered() || IsStickTriggered(stick.x, previousStick_.x, 1.0f)) {
+		return 1;
+	}
+	return 0;
 }
 
 void MenuBase::Select(int index) { selected_ = (std::max)(index, 0); } // 多すぎる番号は、次の Update で項目の数に収める
@@ -218,9 +258,11 @@ bool MenuBase::IsMouseOverItem(Handle<Entity> item) const {
 //=============================================================================
 void MenuBase::TryDecide(const std::vector<Handle<Entity>>& items, int index) {
 	if (!CanDecide(index)) {
+		GameAudio::PlaySe(Se::UiBack); // 決められない（まだ遊べないマスなど）：戻るの音で「入れない」と知らせる
 		OnDecideRejected(index);
 		return;
 	}
+	GameAudio::PlaySe(Se::UiDecide);
 	const Entity* item = EntityManager::Get(items[index]);
 	if (item != nullptr) {
 		Decide(index, item->name);

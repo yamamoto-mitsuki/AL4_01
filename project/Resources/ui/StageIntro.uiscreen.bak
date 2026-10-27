@@ -1,0 +1,84 @@
+{
+	"version": 1,
+	"entities": [
+		{
+			"id": 601,
+			"name": "StageIntro",
+			"parent": 0,
+			"active": true,
+			"components": {
+				"Transform": {
+					"translation": [0.0, 0.0, 0.0],
+					"rotation": [0.0, 0.0, 0.0],
+					"scale": [1.0, 1.0, 1.0]
+				},
+				"StageIntro": {
+					"Enabled": true,
+					"Screen Name": "StageIntro",
+					"Stage Text": "StageText",
+					"Hold Time": 0.6,
+					"Clear Time": 0.9,
+					"Blur Focus Distance": 1.0,
+					"Blur Focus Range": 0.0,
+					"Blur Far Transition": 3.0,
+					"Blur Near Transition": 0.0,
+					"Blur Max": 24.0
+				},
+				"UI Screen": {
+					"pauseGame": false,
+					"showMotion": "Fade",
+					"showDuration": 0.3,
+					"showEase": "OutSine",
+					"showStagger": 0.0,
+					"hideMotion": "Fade",
+					"hideDuration": 1.0,
+					"hideEase": "InOutSine",
+					"hideStagger": 0.0
+				}
+			}
+		},
+		{
+			"id": 602,
+			"name": "StageText",
+			"parent": 601,
+			"active": true,
+			"components": {
+				"Transform": {
+					"translation": [0.0, 150.0, 0.0],
+					"rotation": [0.0, 0.0, 0.0],
+					"scale": [1.0, 1.0, 1.0]
+				},
+				"Text": {
+					"enabled": true,
+					"text": "Stage 01",
+					"font": "C:/Windows/Fonts/NotoSansJP-VF.ttf",
+					"fontSize": 80.0,
+					"color": [1.0, 1.0, 1.0, 0.95],
+					"align": "Center",
+					"anchor": "Center",
+					"pivot": [0.5, 0.5],
+					"lineSpacing": 0.0,
+					"letterSpacing": 10.0,
+					"order": 0,
+					"blend": "Normal",
+					"outlineWidth": 0.0,
+					"outlineColor": [0.0, 0.0, 0.0, 1.0],
+					"shadow": false,
+					"shadowOffset": [3.0, -3.0],
+					"shadowColor": [0.0, 0.0, 0.0, 0.6],
+					"glowWidth": 8.0,
+					"glowColor": [0.75, 0.93, 1.0, 0.45],
+					"shine": false,
+					"shineColor": [1.0, 1.0, 1.0, 0.9],
+					"shineWidth": 24.0,
+					"shineDuration": 0.6,
+					"shineInterval": 2.0,
+					"motion": "None",
+					"motionAmount": 8.0,
+					"motionSpeed": 2.0,
+					"motionSpread": 0.1
+				}
+			}
+		}
+	]
+}

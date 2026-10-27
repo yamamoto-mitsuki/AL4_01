@@ -8,7 +8,7 @@
 			"active": true,
 			"components": {
 				"Transform": {
-					"translation": [0.0, 7.9045362, 0.0],
+					"translation": [0.0, 1.1316648, 0.0],
 					"rotation": [0.0, 0.0, 0.0],
 					"scale": [1.0, 1.0, 1.0]
 				},
@@ -31,7 +31,6 @@
 					"Gravity": 30.0,
 					"Fall Gravity Multiplier": 1.5,
 					"Max Fall Speed": 20.0,
-					"Jump Cut": 0.5,
 					"Coyote Time": 0.1,
 					"Jump Buffer": 0.1,
 					"Wall Jump Speed": 6.0,
@@ -41,7 +40,9 @@
 					"Launch Jump Keep": 0.5,
 					"Launch Spin Speed": 720.0,
 					"Max HP": 3,
-					"Restart Delay": 1.0,
+					"Restart Delay": 1.2,
+					"Fall Restart Delay": 0.4,
+					"Restart Fade Time": 0.5,
 					"Clear Time": 0.6,
 					"Crack Small Texture": "resources/Textures/IceCube/ice_crack_small.png",
 					"Crack Large Texture": "resources/Textures/IceCube/ice_crack_large.png",
@@ -90,7 +91,8 @@
 				"Primitive Renderer": {
 					"enabled": true,
 					"shape": "Box",
-					"color": [0.9607843, 0.9607843, 0.9607843, 0.7882353],
+					"color": [0.5956863, 0.7686275, 0.9607843, 0.7882353],
+					"intensity": 1.0,
 					"surface": "Transparent",
 					"texture": "resources/Textures/IceCube/ice.png",
 					"uvScale": [1.0, 1.0],
@@ -100,6 +102,63 @@
 					"metallic": 0.0,
 					"roughness": 0.5,
 					"emissive": [0.11196911, 0.10937524, 0.10937524]
+				}
+			}
+		},
+		{
+			"id": 814,
+			"name": "FootTrail",
+			"parent": 56,
+			"active": true,
+			"components": {
+				"Transform": {
+					"translation": [0.0, -0.45, 0.0],
+					"rotation": [0.0, 0.0, 0.0],
+					"scale": [1.0, 1.0, 1.0]
+				},
+				"DistanceTrail": {
+					"Enabled": true,
+					"Per Meter": 18.0,
+					"Min Speed": 1.5,
+					"Max Step": 3.0,
+					"Ground Only": true
+				},
+				"Particle System": {
+					"enabled": true,
+					"playOnStart": false,
+					"looping": false,
+					"duration": 1.0,
+					"rateOverTime": 0.0,
+					"burstCount": 0,
+					"maxParticles": 256,
+					"shape": "Cone",
+					"radius": 0.35,
+					"coneAngle": 40.0,
+					"boxSize": [1.0, 1.0, 1.0],
+					"fromSurface": false,
+					"lifetime": [0.45, 0.8],
+					"speed": [1.6, 2.8],
+					"size": [0.05, 0.11],
+					"colorA": [0.35, 0.72, 1.0, 0.9],
+					"colorB": [0.85, 0.95, 1.0, 0.75],
+					"intensity": 1.4,
+					"gravity": [0.0, -6.0, 0.0],
+					"drag": 1.5,
+					"endSizeRate": 0.25,
+					"endColor": [1.0, 1.0, 1.0, 0.0],
+					"ease": "InQuad",
+					"converge": false,
+					"convergeEase": "InQuad",
+					"startRotation": [0.0, 0.0],
+					"angularVelocity": [0.0, 0.0],
+					"randomSpinDirection": false,
+					"alignToVelocity": false,
+					"stretch": 1.0,
+					"texture": "",
+					"blend": "Add",
+					"space": "World",
+					"useFog": true,
+					"useDepthOfField": false
 				}
 			}
 		},
@@ -118,6 +177,7 @@
 					"enabled": true,
 					"shape": "Box",
 					"color": [0.60419494, 0.6743964, 0.8108108, 1.0],
+					"intensity": 1.0,
 					"surface": "Opaque",
 					"texture": "",
 					"uvScale": [1.0, 1.0],

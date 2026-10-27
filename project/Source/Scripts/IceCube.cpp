@@ -9,9 +9,13 @@
 #include <MyEngine/Math/RandomEngine.h>
 
 #include "LevelInfo.h"
+#include "Source/Scripts/Audio/GameAudio.h"
+#include "Source/Scripts/Effects/GameRumble.h"
+#include "Source/Scripts/Gimmicks/Checkpoint.h"
 #include "Source/Scripts/Gimmicks/JumpOrb.h"
 #include "Source/Scripts/Gimmicks/LaunchOrb.h"
 #include "Source/Scripts/Gimmicks/StickyWall.h"
+#include "Source/Scripts/Progress/CheckpointState.h"
 
 SCRIPT(IceCube, "Game");
 
@@ -19,7 +23,7 @@ SCRIPT(IceCube, "Game");
 // Inspector に出す・保存する値
 //=============================================================================
 void IceCube::Fields(ComponentUI& ui) {
-	ui.Label("A・D / ←→ / 左スティック・十字：移動　Space・W・↑ / A ボタン：ジャンプ（長押しで高く）");
+	ui.Label("A・D / ←→ / 左スティック・十字：移動　Space・W・↑ / A ボタン：ジャンプ（押した長さに関係なく、いつも同じ高さ）");
 	// ===== 移動 =====
 	ui.Separator("Run");
 	ui.Field("Run Speed", runSpeed_, AtLeast(0.0f).Tip("左右の一番速い速さ（m/s）"));
@@ -29,11 +33,10 @@ void IceCube::Fields(ComponentUI& ui) {
 	ui.Field("Air Decel", airDecel_, AtLeast(0.0f).Tip("空中で入力が無いとき、横の速さを落とす強さ（小さいと、跳んだ勢いが残る）"));
 	// ===== ジャンプ =====
 	ui.Separator("Jump");
-	ui.Field("Jump Height", jumpHeight_, AtLeast(0.0f).Tip("長押ししたときの高さ（m）。跳ぶ速さは、この高さと Gravity から計算する"));
+	ui.Field("Jump Height", jumpHeight_, AtLeast(0.0f).Tip("ジャンプの高さ（m。押した長さに関係なく、いつもこの高さ。緑の壁・水色の円も同じ）。跳ぶ速さは、この高さと Gravity から計算する"));
 	ui.Field("Gravity", gravity_, AtLeast(0.1f).Tip("重力の強さ（m/s²。上がっている間）。大きいほどキビキビ動く（Rigidbody の Gravity Scale は、これに合わせて毎フレーム書く）"));
 	ui.Field("Fall Gravity Multiplier", fallGravityMultiplier_, AtLeast(0.0f).Tip("落ちる間の重力の倍率（1 より大きいと、ふわっとしない）"));
 	ui.Field("Max Fall Speed", maxFallSpeed_, AtLeast(0.0f).Tip("落ちる速さの上限（m/s）"));
-	ui.Field("Jump Cut", jumpCutRatio_, Range(0.0f, 1.0f).Tip("上がっている途中でジャンプを離したとき、上向きの速さに掛ける（0.5 なら、すぐ離すと低いジャンプ。1 なら長押しの差が無い）"));
 	ui.Field("Coyote Time", coyoteTime_, AtLeast(0.0f).Tip("足場から落ちても、この秒数はまだジャンプできる（端ぎりぎりで押しても跳べるように）"));
 	ui.Field("Jump Buffer", jumpBufferTime_, AtLeast(0.0f).Tip("着地のこの秒数前に押したジャンプは、着地した瞬間に跳ぶ（先行入力）"));
 	// ===== ギミック =====
@@ -47,8 +50,14 @@ void IceCube::Fields(ComponentUI& ui) {
 	// ===== HP・やられ・クリア =====
 	ui.Separator("Life");
 	ui.Field("Max HP", maxHp_, Range(1.0f, 10.0f).Tip("HP（トゲで減る。0 で砕ける）"));
-	ui.Field("Restart Delay", restartDelay_, AtLeast(0.0f).Tip("やられてから、レベルの最初に戻るまでの秒数"));
+	ui.Field("Restart Delay", restartDelay_, AtLeast(0.0f).Tip("砕けた・溶けてから、幕を閉じ始めるまでの秒数（幕が閉じきったら、レベルの最初から）"));
+	ui.Field("Fall Restart Delay", fallRestartDelay_, AtLeast(0.0f).Tip("下に落ちてから、幕を閉じ始めるまでの秒数（画面の外なので短く）"));
+	ui.Field("Restart Fade Time", restartFadeTime_, AtLeast(0.01f).Tip("やり直すときに、幕を閉じる秒数（開くのも同じ秒数）"));
 	ui.Field("Clear Time", clearTime_, AtLeast(0.01f).Tip("ゴールの扉へ吸い込まれる秒数"));
+	// --- 中間地点から出てくる ---
+	ui.Field("Appear Time", appearTime_, AtLeast(0.01f).Tip("中間地点から出てくるとき、大きさが 0 から元に戻るまでの秒数"));
+	ui.Field("Appear Stretch", appearStretch_, Range(0.0f, 0.9f).Tip("中間地点から出てきた瞬間、縦に伸びる割合（Jump Stretch より強くすると勢いが出る）"));
+	ui.Field("Appear Hop Height", appearHopHeight_, AtLeast(0.0f).Tip("中間地点から出てきた瞬間、上へ跳ね出る高さ（m。0 ならその場に出る）"));
 	// ===== ダメージ・やられの見た目 =====
 	ui.Separator("Damage");
 	ui.AssetField("Crack Small Texture", crackSmallTexture_, AssetType::Texture, Tip("1 回ダメージを受けたときの、子の Body のテクスチャ（小さいひび）。無ければ元のまま"));
@@ -94,13 +103,33 @@ void IceCube::Start() {
 		rigidbody->windScale = 0.0f;
 	}
 	// 下の線の高さは、シーンの LevelInfo から（LevelInfo が無ければ -10 のまま）
-	if (const LevelInfo* level = LevelInfo::Find()) {
+	const LevelInfo* level = LevelInfo::Find();
+	if (level != nullptr) {
 		killHeight_ = level->GetKillHeight();
+	}
+	// --- 中間地点から始める：その位置へ動いて、見えないまま待つ（中間地点の Checkpoint が Appear を呼ぶと、はじけて出てくる）---
+	// Player は親の無い Entity なので、Transform の位置がそのままワールドの位置（最初のフレームはワールドの位置がまだ計算されていないので、こちらを書く）
+	if (level != nullptr && gCheckpoint.IsRespawning(level->GetStageIndex())) {
+		transform.translation = gCheckpoint.spawnPosition;
+		isWaitingRespawn_ = true;
+		bodyScale_ = 0.0f;
+		return;
+	}
+	// --- スタート地点の中間地点（Is Start）があれば：そこへ動いて、見えないまま待つ（始まりの演出が終わったら、そこから出てくる）---
+	for (const Checkpoint* checkpoint : FindObjectsOfType<Checkpoint>()) {
+		if (checkpoint->IsStart()) {
+			transform.translation = checkpoint->GetSpawnPosition();
+			isWaitingRespawn_ = true;
+			bodyScale_ = 0.0f;
+			break;
+		}
 	}
 }
 
 // ===== 毎フレーム =====
 void IceCube::Update() {
+	// --- コントローラーの振動（円で跳んだとき）を、決めた秒数で止める。ヒットストップ中も数えるので、止めない時間で ---
+	GameRumble::Update(Time::GetUnscaleDeltaTime());
 	RigidbodyComponent* rigidbody = GetComponent<RigidbodyComponent>();
 	if (rigidbody == nullptr) {
 		return; // Rigidbody が無いと動かせない（Inspector で外した）
@@ -110,14 +139,26 @@ void IceCube::Update() {
 		return; // ヒットストップ中（入力で速さを変えない）
 	}
 	// --- 下の線より下に落ちたら、一発アウト（動ける間はいつでも。くっつき・吹っ飛びの最中も）---
-	if (IsPlayable() && GetWorldPosition(transform).y < killHeight_) {
+	// 最初のフレームは見ない：ワールドの位置（worldMatrix）がまだ計算されておらず原点になっているので、
+	// Kill Height が 0 より上のレベル（高い所だけのステージ）で、始まった瞬間にアウトになってしまう
+	if (IsPlayable() && hasUpdated_ && GetWorldPosition(transform).y < killHeight_) {
 		Kill(DeathType::Fall);
 	}
 	// --- トゲなどで頼まれたダメージを、1回分だけ受ける（同じフレームに2つのトゲに触れても1回）---
 	ApplyDamage(*rigidbody);
 	// --- 自分の所の風（前のフレームの終わりの Wind Zone から）---
 	wind_ = WindZoneSystem::Sample(GetWorldPosition(transform));
+	// --- 風の音：今いる所の風の速さ・強さで、大きさと音色を変える（やられ・クリアの間は風の外と同じに、消えていく）---
+	GameAudio::UpdateWind(IsPlayable() ? Length(wind_.velocity) : 0.0f, IsPlayable() ? wind_.strength : 0.0f, deltaTime);
 	wallRegrabTimer_ -= deltaTime;
+	// --- 中間地点で出てくるのを待っている間：止まって、見えないまま（入力も受けない）---
+	if (isWaitingRespawn_) {
+		UpdateRespawnWait(*rigidbody, deltaTime);
+		UpdateBody(*rigidbody, deltaTime); // 大きさ 0 を子の Body へ書く（書かないと、置いた大きさのまま見えてしまう）
+		hasUpdated_ = true;
+		return;
+	}
+	UpdateAppear(deltaTime);
 
 	// --- 今していることで、することが変わる ---
 	switch (state_) {
@@ -147,6 +188,13 @@ void IceCube::Update() {
 	wallContact_ = {};
 	touchingOrbs_.clear();
 	isLaunchBlocked_ = false;
+	hasUpdated_ = true; // 2フレーム目からは、ワールドの位置が正しい
+}
+
+// ===== 消えるとき =====
+void IceCube::OnDestroy() {
+	// 震えている途中でシーンが替わると、数える人（このキューブ）がいなくなって震えっぱなしになるので、ここで止める
+	GameRumble::Stop();
 }
 
 //=============================================================================
@@ -181,13 +229,20 @@ void IceCube::UpdateStick(RigidbodyComponent& rigidbody, float deltaTime) {
 		hasAirJump_ = false; // 壁で戻った自分のジャンプを使った
 		rigidbody.useGravity = true;
 		Jump(rigidbody);
+		GameAudio::PlaySe(Se::Jump, kWallJumpPitch);
 		// 横は、壁の外向き（normal の X の符号）へ Wall Jump Speed。斜めの壁でも、横の速さは同じにする
 		// std::copysign(a, b)：a の大きさに、b の符号（＋−）を付けた数（<cmath>）
 		rigidbody.velocity.x = std::copysign(wallJumpSpeed_, stickNormal_.x);
 		return;
 	}
 	// --- 壁から離れる向きに入力したら、離れて落ちる（自分のジャンプは残る）---
-	if (ReadMoveInput() * stickNormal_.x > kLetGoInput) {
+	// くっついた瞬間に離れる向きをもう押していた（走ってきた向きのまま、吹っ飛んで後ろの壁に付いた など）ときは、
+	// 一度離して押し直すまで離さない（押しっぱなしで、付いた瞬間に落ちないように）
+	const bool isAwayPressed = ReadMoveInput() * stickNormal_.x > kLetGoInput;
+	if (!isAwayPressed) {
+		isLetGoReady_ = true;
+	}
+	if (isAwayPressed && isLetGoReady_) {
 		ChangeState(State::Move);
 		rigidbody.velocity = {0.0f, 0.0f, 0.0f};
 		rigidbody.useGravity = true;
@@ -198,7 +253,7 @@ void IceCube::UpdateStick(RigidbodyComponent& rigidbody, float deltaTime) {
 	rigidbody.velocity = -stickNormal_ * kWallStickSpeed;
 }
 
-// ===== やられ（縮んで消えて、少し待ってから、レベルの最初から）=====
+// ===== やられ（砕ける・溶ける。少し待ってから、幕を閉じてレベルの最初から）=====
 void IceCube::UpdateDead(float deltaTime) {
 	stateTimer_ += deltaTime;
 	// --- 見た目：やられ方で変わる ---
@@ -214,10 +269,14 @@ void IceCube::UpdateDead(float deltaTime) {
 	case DeathType::Fall:
 		break; // 画面の外なので、何もしない
 	}
-	// --- 少し待ってから、レベルの最初から（1回だけ頼む）---
-	if (stateTimer_ >= restartDelay_ && !isRestartRequested_) {
-		isRestartRequested_ = true;
-		SceneManager::ReloadScene();
+	// --- 少し待ってから、幕を閉じて、レベルの最初から（落ちたときは見る物が無いので、すぐ）---
+	// 幕を閉じきったら SceneTransition がシーンを読み直して、幕を開ける（このスクリプトもシーンと一緒に作り直される）
+	// 頼めなかったら（ポーズの「やり直す」などで、もう幕が動いている）、次のフレームにもう一度頼む
+	// 中間地点を取っていたら、そこから（LevelInfo::Retry。LevelInfo が無いシーンは、ただ読み直す）
+	const float delay = (deathType_ == DeathType::Fall) ? fallRestartDelay_ : restartDelay_;
+	if (stateTimer_ >= delay && !isRestartRequested_) {
+		const LevelInfo* level = LevelInfo::Find();
+		isRestartRequested_ = (level != nullptr) ? level->Retry(restartFadeTime_) : SceneTransition::ReloadScene(restartFadeTime_);
 	}
 }
 
@@ -229,6 +288,48 @@ void IceCube::UpdateClear(float deltaTime) {
 	const Vector3 next = MathUtility::Lerp(clearStart_, clearTarget_, Ease::OutQuad(t, 0.0f, 1.0f));
 	EntityManager::TranslateWorld(gameObject.handle, next - GetWorldPosition(transform));
 	bodyScale_ = 1.0f - t;
+}
+
+// ===== 中間地点で出てくるのを待つ（見えない・止まる）=====
+void IceCube::UpdateRespawnWait(RigidbodyComponent& rigidbody, float deltaTime) {
+	rigidbody.velocity = {0.0f, 0.0f, 0.0f};
+	rigidbody.useGravity = false;
+	respawnWaitTimer_ += deltaTime;
+	// 中間地点が呼んでくれない（シーンから消した など）ときは、待ちすぎないで自分で出る
+	if (respawnWaitTimer_ >= kRespawnMaxWait) {
+		Appear();
+	}
+}
+
+// ===== 出てくる（大きさが 0 から戻る。Appear から Appear Time 秒）=====
+void IceCube::UpdateAppear(float deltaTime) {
+	if (!isAppearing_ || state_ == State::Clear) {
+		return; // 出てくる途中でない（クリアの間は、クリアが大きさを書く）
+	}
+	appearTimer_ += deltaTime;
+	// 最初に速く大きくなって、ゆっくり止まる（縦の伸びは Appear で入れた stretch_ が、UpdateBody でだんだん戻る）
+	const float t = std::clamp(appearTimer_ / appearTime_, 0.0f, 1.0f);
+	bodyScale_ = Ease::OutCubic(t, 0.0f, 1.0f);
+	isAppearing_ = t < 1.0f;
+}
+
+// ===== 中間地点から出てくる（Checkpoint から。待っていなければ何もしない）=====
+void IceCube::Appear() {
+	if (!isWaitingRespawn_) {
+		return;
+	}
+	isWaitingRespawn_ = false;
+	isAppearing_ = true;
+	appearTimer_ = 0.0f;
+	bodyScale_ = 0.0f;
+	// --- 上へ小さく跳ね出る（勢い。Appear Hop Height まで上がる速さは、ジャンプと同じく √(2gh)）---
+	// 跳ね出ている間は空中なので、着地するまでジャンプはできない（先行入力は効くので、着地した瞬間に跳べる）
+	if (RigidbodyComponent* rigidbody = GetComponent<RigidbodyComponent>()) {
+		rigidbody->useGravity = true;
+		rigidbody->velocity = {0.0f, std::sqrt(2.0f * gravity_ * appearHopHeight_), 0.0f};
+	}
+	TakeOff();
+	stretch_ = appearStretch_; // 縦に大きく伸びて出てくる（TakeOff が入れた Jump Stretch より強く）
 }
 
 // ===== 状態切り替え =====
@@ -276,6 +377,11 @@ void IceCube::UpdateGround(const RigidbodyComponent& rigidbody, float deltaTime)
 		if (isJustLanded_) {
 			const float impact = (maxFallSpeed_ > 0.0f) ? std::clamp(-previousVelocityY_ / maxFallSpeed_, 0.0f, 1.0f) : 1.0f;
 			stretch_ = -landSquash_ * impact;
+			// 音：強く着地するほど大きく（そっと降りた・小さな段差では鳴らさない）
+			if (impact >= kLandSoundImpact) {
+				GameAudio::PlaySe(Se::Land, 1.0f, MathUtility::Lerp(kLandSoundMinVolume, 1.0f, impact));
+			}
+			ringChain_ = 0; // 水色の円の音の高さを、最初に戻す
 		}
 		isOnGround_ = true;
 		groundJumpTimer_ = coyoteTime_; // 地面にいる間は、いつでも満タン
@@ -362,20 +468,15 @@ void IceCube::UpdateJump(RigidbodyComponent& rigidbody, float deltaTime) {
 		}
 		// 使う順番：地上（コヨーテタイムの間も）は地面のジャンプ → 空中は、触れている水色の円 → 緑の壁・緑の円で戻った自分のジャンプ
 		// || は左から順に調べて、true が出たらそこで止まる（短絡評価）。なので、円を使えたら、自分のジャンプは使わずに残る
-		if (CanGroundJump() || UseJumpOrb() || UseAirJump()) {
+		// 音：地面のジャンプはここで鳴らす。円・自分のジャンプの音は、それぞれの Use の中で鳴らす（使えたときだけ）
+		if (CanGroundJump()) {
+			GameAudio::PlaySe(Se::Jump);
+			Jump(rigidbody);
+		} else if (UseJumpOrb() || UseAirJump()) {
 			Jump(rigidbody);
 		}
 	}
-
-	// --- 長押し：上がっている途中でジャンプを離したら、上向きの速さを減らす（すぐ離すと低いジャンプ）---
-	if (isJumpRising_) {
-		if (rigidbody.velocity.y <= 0.0f) {
-			isJumpRising_ = false; // もう落ち始めた（最後まで押していた）
-		} else if (!IsJumpPressed()) {
-			rigidbody.velocity.y *= jumpCutRatio_;
-			isJumpRising_ = false; // 1回のジャンプで1回だけ
-		}
-	}
+	// ジャンプの高さは押した長さで変わらない（離しても上向きの速さは減らさない。いつも Jump Height まで上がる）
 }
 
 // ===== ジャンプを頼まれているか（今押した・先行入力で覚えている）=====
@@ -398,6 +499,9 @@ bool IceCube::UseJumpOrb() {
 		JumpOrb* orb = orbObject.GetComponent<JumpOrb>();
 		if (orb != nullptr && orb->IsReady()) {
 			orb->Use();
+			// 音：着地するまで続けて使うほど、音階で高くなる（ringChain_ は着地で 0 に戻る）
+			GameAudio::PlayRingJump(ringChain_);
+			++ringChain_;
 			return true;
 		}
 	}
@@ -410,17 +514,17 @@ bool IceCube::UseAirJump() {
 		return false;
 	}
 	hasAirJump_ = false;
+	GameAudio::PlaySe(Se::Jump, kAirJumpPitch);
 	return true;
 }
 
 // ===== 跳ぶ =====
 void IceCube::Jump(RigidbodyComponent& rigidbody) {
-	// 長押ししたときに、ちょうど Jump Height まで上がる速さ
+	// ちょうど Jump Height まで上がる速さ（押した長さに関係なく、いつも同じ高さ）
 	// 速さ v で真上に投げると、重力 g で v² ÷ 2g だけ上がる（v² = 2gh）→ v ＝ √(2gh)。上がっている間の重力（Gravity）で計算する
 	// 下向きの速さは捨てる（落ちている途中で円を使っても、同じ高さだけ上がる）
 	rigidbody.velocity.y = std::sqrt(2.0f * gravity_ * jumpHeight_);
 	TakeOff();
-	isJumpRising_ = true;
 }
 
 // ===== 地面を離れる（跳ぶ・ばね。地面のジャンプと先行入力を消す）=====
@@ -485,12 +589,13 @@ bool IceCube::TryStick(RigidbodyComponent& rigidbody) {
 		return false;
 	}
 	// --- くっつく：止まって、自分のジャンプが戻る ---
+	GameAudio::PlaySe(Se::Stick);
 	ChangeState(State::Stick);
 	stickWall_ = wallContact_;
 	stickNormal_ = wallNormal_;
+	isLetGoReady_ = false; // 離れる向きを一度離すまで、離さない（UpdateStick）
 	hasAirJump_ = true;
 	groundJumpTimer_ = 0.0f;
-	isJumpRising_ = false;
 	rigidbody.velocity = {0.0f, 0.0f, 0.0f};
 	rigidbody.useGravity = false;
 	return true;
@@ -510,6 +615,7 @@ void IceCube::Launch(const LaunchOrb& orb) {
 	if (launchPath_.IsEmpty()) {
 		return;
 	}
+	GameAudio::PlaySe(Se::Launch);
 	ChangeState(State::Launch); // 吹っ飛びの最中に別の円の中でジャンプしたら、そっちの線で吹っ飛び直す
 	launchStart_ = GetWorldPosition(transform);
 	const Vector3 pathStart = launchPath_.Evaluate(0.0f).position;
@@ -523,7 +629,6 @@ void IceCube::Launch(const LaunchOrb& orb) {
 	isOnGround_ = false;
 	groundJumpTimer_ = 0.0f;
 	jumpBufferTimer_ = 0.0f; // 吹っ飛ばしたジャンプ（先行入力）で、すぐやめないように
-	isJumpRising_ = false;
 	rigidbody->velocity = {0.0f, 0.0f, 0.0f};
 	rigidbody->useGravity = false;
 }
@@ -663,7 +768,6 @@ void IceCube::ApplyDamage(RigidbodyComponent& rigidbody) {
 		const Vector3 direction = Normalize(knockback);
 		rigidbody.velocity += direction * (Length(knockback) - Dot(rigidbody.velocity, direction));
 		TakeOff();
-		isJumpRising_ = false; // ジャンプを離したときの「上向きを半分」が、はねた速さに掛からないように
 	}
 }
 
@@ -679,13 +783,19 @@ void IceCube::Kill(DeathType how) {
 	switch (how) {
 	case DeathType::Shatter:
 		SpawnShards(); // かけらを作って、元のキューブを隠す
+		GameAudio::PlaySe(Se::Shatter);
 		break;
 	case DeathType::Melt:
-		meltAmount_ = 0.0f; // UpdateDead で、だんだん溶ける
+		meltAmount_ = 0.0f; // UpdateDead で、だんだん溶ける（熱湯は使っていないので、音は無い）
 		break;
 	case DeathType::Fall:
+		GameAudio::PlaySe(Se::Fall);
 		break;
 	}
+	// --- BGM：低く・小さくして「やり直し」を知らせる。幕が閉じきるまでに小さくなりきる ---
+	// （幕を閉じ始めるのは UpdateDead で、やられ方ごとの Delay の後。次にレベルが始まったら LevelInfo が戻す）
+	const float delay = (how == DeathType::Fall) ? fallRestartDelay_ : restartDelay_;
+	GameAudio::DownBgm(delay + restartFadeTime_);
 }
 
 // ===== ゴールに入った（GoalDoor から）。doorPosition へ吸い込まれる（次のレベルへ進むのは GoalDoor）=====
@@ -701,7 +811,6 @@ void IceCube::Clear(const Vector3& doorPosition) {
 // ===== やられ・クリアを始める（物理で動かすのを止める）=====
 void IceCube::BeginEnding(State next) {
 	ChangeState(next);
-	isJumpRising_ = false;
 	// --- その場で止める（重力で落ちない。やられ・クリアの動きは、このスクリプトが位置と大きさで作る）---
 	if (RigidbodyComponent* rigidbody = GetComponent<RigidbodyComponent>()) {
 		rigidbody->velocity = {0.0f, 0.0f, 0.0f};
@@ -826,7 +935,9 @@ void IceCube::SpawnShards() {
 
 // ===== かけらを飛ばす（重力で落ちながら回って、やり直すまでに小さくなって消える）=====
 void IceCube::UpdateShards(float deltaTime) {
-	const float life = (restartDelay_ > 0.0f) ? std::clamp(1.0f - stateTimer_ / restartDelay_, 0.0f, 1.0f) : 0.0f; // 1 → 0
+	// 幕を閉じている間も飛び続けて、閉じきったときにちょうど消える（Restart Delay ＋ Restart Fade Time で 1 → 0）
+	const float lifeTime = restartDelay_ + restartFadeTime_;
+	const float life = (lifeTime > 0.0f) ? std::clamp(1.0f - stateTimer_ / lifeTime, 0.0f, 1.0f) : 0.0f; // 1 → 0
 	const float size = cubeSize_ * shardSize_ * life;
 	for (Shard& shard : shards_) {
 		if (!shard.object) {
@@ -859,8 +970,4 @@ float IceCube::ReadMoveInput() {
 
 bool IceCube::IsJumpTriggered() {
 	return InputManager::IsKeyTriggered(DIK_SPACE) || InputManager::IsKeyTriggered(DIK_W) || InputManager::IsKeyTriggered(DIK_UP) || InputManager::IsButtonTriggered(GamepadButton::A);
-}
-
-bool IceCube::IsJumpPressed() {
-	return InputManager::IsKeyPressed(DIK_SPACE) || InputManager::IsKeyPressed(DIK_W) || InputManager::IsKeyPressed(DIK_UP) || InputManager::IsButtonPressed(GamepadButton::A);
 }

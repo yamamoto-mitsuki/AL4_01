@@ -14,10 +14,12 @@ class LaunchOrb;
 /// 氷のキューブ（プレイヤー）。Rigidbody ＋ Collider（Sphere）を付けた Entity に付ける
 /// <para>Rigidbody は Freeze Position Z を付け、Collide With Rigidbodies を外す。Use Gravity・Gravity Scale は、ここが毎フレーム書く</para>
 /// <para>見た目のキューブは子の Entity「Body」（Primitive Renderer の箱）。当たりは球で、キューブは見た目だけ（傾く・伸び縮みする）</para>
-/// <para>左右移動とジャンプ（1回）。コヨーテタイム・先行入力・長押しで高さが変わる。ぶつかる・押し戻すのはエンジン（PhysicsSystem）の仕事で、
+/// <para>左右移動とジャンプ（1回）。コヨーテタイム・先行入力。ジャンプの高さは押した長さに関係なく、いつも同じ。ぶつかる・押し戻すのはエンジン（PhysicsSystem）の仕事で、
 /// ここは「入力を読んで、Rigidbody の速さと重力の強さを書く」だけ</para>
 /// <para>ギミック：水色の円（JumpOrb）で空中でもう一度跳ぶ・緑の円（LaunchOrb）の中でジャンプすると、矢印の線に沿って吹っ飛ぶ・緑の壁（StickyWall）にくっつく</para>
-/// <para>HP・やられ（下に落ちる・Kill・HP 0）・クリア（GoalDoor から）。やられたら少し待って、レベルの最初から（SceneManager::ReloadScene）</para>
+/// <para>HP・やられ（下に落ちる・Kill・HP 0）・クリア（GoalDoor から）。やられたら少し待って、幕を閉じてやり直す（LevelInfo::Retry）</para>
+/// <para>中間地点（Checkpoint）を取っていたら、読み直した後はそこに見えないまま待ち、幕が開くと Checkpoint の Appear で、はじけて出てくる。
+/// スタート地点の中間地点（Checkpoint の Is Start）があれば、ステージの始まりもそこで見えないまま待ち、始まりの演出が終わると出てくる</para>
 /// <para>トゲ（Spikes）で HP が減る・ひびが入る。HP 0 で砕ける、熱湯（HotWater）で溶ける。風（Wind Zone）には自分で流される（Rigidbody の Wind Scale は Start で 0 にする）</para>
 /// </summary>
 class IceCube : public Script {
@@ -33,6 +35,7 @@ public:
 
 	void Start() override;
 	void Update() override;
+	void OnDestroy() override; // コントローラーの振動を止める（シーンが替わる・やり直すとき）
 	void Fields(ComponentUI& ui) override;
 
 	// ===== 当たり（足元の向き・緑の壁・水色の円を集める。キューブを地面の向きに傾ける）=====
@@ -49,10 +52,14 @@ public:
 	void Kill(DeathType how);
 	// ゴールに入った（GoalDoor から）。doorPosition へ吸い込まれる（次のレベルへ進むのは GoalDoor）
 	void Clear(const Vector3& doorPosition);
+	// 中間地点から出てくる（Checkpoint から。幕が開いたとき）。それまでは見えないまま止まって待つ。待っていなければ何もしない
+	void Appear();
 	int GetHp() const { return hp_; }
 	int GetMaxHp() const { return maxHp_; }
 	// 操作できるか（やられ・クリアの最中でない）
 	bool IsPlayable() const;
+	// 中間地点・スタート地点で、見えないまま出てくるのを待っているか（Appear の前）
+	bool IsWaitingRespawn() const { return isWaitingRespawn_; }
 
 private:
 	/// <summary>
@@ -72,9 +79,11 @@ private:
 	void UpdateLaunch(RigidbodyComponent& rigidbody, float deltaTime);        // State::Launch
 	void UpdateDead(float deltaTime);                                         // State::Dead
 	void UpdateClear(float deltaTime);                                        // State::Clear
+	void UpdateRespawnWait(RigidbodyComponent& rigidbody, float deltaTime);   // 中間地点で、出てくるのを待つ（見えない・止まる）
+	void UpdateAppear(float deltaTime);                                       // 中間地点から出てくる（大きさが 0 から戻る）
 	void UpdateGround(const RigidbodyComponent& rigidbody, float deltaTime);  // 地面にいるか・着地
 	void UpdateRun(RigidbodyComponent& rigidbody, float deltaTime);           // 左右移動
-	void UpdateJump(RigidbodyComponent& rigidbody, float deltaTime);          // ジャンプ（先行入力・コヨーテタイム・長押し・水色の円）
+	void UpdateJump(RigidbodyComponent& rigidbody, float deltaTime);          // ジャンプ（先行入力・コヨーテタイム・水色の円）
 	void UpdateGravity(RigidbodyComponent& rigidbody) const;                  // 重力の強さ（上がる・落ちる）と、落ちる速さの上限
 	void UpdateBody(const RigidbodyComponent& rigidbody, float deltaTime);    // 見た目（子の Body の傾き・伸び縮み・大きさ）
 	void UpdateBodyMaterial();                                                // 見た目（子の Body のひび・ダメージで白く光る）
@@ -106,7 +115,6 @@ private:
 	// ===== 入力 =====
 	static float ReadMoveInput();  // 左右（-1〜1。左が−）
 	static bool IsJumpTriggered(); // ジャンプを押した瞬間
-	static bool IsJumpPressed();   // ジャンプを押している
 
 	// ===== Inspector に出す・保存する値 =====
 	// --- 移動 ---
@@ -116,11 +124,10 @@ private:
 	float airAccel_ = 35.0f;    // 空中で、入力の向きへ速さを変える強さ
 	float airDecel_ = 10.0f;    // 空中で入力が無いとき、横の速さを落とす強さ（小さいと、跳んだ勢いが残る）
 	// --- ジャンプ ---
-	float jumpHeight_ = 3.0f;            // 長押ししたときのジャンプの高さ（m）
+	float jumpHeight_ = 3.0f;            // ジャンプの高さ（m。押した長さに関係なく、いつも同じ）
 	float gravity_ = 30.0f;              // 重力の強さ（m/s²。上がっている間）
 	float fallGravityMultiplier_ = 1.5f; // 落ちる間の重力の倍率
 	float maxFallSpeed_ = 20.0f;         // 落ちる速さの上限（m/s）
-	float jumpCutRatio_ = 0.5f;          // 上がっている途中でジャンプを離したとき、上向きの速さに掛ける
 	float coyoteTime_ = 0.1f;            // 足場から落ちても、この秒数はまだジャンプできる
 	float jumpBufferTime_ = 0.1f;        // 着地のこの秒数前に押したジャンプは、着地した瞬間に跳ぶ
 	// --- ギミック ---
@@ -131,9 +138,15 @@ private:
 	float launchJumpKeep_ = 0.5f;    // 吹っ飛びをやめて跳んだとき、横の速さに掛ける
 	float launchSpinSpeed_ = 720.0f; // 吹っ飛び中に、見た目のキューブが回る速さ（度/秒）
 	// --- HP・やられ・クリア ---
-	int maxHp_ = 3;             // HP
-	float restartDelay_ = 1.0f; // やられてから、レベルの最初に戻るまでの秒数
-	float clearTime_ = 0.6f;    // ゴールの扉へ吸い込まれる秒数
+	int maxHp_ = 3;                 // HP
+	float restartDelay_ = 1.2f;     // やられて（砕ける・溶ける）から、幕を閉じ始めるまでの秒数
+	float fallRestartDelay_ = 0.4f; // 下に落ちてから、幕を閉じ始めるまでの秒数（画面の外で見る物が無いので短く）
+	float restartFadeTime_ = 0.5f;  // やり直すときの幕を閉じる秒数（開くのも同じ秒数）
+	float clearTime_ = 0.6f;        // ゴールの扉へ吸い込まれる秒数
+	// --- 中間地点から出てくる ---
+	float appearTime_ = 0.18f;     // 大きさが 0 から元に戻るまでの秒数
+	float appearStretch_ = 0.6f;   // 出てきた瞬間、縦に伸びる割合（Jump Stretch より強く）
+	float appearHopHeight_ = 1.2f; // 出てきた瞬間、上へ跳ね出る高さ（m）
 	// --- ダメージ・やられの見た目 ---
 	uint32_t crackSmallTexture_ = 0; // 1 回ダメージを受けたときの Body のテクスチャ（小さいひび。0 なら元のまま）
 	uint32_t crackLargeTexture_ = 0; // 2 回以上ダメージを受けたときの Body のテクスチャ（大きいひび。0 なら小さいひびのまま）
@@ -161,18 +174,23 @@ private:
 	float killHeight_ = -10.0f;                 // これより下に落ちたら一発アウト（Start で LevelInfo から読む）
 	bool isOnGround_ = false;                   // 地面にいる
 	bool isJustLanded_ = false;                 // このフレームに着地した
+	int ringChain_ = 0;                         // 地面に降りてから、水色の円を何回使ったか（円の音の高さ。着地で 0 に戻す）
 	float groundJumpTimer_ = 0.0f;              // 足場から落ちた後、地面のジャンプがあと何秒使えるか（コヨーテタイムの残り）
 	bool hasAirJump_ = false;                   // 緑の壁・緑の円で戻った自分のジャンプがある（使うか着地するまで残る）
 	float jumpBufferTimer_ = 0.0f;              // 押したジャンプを、あと何秒覚えているか（先行入力の残り）
 	float sinceJump_ = 1.0f;                    // 最後に跳んでからの秒数
-	bool isJumpRising_ = false;                 // ジャンプで上がっている途中（長押しを見る）
 	float previousVelocityX_ = 0.0f;            // 前のフレームの左右の速さ（坂に着地したときに使う）
 	float previousVelocityY_ = 0.0f;            // 前のフレームの上下の速さ（着地の強さに使う）
+	bool hasUpdated_ = false;                   // 1回目の Update が済んだ（最初のフレームはワールドの位置がまだ原点なので、下の線を見ない）
 	Vector3 groundNormal_ = {0.0f, 0.0f, 0.0f}; // このフレームの足元の向き（当たりで集める。乗っていなければ 0）
 	float stateTimer_ = 0.0f;                   // 今していることになってからの秒数（吹っ飛び・やられ・クリアで使う）
 	bool isRestartRequested_ = false;           // やり直しを頼んだ（何回も頼まないように）
 	Vector3 clearStart_ = {0.0f, 0.0f, 0.0f};   // 吸い込まれ始めた位置
 	Vector3 clearTarget_ = {0.0f, 0.0f, 0.0f};  // 扉の位置
+	bool isWaitingRespawn_ = false;             // 中間地点で、出てくるのを待っている（見えない・止まる。Checkpoint が Appear を呼ぶまで）
+	float respawnWaitTimer_ = 0.0f;             // 待ち始めてからの秒数（中間地点が呼んでくれないときに、自分で出る）
+	bool isAppearing_ = false;                  // 出てくる途中（大きさが 0 から戻っている）
+	float appearTimer_ = 0.0f;                  // 出始めてからの秒数
 	GameObject body_;                           // 子の「Body」（見た目のキューブ。Start で探す）
 	float bodyAngle_ = 0.0f;                    // 今の傾き（度。Z 軸のまわりで、左回りが＋）
 	float stretch_ = 0.0f;                      // 今の伸び縮み（＋で縦に伸びる、−でつぶれる）
@@ -201,6 +219,7 @@ private:
 	// --- 緑の壁 ---
 	GameObject stickWall_;                     // くっついている壁
 	Vector3 stickNormal_ = {0.0f, 0.0f, 0.0f}; // くっついている壁の向き（壁から外へ。当たりの normal）
+	bool isLetGoReady_ = false;                // 離れる向きの入力で離せるか（くっついた瞬間に押していたら、一度離すまで false）
 	GameObject lastWall_;                      // 最後に離れた壁
 	float wallRegrabTimer_ = 0.0f;             // 最後に離れた壁に、またくっつけるまでの残り秒数
 	// --- 緑の円（吹っ飛び）---
@@ -230,4 +249,10 @@ private:
 	static constexpr float kWindWobbleSpeed = 9.0f;       // 風の中で揺れる速さ（sin に掛ける。ラジアン/秒。1秒に約1.4回）
 	static constexpr float kMeltSquash = 0.9f;            // 溶けきったとき、縦がどれだけつぶれるか（1 なら平らになって見えなくなる）
 	static constexpr float kMeltSpread = 0.6f;            // 溶けきったとき、横がどれだけ広がるか
+	static constexpr float kRespawnMaxWait = 6.0f;        // 中間地点で、これより長く待ったら自分で出る（ふだんは中間地点が先に呼ぶ。スタート地点は始まりの演出の後なので、2 秒ほど待つ）
+	// --- 音 ---
+	static constexpr float kWallJumpPitch = 1.2f;      // 緑の壁から跳んだ音の高さ（地面のジャンプの音を少し高くして使う）
+	static constexpr float kAirJumpPitch = 1.35f;      // 自分のジャンプ（緑の壁・緑の円で戻った分）を空中で使った音の高さ
+	static constexpr float kLandSoundImpact = 0.15f;   // 着地の強さ（0〜1）がこれより小さければ、着地の音を鳴らさない（坂の小さな段差で鳴り続けないように）
+	static constexpr float kLandSoundMinVolume = 0.4f; // 着地の音の一番小さい大きさ（強く着地するほど 1 へ近づく）
 };

@@ -2,13 +2,13 @@
 	"version": 1,
 	"entities": [
 		{
-			"id": 99,
+			"id": 801,
 			"name": "SticktyWall",
 			"parent": 0,
 			"active": true,
 			"components": {
 				"Transform": {
-					"translation": [26.409088, 8.700274, 0.0],
+					"translation": [8.0227375, 4.047947, 0.0],
 					"rotation": [0.0, 0.0, 0.0],
 					"scale": [1.0, 1.0, 1.0]
 				},
@@ -23,9 +23,10 @@
 					"enabled": true,
 					"sideShade": 0.7,
 					"worldSpaceUV": true,
-					"color": [0.05405414, 1.0, 0.0, 1.0],
+					"color": [0.18046036, 0.82625484, 0.14355777, 1.0],
+					"intensity": 1.0,
 					"surface": "Opaque",
-					"texture": "",
+					"texture": "resources/Textures/IceCube/ice.png",
 					"uvScale": [2.0, 2.0],
 					"shadingType": "HalfLambert",
 					"specular": [0.0, 0.0, 0.0],
@@ -38,9 +39,9 @@
 					"depth": 4.0,
 					"pointCount": 4,
 					"point0": [-1.25, -3.5],
-					"point1": [3.25, -2.0],
-					"point2": [3.25, -0.5],
-					"point3": [-1.25, -0.5]
+					"point1": [1.75, -3.5],
+					"point2": [1.75, 4.0],
+					"point3": [-1.25, 4.0]
 				},
 				"StickyWall": {
 					"Enabled": true

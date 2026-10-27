@@ -2,7 +2,7 @@
 	"version": 1,
 	"entities": [
 		{
-			"id": 186,
+			"id": 232,
 			"name": "StageSelect",
 			"parent": 0,
 			"active": true,
@@ -15,9 +15,11 @@
 				"StageSelectMenu": {
 					"Enabled": true,
 					"Style Name": "SelectedStyle",
-					"Columns": 5,
+					"Columns": 8,
 					"Use Mouse": true,
 					"Hit Padding": 16.0,
+					"Selected Offset": [0.0, 0.0],
+					"Slide Time": 0.12,
 					"Screen Name": "StageSelect",
 					"Cell Template": "CellTemplate",
 					"Back Name": "Back",
@@ -26,8 +28,17 @@
 					"Open Color": [1.0, 1.0, 1.0, 0.6],
 					"Locked Color": [1.0, 1.0, 1.0, 0.18],
 					"Stage Name": "StageName",
-					"Best Time": "BestTime",
+					"Message": "Message",
+					"Best Label Name": "BestLabel",
+					"Best Value Name": "BestValue",
+					"Clears Label Name": "ClearsLabel",
+					"Clears Value Name": "ClearsValue",
+					"Crystal Template": "CrystalTemplate",
+					"Crystal Spacing": 34.0,
+					"Crystal On Color": [0.82, 0.66, 1.0, 1.0],
+					"Crystal Off Color": [1.0, 1.0, 1.0, 0.2],
 					"Best Label": "Best",
+					"Clears Label": "Clears",
 					"No Record Text": "--:--.--",
 					"Locked Text": "Locked",
 					"Coming Text": "Coming soon",
@@ -48,9 +59,9 @@
 			}
 		},
 		{
-			"id": 187,
+			"id": 233,
 			"name": "Header",
-			"parent": 186,
+			"parent": 232,
 			"active": true,
 			"components": {
 				"Transform": {
@@ -91,13 +102,13 @@
 			}
 		},
 		{
-			"id": 188,
+			"id": 234,
 			"name": "CellTemplate",
-			"parent": 186,
+			"parent": 232,
 			"active": true,
 			"components": {
 				"Transform": {
-					"translation": [-240.0, 80.0, 0.0],
+					"translation": [-420.0, 150.0, 0.0],
 					"rotation": [0.0, 0.0, 0.0],
 					"scale": [1.0, 1.0, 1.0]
 				},
@@ -134,9 +145,9 @@
 			}
 		},
 		{
-			"id": 189,
+			"id": 235,
 			"name": "Items",
-			"parent": 186,
+			"parent": 232,
 			"active": true,
 			"components": {
 				"Transform": {
@@ -147,13 +158,13 @@
 			}
 		},
 		{
-			"id": 190,
+			"id": 236,
 			"name": "StageName",
-			"parent": 186,
+			"parent": 232,
 			"active": true,
 			"components": {
 				"Transform": {
-					"translation": [0.0, -140.0, 0.0],
+					"translation": [0.0, -110.0, 0.0],
 					"rotation": [0.0, 0.0, 0.0],
 					"scale": [1.0, 1.0, 1.0]
 				},
@@ -190,13 +201,13 @@
 			}
 		},
 		{
-			"id": 191,
-			"name": "BestTime",
-			"parent": 186,
+			"id": 237,
+			"name": "Message",
+			"parent": 232,
 			"active": true,
 			"components": {
 				"Transform": {
-					"translation": [-2.0, -230.0, 0.0],
+					"translation": [0.0, -200.0, 0.0],
 					"rotation": [0.0, 0.0, 0.0],
 					"scale": [1.0, 1.0, 1.0]
 				},
@@ -233,9 +244,9 @@
 			}
 		},
 		{
-			"id": 192,
+			"id": 238,
 			"name": "SelectedStyle",
-			"parent": 186,
+			"parent": 232,
 			"active": true,
 			"components": {
 				"Transform": {
@@ -262,7 +273,7 @@
 					"shadowOffset": [3.0, -3.0],
 					"shadowColor": [0.0, 0.0, 0.0, 0.6],
 					"glowWidth": 10.0,
-					"glowColor": [0.09803922, 0.95686275, 0.42745098, 1.0],
+					"glowColor": [0.62, 0.82, 1.0, 1.0],
 					"shine": false,
 					"shineColor": [1.0, 1.0, 1.0, 0.9],
 					"shineWidth": 24.0,
@@ -272,6 +283,266 @@
 					"motionAmount": 8.0,
 					"motionSpeed": 2.0,
 					"motionSpread": 0.1
+				}
+			}
+		},
+		{
+			"id": 239,
+			"name": "Back",
+			"parent": 232,
+			"active": true,
+			"components": {
+				"Transform": {
+					"translation": [-370.0, -260.0, 0.0],
+					"rotation": [0.0, 0.0, 0.0],
+					"scale": [1.0, 1.0, 1.0]
+				},
+				"Text": {
+					"enabled": true,
+					"text": "Back",
+					"font": "C:/Windows/Fonts/NotoSansJP-VF.ttf",
+					"fontSize": 48.0,
+					"color": [1.0, 1.0, 1.0, 0.7411765],
+					"align": "Center",
+					"anchor": "Center",
+					"pivot": [0.5, 0.5],
+					"lineSpacing": 1.0,
+					"letterSpacing": 0.0,
+					"order": 0,
+					"blend": "Normal",
+					"outlineWidth": 0.0,
+					"outlineColor": [0.0, 0.0, 0.0, 1.0],
+					"shadow": false,
+					"shadowOffset": [3.0, -3.0],
+					"shadowColor": [0.0, 0.0, 0.0, 0.6],
+					"glowWidth": 0.0,
+					"glowColor": [1.0, 0.8, 0.3, 0.8],
+					"shine": false,
+					"shineColor": [1.0, 1.0, 1.0, 0.9],
+					"shineWidth": 24.0,
+					"shineDuration": 0.6,
+					"shineInterval": 2.0,
+					"motion": "None",
+					"motionAmount": 8.0,
+					"motionSpeed": 2.0,
+					"motionSpread": 0.1
+				}
+			}
+		},
+		{
+			"id": 240,
+			"name": "BestLabel",
+			"parent": 232,
+			"active": true,
+			"components": {
+				"Transform": {
+					"translation": [-200.0, -200.0, 0.0],
+					"rotation": [0.0, 0.0, 0.0],
+					"scale": [1.0, 1.0, 1.0]
+				},
+				"Text": {
+					"enabled": true,
+					"text": "Best",
+					"font": "C:/Windows/Fonts/NotoSansJP-VF.ttf",
+					"fontSize": 30.0,
+					"color": [1.0, 1.0, 1.0, 0.75],
+					"align": "Right",
+					"anchor": "Center",
+					"pivot": [1.0, 0.5],
+					"lineSpacing": 1.0,
+					"letterSpacing": 0.0,
+					"order": 0,
+					"blend": "Normal",
+					"outlineWidth": 0.0,
+					"outlineColor": [0.0, 0.0, 0.0, 1.0],
+					"shadow": false,
+					"shadowOffset": [3.0, -3.0],
+					"shadowColor": [0.0, 0.0, 0.0, 0.6],
+					"glowWidth": 0.0,
+					"glowColor": [1.0, 0.8, 0.3, 0.8],
+					"shine": false,
+					"shineColor": [1.0, 1.0, 1.0, 0.9],
+					"shineWidth": 24.0,
+					"shineDuration": 0.6,
+					"shineInterval": 2.0,
+					"motion": "None",
+					"motionAmount": 8.0,
+					"motionSpeed": 2.0,
+					"motionSpread": 0.1
+				}
+			}
+		},
+		{
+			"id": 241,
+			"name": "BestValue",
+			"parent": 232,
+			"active": true,
+			"components": {
+				"Transform": {
+					"translation": [-186.0, -200.0, 0.0],
+					"rotation": [0.0, 0.0, 0.0],
+					"scale": [1.0, 1.0, 1.0]
+				},
+				"Text": {
+					"enabled": true,
+					"text": "0:00.00",
+					"font": "C:/Windows/Fonts/NotoSansJP-VF.ttf",
+					"fontSize": 36.0,
+					"color": [0.62, 0.86, 1.0, 1.0],
+					"align": "Left",
+					"anchor": "Center",
+					"pivot": [0.0, 0.5],
+					"lineSpacing": 1.0,
+					"letterSpacing": 0.0,
+					"order": 0,
+					"blend": "Normal",
+					"outlineWidth": 0.0,
+					"outlineColor": [0.0, 0.0, 0.0, 1.0],
+					"shadow": false,
+					"shadowOffset": [3.0, -3.0],
+					"shadowColor": [0.0, 0.0, 0.0, 0.6],
+					"glowWidth": 0.0,
+					"glowColor": [1.0, 0.8, 0.3, 0.8],
+					"shine": false,
+					"shineColor": [1.0, 1.0, 1.0, 0.9],
+					"shineWidth": 24.0,
+					"shineDuration": 0.6,
+					"shineInterval": 2.0,
+					"motion": "None",
+					"motionAmount": 8.0,
+					"motionSpeed": 2.0,
+					"motionSpread": 0.1
+				}
+			}
+		},
+		{
+			"id": 242,
+			"name": "ClearsLabel",
+			"parent": 232,
+			"active": true,
+			"components": {
+				"Transform": {
+					"translation": [80.0, -200.0, 0.0],
+					"rotation": [0.0, 0.0, 0.0],
+					"scale": [1.0, 1.0, 1.0]
+				},
+				"Text": {
+					"enabled": true,
+					"text": "Clears",
+					"font": "C:/Windows/Fonts/NotoSansJP-VF.ttf",
+					"fontSize": 30.0,
+					"color": [1.0, 1.0, 1.0, 0.75],
+					"align": "Right",
+					"anchor": "Center",
+					"pivot": [1.0, 0.5],
+					"lineSpacing": 1.0,
+					"letterSpacing": 0.0,
+					"order": 0,
+					"blend": "Normal",
+					"outlineWidth": 0.0,
+					"outlineColor": [0.0, 0.0, 0.0, 1.0],
+					"shadow": false,
+					"shadowOffset": [3.0, -3.0],
+					"shadowColor": [0.0, 0.0, 0.0, 0.6],
+					"glowWidth": 0.0,
+					"glowColor": [1.0, 0.8, 0.3, 0.8],
+					"shine": false,
+					"shineColor": [1.0, 1.0, 1.0, 0.9],
+					"shineWidth": 24.0,
+					"shineDuration": 0.6,
+					"shineInterval": 2.0,
+					"motion": "None",
+					"motionAmount": 8.0,
+					"motionSpeed": 2.0,
+					"motionSpread": 0.1
+				}
+			}
+		},
+		{
+			"id": 243,
+			"name": "ClearsValue",
+			"parent": 232,
+			"active": true,
+			"components": {
+				"Transform": {
+					"translation": [94.0, -200.0, 0.0],
+					"rotation": [0.0, 0.0, 0.0],
+					"scale": [1.0, 1.0, 1.0]
+				},
+				"Text": {
+					"enabled": true,
+					"text": "0",
+					"font": "C:/Windows/Fonts/NotoSansJP-VF.ttf",
+					"fontSize": 36.0,
+					"color": [1.0, 0.84, 0.52, 1.0],
+					"align": "Left",
+					"anchor": "Center",
+					"pivot": [0.0, 0.5],
+					"lineSpacing": 1.0,
+					"letterSpacing": 0.0,
+					"order": 0,
+					"blend": "Normal",
+					"outlineWidth": 0.0,
+					"outlineColor": [0.0, 0.0, 0.0, 1.0],
+					"shadow": false,
+					"shadowOffset": [3.0, -3.0],
+					"shadowColor": [0.0, 0.0, 0.0, 0.6],
+					"glowWidth": 0.0,
+					"glowColor": [1.0, 0.8, 0.3, 0.8],
+					"shine": false,
+					"shineColor": [1.0, 1.0, 1.0, 0.9],
+					"shineWidth": 24.0,
+					"shineDuration": 0.6,
+					"shineInterval": 2.0,
+					"motion": "None",
+					"motionAmount": 8.0,
+					"motionSpeed": 2.0,
+					"motionSpread": 0.1
+				}
+			}
+		},
+		{
+			"id": 244,
+			"name": "CrystalTemplate",
+			"parent": 232,
+			"active": true,
+			"components": {
+				"Transform": {
+					"translation": [170.0, -200.0, 0.0],
+					"rotation": [0.0, 0.0, 0.0],
+					"scale": [1.0, 1.0, 1.0]
+				},
+				"Image": {
+					"enabled": false,
+					"texture": "resources/Textures/UI/crystal_icon.png",
+					"color": [1.0, 1.0, 1.0, 1.0],
+					"size": [22.0, 33.0],
+					"anchor": "Center",
+					"pivot": [0.5, 0.5],
+					"fill": 1.0,
+					"order": 0,
+					"flipX": false,
+					"flipY": false,
+					"blend": "Normal",
+					"columns": 1,
+					"rows": 1,
+					"frame": 0,
+					"useRect": false,
+					"rectPosition": [0.0, 0.0],
+					"rectSize": [0.0, 0.0]
+				}
+			}
+		},
+		{
+			"id": 245,
+			"name": "CrystalIcons",
+			"parent": 232,
+			"active": true,
+			"components": {
+				"Transform": {
+					"translation": [0.0, 0.0, 0.0],
+					"rotation": [0.0, 0.0, 0.0],
+					"scale": [1.0, 1.0, 1.0]
 				}
 			}
 		}

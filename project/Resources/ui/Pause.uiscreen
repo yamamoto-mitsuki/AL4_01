@@ -2,7 +2,7 @@
 	"version": 1,
 	"entities": [
 		{
-			"id": 193,
+			"id": 277,
 			"name": "Pause",
 			"parent": 0,
 			"active": true,
@@ -18,8 +18,19 @@
 					"Columns": 1,
 					"Use Mouse": true,
 					"Hit Padding": 12.0,
+					"Selected Offset": [16.0, 0.0],
+					"Slide Time": 0.12,
 					"Screen Name": "Pause",
-					"Title Scene": "Title"
+					"Title Scene": "Title",
+					"Settings Screen": "PauseSettings",
+					"Header Name": "Header",
+					"Fade Time": 0.2,
+					"Blur Time": 0.25,
+					"Blur Focus Distance": 1.0,
+					"Blur Focus Range": 0.0,
+					"Blur Far Transition": 3.0,
+					"Blur Near Transition": 0.0,
+					"Blur Max": 16.0
 				},
 				"UI Screen": {
 					"pauseGame": true,
@@ -35,9 +46,9 @@
 			}
 		},
 		{
-			"id": 194,
+			"id": 278,
 			"name": "Dim",
-			"parent": 193,
+			"parent": 277,
 			"active": true,
 			"components": {
 				"Transform": {
@@ -48,7 +59,7 @@
 				"Image": {
 					"enabled": true,
 					"texture": "",
-					"color": [0.0, 0.0, 0.0, 0.7058824],
+					"color": [0.0, 0.0, 0.0, 0.45],
 					"size": [1280.0, 720.0],
 					"anchor": "Center",
 					"pivot": [0.5, 0.5],
@@ -75,9 +86,9 @@
 			}
 		},
 		{
-			"id": 195,
-			"name": "Pause",
-			"parent": 193,
+			"id": 279,
+			"name": "Header",
+			"parent": 277,
 			"active": true,
 			"components": {
 				"Transform": {
@@ -118,9 +129,9 @@
 			}
 		},
 		{
-			"id": 196,
+			"id": 280,
 			"name": "SelectedStyle",
-			"parent": 193,
+			"parent": 277,
 			"active": true,
 			"components": {
 				"Transform": {
@@ -146,14 +157,14 @@
 					"shadow": false,
 					"shadowOffset": [0.0, -3.0],
 					"shadowColor": [0.0, 0.0, 0.0, 1.0],
-					"glowWidth": 0.0,
-					"glowColor": [1.0, 1.0, 1.0, 1.0],
-					"shine": true,
-					"shineColor": [0.16078432, 0.78431374, 0.15294118, 1.0],
+					"glowWidth": 10.0,
+					"glowColor": [0.62, 0.82, 1.0, 1.0],
+					"shine": false,
+					"shineColor": [0.62, 0.82, 1.0, 1.0],
 					"shineWidth": 72.0,
 					"shineDuration": 1.0,
 					"shineInterval": 0.3,
-					"motion": "Bounce",
+					"motion": "None",
 					"motionAmount": 6.0,
 					"motionSpeed": 1.0,
 					"motionSpread": 0.2
@@ -161,9 +172,9 @@
 			}
 		},
 		{
-			"id": 197,
+			"id": 281,
 			"name": "Items",
-			"parent": 193,
+			"parent": 277,
 			"active": true,
 			"components": {
 				"Transform": {
@@ -174,13 +185,13 @@
 			}
 		},
 		{
-			"id": 198,
+			"id": 282,
 			"name": "Resume",
-			"parent": 197,
+			"parent": 281,
 			"active": true,
 			"components": {
 				"Transform": {
-					"translation": [-435.0, 28.0, 0.0],
+					"translation": [-570, 50, 0.0],
 					"rotation": [0.0, 0.0, 0.0],
 					"scale": [1.0, 1.0, 1.0]
 				},
@@ -188,11 +199,11 @@
 					"enabled": true,
 					"text": "Resume",
 					"font": "C:/Windows/Fonts/NotoSansJP-VF.ttf",
-					"fontSize": 64.0,
-					"color": [1.0, 1.0, 1.0, 1.0],
-					"align": "Center",
+					"fontSize": 48.0,
+					"color": [1.0, 1.0, 1.0, 0.5882353],
+					"align": "Left",
 					"anchor": "Center",
-					"pivot": [0.5, 0.5],
+					"pivot": [0.0, 0.5],
 					"lineSpacing": 1.0,
 					"letterSpacing": 0.0,
 					"order": 0,
@@ -217,13 +228,13 @@
 			}
 		},
 		{
-			"id": 199,
+			"id": 283,
 			"name": "Restart",
-			"parent": 197,
+			"parent": 281,
 			"active": true,
 			"components": {
 				"Transform": {
-					"translation": [-435.0, -100.0, 0.0],
+					"translation": [-570, -30, 0.0],
 					"rotation": [0.0, 0.0, 0.0],
 					"scale": [1.0, 1.0, 1.0]
 				},
@@ -231,11 +242,11 @@
 					"enabled": true,
 					"text": "Restart",
 					"font": "C:/Windows/Fonts/NotoSansJP-VF.ttf",
-					"fontSize": 64.0,
-					"color": [1.0, 1.0, 1.0, 1.0],
-					"align": "Center",
+					"fontSize": 48.0,
+					"color": [1.0, 1.0, 1.0, 0.5882353],
+					"align": "Left",
 					"anchor": "Center",
-					"pivot": [0.5, 0.5],
+					"pivot": [0.0, 0.5],
 					"lineSpacing": 1.0,
 					"letterSpacing": 0.0,
 					"order": 0,
@@ -260,13 +271,56 @@
 			}
 		},
 		{
-			"id": 200,
-			"name": "Title",
-			"parent": 197,
+			"id": 300,
+			"name": "Settings",
+			"parent": 281,
 			"active": true,
 			"components": {
 				"Transform": {
-					"translation": [-435.0, -239.0, 0.0],
+					"translation": [-570, -110, 0.0],
+					"rotation": [0.0, 0.0, 0.0],
+					"scale": [1.0, 1.0, 1.0]
+				},
+				"Text": {
+					"enabled": true,
+					"text": "Settings",
+					"font": "C:/Windows/Fonts/NotoSansJP-VF.ttf",
+					"fontSize": 48.0,
+					"color": [1.0, 1.0, 1.0, 0.5882353],
+					"align": "Left",
+					"anchor": "Center",
+					"pivot": [0.0, 0.5],
+					"lineSpacing": 1.0,
+					"letterSpacing": 0.0,
+					"order": 0,
+					"blend": "Normal",
+					"outlineWidth": 0.0,
+					"outlineColor": [1.0, 1.0, 1.0, 1.0],
+					"shadow": false,
+					"shadowOffset": [0.0, -3.0],
+					"shadowColor": [0.0, 0.0, 0.0, 1.0],
+					"glowWidth": 0.0,
+					"glowColor": [1.0, 1.0, 1.0, 1.0],
+					"shine": false,
+					"shineColor": [0.16078432, 0.78431374, 0.15294118, 1.0],
+					"shineWidth": 72.0,
+					"shineDuration": 1.0,
+					"shineInterval": 0.3,
+					"motion": "None",
+					"motionAmount": 6.0,
+					"motionSpeed": 1.0,
+					"motionSpread": 0.2
+				}
+			}
+		},
+		{
+			"id": 284,
+			"name": "Title",
+			"parent": 281,
+			"active": true,
+			"components": {
+				"Transform": {
+					"translation": [-570, -190, 0.0],
 					"rotation": [0.0, 0.0, 0.0],
 					"scale": [1.0, 1.0, 1.0]
 				},
@@ -274,11 +328,11 @@
 					"enabled": true,
 					"text": "Title",
 					"font": "C:/Windows/Fonts/NotoSansJP-VF.ttf",
-					"fontSize": 64.0,
-					"color": [1.0, 1.0, 1.0, 1.0],
-					"align": "Center",
+					"fontSize": 48.0,
+					"color": [1.0, 1.0, 1.0, 0.5882353],
+					"align": "Left",
 					"anchor": "Center",
-					"pivot": [0.5, 0.5],
+					"pivot": [0.0, 0.5],
 					"lineSpacing": 1.0,
 					"letterSpacing": 0.0,
 					"order": 0,

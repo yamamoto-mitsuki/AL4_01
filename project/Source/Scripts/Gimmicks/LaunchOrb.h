@@ -29,6 +29,7 @@ public:
 
 protected:
 	void OnUse() override { pulseTimer_ = 0.0f; } // 使った瞬間に、輪がふくらむ
+	float GetRumbleTime() const override;         // 吹っ飛ぶ円なので、水色の円より長く震える
 
 private:
 	// ===== Inspector に出す・保存する値 =====

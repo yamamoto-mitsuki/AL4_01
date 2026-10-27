@@ -5,6 +5,8 @@
 
 #include "IceCube.h"
 #include "LevelInfo.h"
+#include "Source/Scripts/Audio/GameAudio.h"
+#include "Source/Scripts/Effects/GameRumble.h"
 
 SCRIPT(GoalDoor, "Game");
 
@@ -25,6 +27,9 @@ void GoalDoor::Fields(ComponentUI& ui) {
 	ui.Field("Blur Far Transition", blurTo_.farTransition, AtLeast(0.0f).Tip("ぼけきった時の、一番ぼけるまでの奥行き（m）。小さいほど、すぐ奥が強くぼける"));
 	ui.Field("Blur Near Transition", blurTo_.nearTransition, AtLeast(0.0f).Tip("ぼけきった時の、手前のぼけ（m）。0 なら手前はぼかさない"));
 	ui.Field("Blur Max", blurTo_.maxBlur, AtLeast(0.0f).Tip("ぼけきった時の、ぼけの半径（ピクセル。エンジンの上限は 32）。大きいほど強くぼける"));
+	// --- 振動 ---
+	ui.Field("Rumble Power", rumblePower_, Range(0.0f, 1.0f).Tip("触れた瞬間のコントローラーの振動の強さ（一定）"));
+	ui.Field("Rumble Time", rumbleTime_, AtLeast(0.0f).Tip("震える秒数。0 なら震えない"));
 }
 
 //=============================================================================
@@ -43,6 +48,11 @@ void GoalDoor::OnTriggerEnter(GameObject other) {
 	if (LevelInfo* level = LevelInfo::Find()) {
 		level->Clear();
 	}
+	// --- 音：ゴールの音を鳴らして、BGM はぼけるのと同じ秒数で小さくする（次のレベル・タイトルが始まったら戻る）---
+	GameAudio::PlaySe(Se::Goal);
+	GameAudio::DuckBgm(blurTime_);
+	// --- コントローラーを震わせる（止めるのは GameRumble。数えるのは IceCube::Update で、クリアの後も動いている）---
+	GameRumble::Play(rumblePower_, rumbleTime_);
 	// --- 粒が昇り始める ---
 	if (const GameObject particle = gameObject.FindChild(particleName_)) {
 		ParticleSystem::Play(particle.handle);

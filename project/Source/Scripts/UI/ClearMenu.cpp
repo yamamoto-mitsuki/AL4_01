@@ -19,6 +19,8 @@ void ClearMenu::Fields(ComponentUI& ui) {
 	ui.Field("Stage Text", stageTextName_, Tip("ステージの名前（StageCatalog.h の title）を書く Text の名前（一番上の直下の子）"));
 	ui.Field("Time Text", timeTextName_, Tip("遊んだ時間を書く Text の名前（一番上の直下の子）"));
 	ui.Field("Record Text", recordTextName_, Tip("New Best か、前の1位のタイムを書く Text の名前（一番上の直下の子）"));
+	ui.Field("Crystals", crystalsName_, Tip("隠し結晶の図形と数を入れた物の名前（一番上の直下の子）。結晶の無いステージでは消す"));
+	ui.Field("Crystal Count Text", crystalCountName_, Tip("隠し結晶の「取った数 / 置いてある数」を書く Text の名前（Crystals の子）"));
 	// --- 言葉 ---
 	ui.Field("New Best Text", newBestText_, Tip("1位になったとき（初めてのクリアも）に出す言葉"));
 	ui.Field("Best Label", bestLabel_, Tip("1位でなかったときに、前の1位のタイムの前に付ける言葉"));
@@ -46,6 +48,17 @@ void ClearMenu::OnStart() {
 	}
 	if (TextComponent* text = FindText(timeTextName_)) {
 		text->text = FormatTime(level->GetPlayTime());
+	}
+	// --- 隠し結晶：取った数 / 置いてある数（クリアで記録した後の数）。結晶の無いステージでは消す ---
+	if (const GameObject crystals = gameObject.FindChild(crystalsName_)) {
+		const int total = (stage < kStageCount) ? GameProgress::GetCrystalTotal(stage) : 0;
+		if (total <= 0) {
+			crystals.SetActive(false);
+		} else if (const GameObject count = crystals.FindChild(crystalCountName_)) {
+			if (TextComponent* text = count.GetComponent<TextComponent>()) {
+				text->text = std::format("{} / {}", GameProgress::GetCrystalCount(stage), total);
+			}
+		}
 	}
 	// --- 記録：1位になったら New Best（うっすら光る）。ならなかったら、前の1位のタイムを薄く ---
 	if (TextComponent* text = FindText(recordTextName_)) {

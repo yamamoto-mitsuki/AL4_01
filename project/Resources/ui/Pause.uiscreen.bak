@@ -2,7 +2,7 @@
 	"version": 1,
 	"entities": [
 		{
-			"id": 194,
+			"id": 193,
 			"name": "Pause",
 			"parent": 0,
 			"active": true,
@@ -35,9 +35,9 @@
 			}
 		},
 		{
-			"id": 195,
+			"id": 194,
 			"name": "Dim",
-			"parent": 194,
+			"parent": 193,
 			"active": true,
 			"components": {
 				"Transform": {
@@ -75,9 +75,9 @@
 			}
 		},
 		{
-			"id": 196,
+			"id": 195,
 			"name": "Pause",
-			"parent": 194,
+			"parent": 193,
 			"active": true,
 			"components": {
 				"Transform": {
@@ -118,9 +118,9 @@
 			}
 		},
 		{
-			"id": 197,
+			"id": 196,
 			"name": "SelectedStyle",
-			"parent": 194,
+			"parent": 193,
 			"active": true,
 			"components": {
 				"Transform": {
@@ -147,9 +147,9 @@
 					"shadowOffset": [0.0, -3.0],
 					"shadowColor": [0.0, 0.0, 0.0, 1.0],
 					"glowWidth": 0.0,
-					"glowColor": [1.0, 1.0, 1.0, 1.0],
+					"glowColor": [0.62, 0.82, 1.0, 1.0],
 					"shine": true,
-					"shineColor": [0.16078432, 0.78431374, 0.15294118, 1.0],
+					"shineColor": [0.62, 0.82, 1.0, 1.0],
 					"shineWidth": 72.0,
 					"shineDuration": 1.0,
 					"shineInterval": 0.3,
@@ -161,9 +161,9 @@
 			}
 		},
 		{
-			"id": 198,
+			"id": 197,
 			"name": "Items",
-			"parent": 194,
+			"parent": 193,
 			"active": true,
 			"components": {
 				"Transform": {
@@ -174,9 +174,9 @@
 			}
 		},
 		{
-			"id": 199,
+			"id": 198,
 			"name": "Resume",
-			"parent": 198,
+			"parent": 197,
 			"active": true,
 			"components": {
 				"Transform": {
@@ -217,9 +217,9 @@
 			}
 		},
 		{
-			"id": 200,
+			"id": 199,
 			"name": "Restart",
-			"parent": 198,
+			"parent": 197,
 			"active": true,
 			"components": {
 				"Transform": {
@@ -260,9 +260,9 @@
 			}
 		},
 		{
-			"id": 201,
+			"id": 200,
 			"name": "Title",
-			"parent": 198,
+			"parent": 197,
 			"active": true,
 			"components": {
 				"Transform": {

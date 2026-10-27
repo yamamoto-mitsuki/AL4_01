@@ -2,7 +2,19 @@
 
 #include <MyEngine/Systems/ParticleSystem.h>
 
+#include "Source/Scripts/Effects/GameRumble.h"
 #include "Source/Scripts/IceCube.h"
+
+namespace {
+// 使ったときのコントローラーの振動（強さは水色の円・緑の円で同じ。だんだん大きくはしない）
+constexpr float kRumblePower = 0.9f; // 強さ（0〜1。左右のモーターに同じ値）
+constexpr float kRumbleTime = 0.15f; // 震える秒数（水色の円。緑の円は LaunchOrb::GetRumbleTime で長く）
+} // namespace
+
+//=============================================================================
+// 使ったときに震える秒数（派生クラスで変えないなら、水色の円と同じ）
+//=============================================================================
+float JumpRing::GetRumbleTime() const { return kRumbleTime; }
 
 //=============================================================================
 // Inspector に出す・保存する値（派生クラスの Fields から、最初に呼ぶ）
@@ -26,6 +38,8 @@ void JumpRing::Use() {
 	if (const GameObject burst = gameObject.FindChild(burstParticleName_)) {
 		ParticleSystem::Play(burst.handle); // Burst Count の数を一度に出す
 	}
+	// --- コントローラー：一定の強さで短く震わせる（止めるのは GameRumble が数えて）---
+	GameRumble::Play(kRumblePower, GetRumbleTime());
 	OnUse(); // ほかの見た目（派生クラス）
 }
 

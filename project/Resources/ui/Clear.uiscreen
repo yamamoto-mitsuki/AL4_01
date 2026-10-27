@@ -2,7 +2,7 @@
 	"version": 1,
 	"entities": [
 		{
-			"id": 209,
+			"id": 285,
 			"name": "Clear",
 			"parent": 0,
 			"active": true,
@@ -18,15 +18,19 @@
 					"Columns": 2,
 					"Use Mouse": true,
 					"Hit Padding": 16.0,
+					"Selected Offset": [0.0, 0.0],
+					"Slide Time": 0.12,
 					"Stage Text": "StageText",
 					"Time Text": "TimeText",
 					"Record Text": "RecordText",
+					"Crystals": "Crystals",
+					"Crystal Count Text": "Count",
 					"New Best Text": "New Best",
 					"Best Label": "Best",
 					"New Best Color": [0.85, 0.95, 1.0, 1.0],
 					"New Best Glow Width": 8.0,
 					"New Best Glow Color": [0.75, 0.93, 1.0, 0.55],
-					"Input Delay": 1.0,
+					"Input Delay": 1.25,
 					"Next Item Name": "Next"
 				},
 				"UI Screen": {
@@ -46,13 +50,13 @@
 			}
 		},
 		{
-			"id": 210,
+			"id": 286,
 			"name": "StageText",
-			"parent": 209,
+			"parent": 285,
 			"active": true,
 			"components": {
 				"Transform": {
-					"translation": [5.0, 200.0, 0.0],
+					"translation": [5.0, 235.0, 0.0],
 					"rotation": [0.0, 0.0, 0.0],
 					"scale": [1.0, 1.0, 1.0]
 				},
@@ -89,9 +93,97 @@
 			}
 		},
 		{
-			"id": 211,
+			"id": 293,
+			"name": "Crystals",
+			"parent": 285,
+			"active": true,
+			"components": {
+				"Transform": {
+					"translation": [0.0, 128.0, 0.0],
+					"rotation": [0.0, 0.0, 0.0],
+					"scale": [1.0, 1.0, 1.0]
+				}
+			}
+		},
+		{
+			"id": 294,
+			"name": "Icon",
+			"parent": 293,
+			"active": true,
+			"components": {
+				"Transform": {
+					"translation": [-46.0, 0.0, 0.0],
+					"rotation": [0.0, 0.0, 0.0],
+					"scale": [1.0, 1.0, 1.0]
+				},
+				"Image": {
+					"enabled": true,
+					"texture": "resources/Textures/UI/crystal_icon.png",
+					"color": [0.82, 0.66, 1.0, 1.0],
+					"size": [30.0, 45.0],
+					"anchor": "Center",
+					"pivot": [0.5, 0.5],
+					"fill": 1.0,
+					"order": 0,
+					"flipX": false,
+					"flipY": false,
+					"blend": "Normal",
+					"columns": 1,
+					"rows": 1,
+					"frame": 0,
+					"useRect": false,
+					"rectPosition": [0.0, 0.0],
+					"rectSize": [0.0, 0.0]
+				}
+			}
+		},
+		{
+			"id": 295,
+			"name": "Count",
+			"parent": 293,
+			"active": true,
+			"components": {
+				"Transform": {
+					"translation": [-22.0, 0.0, 0.0],
+					"rotation": [0.0, 0.0, 0.0],
+					"scale": [1.0, 1.0, 1.0]
+				},
+				"Text": {
+					"enabled": true,
+					"text": "0 / 0",
+					"font": "C:/Windows/Fonts/NotoSansJP-VF.ttf",
+					"fontSize": 44.0,
+					"color": [0.82, 0.66, 1.0, 1.0],
+					"align": "Left",
+					"anchor": "Center",
+					"pivot": [0.0, 0.5],
+					"lineSpacing": 1.0,
+					"letterSpacing": 0.0,
+					"order": 0,
+					"blend": "Normal",
+					"outlineWidth": 0.0,
+					"outlineColor": [0.0, 0.0, 0.0, 1.0],
+					"shadow": false,
+					"shadowOffset": [3.0, -3.0],
+					"shadowColor": [0.0, 0.0, 0.0, 0.6],
+					"glowWidth": 6.0,
+					"glowColor": [0.72, 0.55, 1.0, 0.45],
+					"shine": false,
+					"shineColor": [1.0, 1.0, 1.0, 0.9],
+					"shineWidth": 24.0,
+					"shineDuration": 0.6,
+					"shineInterval": 2.0,
+					"motion": "None",
+					"motionAmount": 8.0,
+					"motionSpeed": 2.0,
+					"motionSpread": 0.1
+				}
+			}
+		},
+		{
+			"id": 287,
 			"name": "TimeText",
-			"parent": 209,
+			"parent": 285,
 			"active": true,
 			"components": {
 				"Transform": {
@@ -132,9 +224,9 @@
 			}
 		},
 		{
-			"id": 212,
+			"id": 288,
 			"name": "RecordText",
-			"parent": 209,
+			"parent": 285,
 			"active": true,
 			"components": {
 				"Transform": {
@@ -175,9 +267,9 @@
 			}
 		},
 		{
-			"id": 213,
+			"id": 289,
 			"name": "Items",
-			"parent": 209,
+			"parent": 285,
 			"active": true,
 			"components": {
 				"Transform": {
@@ -188,9 +280,9 @@
 			}
 		},
 		{
-			"id": 216,
+			"id": 290,
 			"name": "SelectedStyle",
-			"parent": 209,
+			"parent": 285,
 			"active": true,
 			"components": {
 				"Transform": {
@@ -217,7 +309,7 @@
 					"shadowOffset": [3.0, -3.0],
 					"shadowColor": [0.0, 0.0, 0.0, 0.6],
 					"glowWidth": 10.0,
-					"glowColor": [0.078431375, 0.9019608, 0.40392157, 1.0],
+					"glowColor": [0.62, 0.82, 1.0, 1.0],
 					"shine": false,
 					"shineColor": [1.0, 1.0, 1.0, 0.9],
 					"shineWidth": 24.0,
@@ -231,9 +323,9 @@
 			}
 		},
 		{
-			"id": 214,
+			"id": 291,
 			"name": "Next",
-			"parent": 213,
+			"parent": 289,
 			"active": true,
 			"components": {
 				"Transform": {
@@ -274,9 +366,9 @@
 			}
 		},
 		{
-			"id": 215,
+			"id": 292,
 			"name": "Title",
-			"parent": 213,
+			"parent": 289,
 			"active": true,
 			"components": {
 				"Transform": {

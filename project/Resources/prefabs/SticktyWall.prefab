@@ -2,13 +2,13 @@
 	"version": 1,
 	"entities": [
 		{
-			"id": 801,
+			"id": 920,
 			"name": "SticktyWall",
 			"parent": 0,
 			"active": true,
 			"components": {
 				"Transform": {
-					"translation": [8.0227375, 4.047947, 0.0],
+					"translation": [67.45918, 9.88232, 0.0],
 					"rotation": [0.0, 0.0, 0.0],
 					"scale": [1.0, 1.0, 1.0]
 				},

@@ -1,5 +1,6 @@
 #include <MyEngine/Engine.h>
 #include "Source/Scripts/GameTitle.h"
+#include "Source/Scripts/Progress/GameSettings.h"
 
 int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 	WindowConfig config;
@@ -10,6 +11,8 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 	config.isImGui = true;
 #endif
 	Engine::Initialize(config, "Title");
+	// 設定（音の大きさ・全画面）を saves/Settings.json から当てる（最初のシーンが音を鳴らす前に）
+	GameSettings::Load();
 	while (Engine::ProcessMessage()) {
 		Engine::BeginFrame();
 		Engine::GetWindowManager()->UpdateAll();
