@@ -6,11 +6,11 @@
 
 #include <externals/magic_enum/magic_enum.hpp>
 
-#include <MyEngine/Components/FogComponent.h>
-#include <MyEngine/Components/LightComponent.h>
-#include <MyEngine/Components/ParticleSystemComponent.h>
-#include <MyEngine/Components/PolygonRendererComponent.h>
-#include <MyEngine/Components/SpriteRendererComponent.h>
+#include <MyEngine/Components/Rendering3D/FogComponent.h>
+#include <MyEngine/Components/Lighting/LightComponent.h>
+#include <MyEngine/Components/Effects/ParticleSystemComponent.h>
+#include <MyEngine/Components/Rendering3D/PolygonRendererComponent.h>
+#include <MyEngine/Components/Rendering2D/SpriteRendererComponent.h>
 #include <MyEngine/ECS/ComponentUI.h>
 #include <MyEngine/ECS/EntityManager.h>
 #include <MyEngine/ECS/Script.h>

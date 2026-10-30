@@ -6,7 +6,7 @@
 
 #include <externals/magic_enum/magic_enum.hpp>
 
-#include <MyEngine/Components/TextComponent.h>
+#include <MyEngine/Components/UI/TextComponent.h>
 #include <MyEngine/ECS/EntityManager.h>
 
 #include "Source/Scripts/Progress/GameSettings.h"

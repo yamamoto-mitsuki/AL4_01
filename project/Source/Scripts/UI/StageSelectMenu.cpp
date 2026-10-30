@@ -4,7 +4,7 @@
 #include <format>
 #include <optional>
 
-#include <MyEngine/Components/ImageComponent.h>
+#include <MyEngine/Components/UI/ImageComponent.h>
 #include <MyEngine/Diagnostics/LogManager.h>
 
 #include "Source/Scripts/Audio/GameAudio.h"

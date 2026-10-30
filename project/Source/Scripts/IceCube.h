@@ -5,7 +5,7 @@
 #include <MyEngine/Math/Geometry/PathCurve.h>
 #include <MyEngine/Math/Vector3.h>
 #include <MyEngine/Math/Vector4.h>
-#include <MyEngine/Systems/WindZoneSystem.h>
+#include <MyEngine/Systems/Physics/WindZoneSystem.h>
 
 // 前方宣言
 class LaunchOrb;

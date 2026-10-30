@@ -2,7 +2,7 @@
 
 #include <cmath>
 
-#include <MyEngine/Systems/ParticleSystem.h>
+#include <MyEngine/Systems/Effects/ParticleSystem.h>
 
 SCRIPT(DistanceTrail, "Effects");
 

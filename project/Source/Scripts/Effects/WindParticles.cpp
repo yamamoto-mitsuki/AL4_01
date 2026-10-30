@@ -3,10 +3,10 @@
 #include <algorithm>
 #include <cmath>
 
-#include <MyEngine/Components/ParticleSystemComponent.h>
-#include <MyEngine/Components/WindZoneComponent.h>
-#include <MyEngine/Systems/ParticleSystem.h>
-#include <MyEngine/Systems/WindZoneSystem.h>
+#include <MyEngine/Components/Effects/ParticleSystemComponent.h>
+#include <MyEngine/Components/Physics/WindZoneComponent.h>
+#include <MyEngine/Systems/Effects/ParticleSystem.h>
+#include <MyEngine/Systems/Physics/WindZoneSystem.h>
 
 SCRIPT(WindParticles, "Effects");
 

@@ -1,5 +1,5 @@
 #pragma once
-#include <MyEngine/Components/DepthOfFieldComponent.h>
+#include <MyEngine/Components/Rendering3D/DepthOfFieldComponent.h>
 #include <MyEngine/Core/Handle.h>
 #include <MyEngine/ECS/Entity.h>
 

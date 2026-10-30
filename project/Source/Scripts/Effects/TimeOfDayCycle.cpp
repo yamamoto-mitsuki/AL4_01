@@ -5,7 +5,7 @@
 
 #include <externals/magic_enum/magic_enum.hpp>
 
-#include <MyEngine/Components/SpriteRendererComponent.h>
+#include <MyEngine/Components/Rendering2D/SpriteRendererComponent.h>
 #include <MyEngine/ECS/EntityManager.h>
 #include <MyEngine/Math/Easing.h>
 #include <MyEngine/Math/MathUtility.h>

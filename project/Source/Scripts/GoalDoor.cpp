@@ -1,7 +1,7 @@
 #include "GoalDoor.h"
 
 #include <MyEngine/Diagnostics/LogManager.h>
-#include <MyEngine/Systems/ParticleSystem.h>
+#include <MyEngine/Systems/Effects/ParticleSystem.h>
 
 #include "IceCube.h"
 #include "LevelInfo.h"

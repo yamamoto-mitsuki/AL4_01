@@ -1,6 +1,6 @@
 #include "TextHider.h"
 
-#include <MyEngine/Components/TextComponent.h>
+#include <MyEngine/Components/UI/TextComponent.h>
 #include <MyEngine/ECS/EntityManager.h>
 #include <MyEngine/UI/UIScreen.h>
 

@@ -3,10 +3,10 @@
 #include <algorithm>
 #include <cmath>
 
-#include <MyEngine/Components/ParticleSystemComponent.h>
+#include <MyEngine/Components/Effects/ParticleSystemComponent.h>
 #include <MyEngine/Math/Easing.h>
 #include <MyEngine/Math/MathUtility.h>
-#include <MyEngine/Systems/ParticleSystem.h>
+#include <MyEngine/Systems/Effects/ParticleSystem.h>
 
 #include "Source/Scripts/Audio/GameAudio.h"
 #include "Source/Scripts/Effects/GameRumble.h"

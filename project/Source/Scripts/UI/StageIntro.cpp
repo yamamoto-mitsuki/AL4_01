@@ -3,7 +3,7 @@
 #include <algorithm>
 #include <format>
 
-#include <MyEngine/Components/TextComponent.h>
+#include <MyEngine/Components/UI/TextComponent.h>
 #include <MyEngine/Diagnostics/LogManager.h>
 
 #include "Source/Scripts/LevelInfo.h"

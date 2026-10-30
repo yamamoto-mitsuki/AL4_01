@@ -5,8 +5,8 @@
 
 #include <MyEngine/ECS/EntityManager.h>
 #include <MyEngine/Input/InputManager.h>
-#include <MyEngine/Systems/SpriteRenderSystem.h>
-#include <MyEngine/Systems/TextRenderSystem.h>
+#include <MyEngine/Systems/Rendering2D/SpriteRenderSystem.h>
+#include <MyEngine/Systems/UI/TextRenderSystem.h>
 
 #include "Source/Scripts/Audio/GameAudio.h"
 

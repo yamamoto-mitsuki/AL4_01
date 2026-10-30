@@ -3,7 +3,7 @@
 #include <string>
 #include <vector>
 
-#include <MyEngine/Components/TextComponent.h>
+#include <MyEngine/Components/UI/TextComponent.h>
 #include <MyEngine/ECS/Script.h>
 
 /// <summary>

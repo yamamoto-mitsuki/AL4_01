@@ -2,7 +2,7 @@
 
 #include <algorithm>
 
-#include <MyEngine/Components/AlphaGroupComponent.h>
+#include <MyEngine/Components/UI/AlphaGroupComponent.h>
 #include <MyEngine/Diagnostics/LogManager.h>
 #include <MyEngine/Engine.h>
 #include <MyEngine/Input/InputManager.h>

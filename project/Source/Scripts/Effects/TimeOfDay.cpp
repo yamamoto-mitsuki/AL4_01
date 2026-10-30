@@ -1,6 +1,6 @@
 #include "TimeOfDay.h"
 
-#include <MyEngine/Components/SpriteRendererComponent.h>
+#include <MyEngine/Components/Rendering2D/SpriteRendererComponent.h>
 #include <MyEngine/ECS/EntityManager.h>
 
 SCRIPT(TimeOfDay, "Effects");

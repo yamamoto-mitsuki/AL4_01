@@ -4,10 +4,10 @@
 #include <cmath>
 
 #include <MyEngine/Camera/Camera.h>
-#include <MyEngine/Components/TransformComponent.h>
+#include <MyEngine/Components/Core/TransformComponent.h>
 #include <MyEngine/ECS/EntityManager.h>
 #include <MyEngine/Math/Easing.h>
-#include <MyEngine/Systems/CameraSystem.h>
+#include <MyEngine/Systems/Camera/CameraSystem.h>
 
 namespace {
 // メインカメラから point までの奥行き（カメラの前の向きに測った長さ。エンジンがピントを測るのと同じ測り方）

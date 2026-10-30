@@ -5,9 +5,9 @@
 #include <numbers>
 
 #include <MyEngine/Camera/Camera.h>
-#include <MyEngine/Components/ParticleSystemComponent.h>
-#include <MyEngine/Systems/CameraSystem.h>
-#include <MyEngine/Systems/ParticleSystem.h>
+#include <MyEngine/Components/Effects/ParticleSystemComponent.h>
+#include <MyEngine/Systems/Camera/CameraSystem.h>
+#include <MyEngine/Systems/Effects/ParticleSystem.h>
 
 SCRIPT(AmbientParticles, "Effects");
 

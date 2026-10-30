@@ -4,7 +4,7 @@
 #include <array>
 
 #include <MyEngine/Math/MathUtility.h>
-#include <MyEngine/Systems/ArrowStripSystem.h>
+#include <MyEngine/Systems/Rendering3D/ArrowStripSystem.h>
 
 SCRIPT(LaunchOrb, "Gimmick");
 

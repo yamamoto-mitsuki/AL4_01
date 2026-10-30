@@ -1,6 +1,6 @@
 #include "JumpRing.h"
 
-#include <MyEngine/Systems/ParticleSystem.h>
+#include <MyEngine/Systems/Effects/ParticleSystem.h>
 
 #include "Source/Scripts/Effects/GameRumble.h"
 #include "Source/Scripts/IceCube.h"
