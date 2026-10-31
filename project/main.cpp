@@ -4,7 +4,7 @@
 
 int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 	WindowConfig config;
-	config.title = ConvertString(std::string(kGameTitle));
+	config.title = L"LE2A_29_ヤマモト_ミツキ_森の中の氷";
 	config.width = 1280;
 	config.height = 720;
 #ifdef USE_IMGUI
