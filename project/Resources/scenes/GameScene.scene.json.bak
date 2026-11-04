@@ -1,5 +1,5 @@
 {
-	"version": 1,
+	"version": 4,
 	"entities": [
 		{
 			"id": 1,
@@ -8,15 +8,36 @@
 			"active": true,
 			"components": {
 				"Transform": {
-					"translation": [0.0, 11.146819, -25.618599],
-					"rotation": [0.0, 0.0, 0.0],
+					"translation": [0.0, 15.0, -10.0],
+					"rotation": [55.0, 0.0, 0.0],
 					"scale": [1.0, 1.0, 1.0]
 				},
 				"Camera": {
-					"fovY": 45.0,
+					"fovY": 60.0,
 					"nearZ": 0.1,
 					"farZ": 1000.0,
-					"priority": 0
+					"priority": 0,
+					"blendStyle": "Cut",
+					"blendTime": 1.0,
+					"blendEase": "InOutCubic",
+					"timeMode": "Game"
+				},
+				"Camera Follow": {
+					"enabled": true,
+					"target": 18404052429168653556,
+					"plane": "XY",
+					"mode": "LookAhead",
+					"lookAheadTime": [0.4, 0.0],
+					"lookAheadMax": [3.0, 2.0],
+					"lookAheadSmoothTime": 0.3,
+					"offset": [0.0, 8.5],
+					"deadZone": [0.5, 1.5],
+					"groundSnapY": true,
+					"smoothTime": 0.15,
+					"maxLag": [6.0, 4.0],
+					"useBounds": false,
+					"boundsMin": [-10.0, -10.0],
+					"boundsMax": [100.0, 30.0]
 				}
 			}
 		},
@@ -40,129 +61,31 @@
 			}
 		},
 		{
-			"id": 3,
-			"name": "Trampoline",
+			"id": 6534363600382587221,
+			"name": "Ground",
 			"parent": 0,
 			"active": true,
 			"components": {
 				"Transform": {
-					"translation": [0.0, 5.5388093, 0.0],
+					"translation": [0.0, -0.5, 0.0],
 					"rotation": [0.0, 0.0, 0.0],
-					"scale": [1.0, 1.0, 1.0]
-				},
-				"Elastic Surface": {
-					"enabled": true,
-					"width": 20.0,
-					"pointCount": 130,
-					"tension": 30000.0,
-					"massPerMeter": 1.0,
-					"damping": 1.0,
-					"smoothing": 0.5,
-					"edgeStiffness": 2000.0,
-					"edgeDamping": 500.0,
-					"edgeFalloff": 3.0,
-					"contactStiffness": 50000.0,
-					"contactDamping": 50.0,
-					"stepsPerSecond": 1200,
-					"thickness": 0.5,
-					"depth": 15.0,
-					"showLines": false,
-					"color": [0.36293435, 0.36293435, 0.36293435, 1.0],
-					"texture": "",
-					"uvScale": [5.0, 5.0],
-					"shadingType": "PBR",
-					"specular": [0.0, 0.0, 0.0],
-					"shininess": 32.0,
-					"metallic": 1.0,
-					"roughness": 0.2,
-					"emissive": [0.0, 0.0, 0.0],
-					"postHeight": 3.73,
-					"postWidth": 2.55,
-					"postColor": [0.07722008, 0.06708308, 0.06708308, 1.0],
-					"postTexture": "",
-					"postUvScale": [1.0, 1.0],
-					"postShadingType": "PBR",
-					"postSpecular": [0.0, 0.0, 0.0],
-					"postShininess": 32.0,
-					"postMetallic": 1.0,
-					"postRoughness": 0.285,
-					"postEmissive": [0.0, 0.0, 0.0]
-				}
-			}
-		},
-		{
-			"id": 49,
-			"name": "Player",
-			"parent": 0,
-			"active": true,
-			"components": {
-				"Transform": {
-					"translation": [0.0, 14.520902, 0.0],
-					"rotation": [0.0, 0.0, 0.0],
-					"scale": [1.0, 1.0, 1.0]
+					"scale": [100.0, 1.0, 100.0]
 				},
 				"Collider": {
 					"enabled": true,
 					"isTrigger": false,
-					"shape": "Capsule",
+					"shape": "Box",
 					"center": [0.0, 0.0, 0.0],
-					"physicMaterial": "resources/physics/Player.physmat",
-					"radius": 0.35,
-					"height ": 2.0
-				},
-				"PlayerController": {
-					"Enabled": true,
-					"Move Speed": 3.0,
-					"Ground Accel": 40.0,
-					"Ground Friction": 5.0,
-					"Air Accel": 8.0,
-					"Jump Speed": 9.0,
-					"Surface Boost": 1.0,
-					"Min Jump Speed": 4.0,
-					"Air Jump Speed": 8.0,
-					"Max Jumps": 2,
-					"Ground Grace Time": 0.08,
-					"Pause Time": 0.2,
-					"Fall Speed": 25.0,
-					"Impulse": 20.0,
-					"Radius": 2.0,
-					"Stun Momentum": 200.0,
-					"Stun Time": 0.5,
-					"Stun Decay": 0.7,
-					"Min Stun Time": 0.25,
-					"Same Shape Interval": 0.2,
-					"Respawn Y": -10.0
-				},
-				"Rigidbody": {
-					"mass": 50.0,
-					"useGravity": true,
-					"gravityScale": 1.0,
-					"drag": 0.0,
-					"isKinematic": false,
-					"collideWithRigidbodies": true,
-					"freezePositionX": false,
-					"freezePositionY": false,
-					"freezePositionZ": false,
-					"velocity": [0.0, 0.0, 0.0]
-				}
-			}
-		},
-		{
-			"id": 50,
-			"name": "Body",
-			"parent": 49,
-			"active": true,
-			"components": {
-				"Transform": {
-					"translation": [0.0, 0.0, 0.0],
-					"rotation": [0.0, 0.0, 0.0],
-					"scale": [0.8, 1.6, 0.8]
+					"physicMaterial": "",
+					"size": [1.0, 1.0, 1.0]
 				},
 				"Primitive Renderer": {
 					"enabled": true,
-					"shape": "Sphere",
-					"color": [0.5289575, 0.512619, 0.512619, 1.0],
-					"texture": "",
+					"shape": "Box",
+					"color": [0.3011583, 0.3011583, 0.3011583, 1.0],
+					"intensity": 1.0,
+					"surface": "Opaque",
+					"texture": "MyEngine/Resources/Textures/uvChecker.png",
 					"uvScale": [1.0, 1.0],
 					"shadingType": "PBR",
 					"specular": [0.0, 0.0, 0.0],
@@ -174,107 +97,79 @@
 			}
 		},
 		{
-			"id": 51,
-			"name": "ObjectSpaner",
+			"id": 18404052429168653556,
+			"name": "Player",
 			"parent": 0,
 			"active": true,
 			"components": {
 				"Transform": {
-					"translation": [0.0, 16.8, 0.0],
+					"translation": [0.0, 0.0, 0.0],
 					"rotation": [0.0, 0.0, 0.0],
 					"scale": [1.0, 1.0, 1.0]
 				},
-				"ShapeSpawner": {
-					"Enabled": true,
-					"prefab1": "resources/prefabs/MetallBall.prefab",
-					"weight1": 1.0,
-					"prefab2": "resources/prefabs/Ball.prefab",
-					"weight2": 1.0,
-					"prefab3": "resources/prefabs/MetallBox.prefab",
-					"weight3": 1.0,
-					"prefab4": "resources/prefabs/MetallBox.prefab",
-					"weight4": 1.0,
-					"Spawn Y": 25.0,
-					"Spawn Range": 9.0,
-					"Interval Min": 1.0,
-					"Interval Max": 2.0,
-					"Max Shapes": 15,
-					"Remove Y": -10.0
-				}
-			}
-		},
-		{
-			"id": 52,
-			"name": "Image",
-			"parent": 0,
-			"active": true,
-			"components": {
-				"Transform": {
-					"translation": [-475.65, 280.0, 0.0],
-					"rotation": [0.0, 0.0, 0.0],
-					"scale": [2.93, 1.0, 1.0]
-				},
-				"Image": {
+				"Animator": {
 					"enabled": true,
+					"animation": "resources/Model/Player/Player.gltf",
+					"clip": "00_Idle",
+					"speed": 1.0,
+					"loop": true,
+					"playOnStart": true,
+					"previewTime": 0.0
+				},
+				"Character Controller": {
+					"enabled": true,
+					"slopeLimit": 45.0,
+					"stepOffset": 0.3,
+					"useGravity": true,
+					"gravityScale": 3.0,
+					"pushRigidbodies": true,
+					"pushMass": 80.0,
+					"freezePositionX": false,
+					"freezePositionY": false,
+					"freezePositionZ": false,
+					"velocity": [0.0, 0.0, 0.0]
+				},
+				"Collider": {
+					"enabled": true,
+					"isTrigger": false,
+					"shape": "Sphere",
+					"center": [0.0, 0.45, 0.0],
+					"physicMaterial": "",
+					"radius": 0.45
+				},
+				"Model Renderer": {
+					"enabled": true,
+					"model": "resources/Model/Player/Player.gltf",
 					"texture": "",
-					"color": [0.0, 0.0, 0.0, 1.0],
-					"size": [100.0, 100.0],
-					"anchor": "Center",
-					"pivot": [0.5, 0.5],
-					"fill": 1.0,
-					"order": 0,
-					"flipX": false,
-					"flipY": false,
-					"blend": "Normal",
-					"columns": 1,
-					"rows": 1,
-					"frame": 0,
-					"useRect": false,
-					"rectPosition": [0.0, 0.0],
-					"rectSize": [0.0, 0.0]
-				}
-			}
-		},
-		{
-			"id": 53,
-			"name": "Text",
-			"parent": 0,
-			"active": true,
-			"components": {
-				"Transform": {
-					"translation": [-478.4, 279.3, 0.0],
-					"rotation": [0.0, 0.0, 0.0],
-					"scale": [1.3, 1.3, 1.0]
+					"shadingType": "PBR",
+					"blendMode": "Normal",
+					"rasterizerType": "SolidBack",
+					"depthMode": "TestWrite",
+					"billboard": "None",
+					"color": [0.5984556, 0.512962, 0.512962, 1.0],
+					"intensity": 1.0,
+					"overrideMaterial": true,
+					"ambient": [0.0, 0.0, 0.0],
+					"diffuse": [1.0, 0.9046612, 0.7454042],
+					"specular": [1.0, 1.0, 1.0],
+					"emissive": [0.0, 0.0, 0.0],
+					"shininess": 0.0,
+					"metallic": 0.0,
+					"roughness": 0.0,
+					"alphaCutoff": 0.0,
+					"uvTranslation": [0.0, 0.0, 0.0],
+					"uvRotation": [0.0, 0.0, 0.0],
+					"uvScale": [1.0, 1.0, 1.0]
 				},
-				"Text": {
-					"enabled": true,
-					"text": "トランポリン",
-					"font": "C:/Users/K025G/AppData/Local/Microsoft/Windows/Fonts/GenEiPOPle-Bk.ttf",
-					"fontSize": 36.0,
-					"color": [1.0, 0.0, 0.0, 1.0],
-					"align": "Center",
-					"anchor": "Center",
-					"pivot": [0.5, 0.5],
-					"lineSpacing": 1.0,
-					"letterSpacing": 0.0,
-					"order": 0,
-					"blend": "Normal",
-					"outlineWidth": 0.0,
-					"outlineColor": [0.0, 0.0, 0.0, 1.0],
-					"shadow": false,
-					"shadowOffset": [3.0, -3.0],
-					"shadowColor": [0.0, 0.0, 0.0, 0.6],
-					"glowWidth": 0.0,
-					"glowColor": [1.0, 0.8, 0.3, 0.8],
-					"shine": false,
-					"shineColor": [1.0, 1.0, 1.0, 0.9],
-					"shineWidth": 24.0,
-					"shineDuration": 0.6,
-					"shineInterval": 2.0,
-					"motion": "Bounce",
-					"motionAmount": 8.0,
-					"motionSpeed": 2.0,
-					"motionSpread": 0.1
+				"PlayerController": {
+					"Enabled": true,
+					"Move Speed": 6.0,
+					"Acceleration": 20.0,
+					"Turn Sharpness": 18.0,
+					"Dodge Distance": 6.0,
+					"Dodge Height": 3.0,
+					"Dodge Invincible Time": 0.35,
+					"Dodge Cooldown": 1.0
 				}
 			}
 		}

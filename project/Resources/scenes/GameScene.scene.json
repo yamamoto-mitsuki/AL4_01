@@ -1,0 +1,178 @@
+{
+	"version": 4,
+	"entities": [
+		{
+			"id": 1,
+			"name": "Main Camera",
+			"parent": 0,
+			"active": true,
+			"components": {
+				"Transform": {
+					"translation": [0.0, 15.0, -10.0],
+					"rotation": [55.0, 0.0, 0.0],
+					"scale": [1.0, 1.0, 1.0]
+				},
+				"Camera": {
+					"fovY": 60.0,
+					"nearZ": 0.1,
+					"farZ": 1000.0,
+					"priority": 0,
+					"blendStyle": "Cut",
+					"blendTime": 1.0,
+					"blendEase": "InOutCubic",
+					"timeMode": "Game"
+				},
+				"Camera Follow": {
+					"enabled": true,
+					"target": 18404052429168653556,
+					"plane": "XY",
+					"mode": "LookAhead",
+					"lookAheadTime": [0.4, 0.0],
+					"lookAheadMax": [3.0, 2.0],
+					"lookAheadSmoothTime": 0.3,
+					"offset": [0.0, 8.5],
+					"deadZone": [0.5, 1.5],
+					"groundSnapY": true,
+					"smoothTime": 0.15,
+					"maxLag": [6.0, 4.0],
+					"useBounds": false,
+					"boundsMin": [-10.0, -10.0],
+					"boundsMax": [100.0, 30.0]
+				}
+			}
+		},
+		{
+			"id": 2,
+			"name": "Directional Light",
+			"parent": 0,
+			"active": true,
+			"components": {
+				"Transform": {
+					"translation": [0.0, 3.0, 0.0],
+					"rotation": [87.0, -32.5, 0.0],
+					"scale": [1.0, 1.0, 1.0]
+				},
+				"Directional Light": {
+					"color": [1.0, 1.0, 1.0],
+					"intensity": 4.27,
+					"showIcon": true,
+					"showRange": true
+				}
+			}
+		},
+		{
+			"id": 6534363600382587221,
+			"name": "Ground",
+			"parent": 0,
+			"active": true,
+			"components": {
+				"Transform": {
+					"translation": [0.0, -0.5, 0.0],
+					"rotation": [0.0, 0.0, 0.0],
+					"scale": [100.0, 1.0, 100.0]
+				},
+				"Collider": {
+					"enabled": true,
+					"isTrigger": false,
+					"shape": "Box",
+					"center": [0.0, 0.0, 0.0],
+					"physicMaterial": "",
+					"size": [1.0, 1.0, 1.0]
+				},
+				"Primitive Renderer": {
+					"enabled": true,
+					"shape": "Box",
+					"color": [0.3011583, 0.3011583, 0.3011583, 1.0],
+					"intensity": 1.0,
+					"surface": "Opaque",
+					"texture": "MyEngine/Resources/Textures/uvChecker.png",
+					"uvScale": [1.0, 1.0],
+					"shadingType": "PBR",
+					"specular": [0.0, 0.0, 0.0],
+					"shininess": 32.0,
+					"metallic": 0.0,
+					"roughness": 0.5,
+					"emissive": [0.0, 0.0, 0.0]
+				}
+			}
+		},
+		{
+			"id": 18404052429168653556,
+			"name": "Player",
+			"parent": 0,
+			"active": true,
+			"components": {
+				"Transform": {
+					"translation": [0.0, 0.0, 0.0],
+					"rotation": [0.0, 0.0, 0.0],
+					"scale": [1.0, 1.0, 1.0]
+				},
+				"Animator": {
+					"enabled": true,
+					"animation": "resources/Model/Player/Player.gltf",
+					"clip": "00_Idle",
+					"speed": 1.0,
+					"loop": true,
+					"playOnStart": true,
+					"previewTime": 0.0
+				},
+				"Character Controller": {
+					"enabled": true,
+					"slopeLimit": 45.0,
+					"stepOffset": 0.3,
+					"useGravity": true,
+					"gravityScale": 3.0,
+					"pushRigidbodies": true,
+					"pushMass": 80.0,
+					"freezePositionX": false,
+					"freezePositionY": false,
+					"freezePositionZ": false,
+					"velocity": [0.0, 0.0, 0.0]
+				},
+				"Collider": {
+					"enabled": true,
+					"isTrigger": false,
+					"shape": "Sphere",
+					"center": [0.0, 0.45, 0.0],
+					"physicMaterial": "",
+					"radius": 0.45
+				},
+				"Model Renderer": {
+					"enabled": true,
+					"model": "resources/Model/Player/Player.gltf",
+					"texture": "",
+					"shadingType": "PBR",
+					"blendMode": "Normal",
+					"rasterizerType": "SolidBack",
+					"depthMode": "TestWrite",
+					"billboard": "None",
+					"color": [0.5984556, 0.512962, 0.512962, 1.0],
+					"intensity": 1.0,
+					"overrideMaterial": true,
+					"ambient": [0.0, 0.0, 0.0],
+					"diffuse": [1.0, 0.9046612, 0.7454042],
+					"specular": [1.0, 1.0, 1.0],
+					"emissive": [0.0, 0.0, 0.0],
+					"shininess": 0.0,
+					"metallic": 0.0,
+					"roughness": 0.0,
+					"alphaCutoff": 0.0,
+					"uvTranslation": [0.0, 0.0, 0.0],
+					"uvRotation": [0.0, 0.0, 0.0],
+					"uvScale": [1.0, 1.0, 1.0]
+				},
+				"PlayerController": {
+					"Enabled": true,
+					"Move Speed": 6.0,
+					"Acceleration": 20.0,
+					"Turn Sharpness": 18.0,
+					"Dodge Distance": 6.0,
+					"Dodge Height": 3.0,
+					"Dodge Move Curve": "resources/curve/playerJump.curve",
+					"Dodge Invincible Time": 0.35,
+					"Dodge Cooldown": 1.0
+				}
+			}
+		}
+	]
+}

@@ -1,0 +1,28 @@
+{
+	"keys": [
+		{
+			"time": 0.0,
+			"value": 0.0,
+			"interp": "Bezier",
+			"handleMode": "Free",
+			"inHandle": [0.0, 0.0],
+			"outHandle": [0.18723218, 0.18723218]
+		},
+		{
+			"time": 0.60619897,
+			"value": 0.82298213,
+			"interp": "Bezier",
+			"handleMode": "Aligned",
+			"inHandle": [-0.1872322, -0.03527781],
+			"outHandle": [0.16430664, 0.030958235]
+		},
+		{
+			"time": 1.0,
+			"value": 1.0,
+			"interp": "Bezier",
+			"handleMode": "Free",
+			"inHandle": [-0.14610118, -0.14610118],
+			"outHandle": [0.0, 0.0]
+		}
+	]
+}

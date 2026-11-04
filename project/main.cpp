@@ -1,18 +1,14 @@
 #include <MyEngine/Engine.h>
-#include "Source/Scripts/GameTitle.h"
-#include "Source/Scripts/Progress/GameSettings.h"
 
 int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 	WindowConfig config;
-	config.title = L"LE2A_29_ヤマモト_ミツキ_森の中の氷";
+	config.title = L"AL4_01";
 	config.width = 1280;
 	config.height = 720;
 #ifdef USE_IMGUI
 	config.isImGui = true;
 #endif
-	Engine::Initialize(config, "Title");
-	// 設定（音の大きさ・全画面）を saves/Settings.json から当てる（最初のシーンが音を鳴らす前に）
-	GameSettings::Load();
+	Engine::Initialize(config, "GameScene");
 	while (Engine::ProcessMessage()) {
 		Engine::BeginFrame();
 		Engine::GetWindowManager()->UpdateAll();

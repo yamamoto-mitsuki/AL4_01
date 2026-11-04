@@ -1,0 +1,61 @@
+{
+	"settings": {
+		"length": 2.0
+	},
+	"tracks": [
+		{
+			"type": "TimelineValueTrack",
+			"settings": {
+				"name": "Title.translation",
+				"target": "Title",
+				"isMuted": false,
+				"component": "Image",
+				"property": "translation"
+			},
+			"clips": [
+				{
+					"start": 0.0,
+					"duration": 2.0,
+					"curves": {
+						"x": {
+							"keys": [
+								{
+									"time": 0.0,
+									"value": 0.0,
+									"interp": "Bezier",
+									"handleMode": "Aligned",
+									"inHandle": [-0.0, -0.0],
+									"outHandle": [0.33333334, 0.0]
+								},
+								{
+									"time": 0.3715978,
+									"value": 300.0,
+									"interp": "Bezier",
+									"handleMode": "Aligned",
+									"inHandle": [-0.33333334, -83.473946],
+									"outHandle": [0.17877033, 44.768005]
+								},
+								{
+									"time": 0.6726101,
+									"value": 173.06592,
+									"interp": "Linear",
+									"handleMode": "Aligned",
+									"inHandle": [-0.21919084, -27.850529],
+									"outHandle": [0.09317517, 11.838898]
+								},
+								{
+									"time": 2.0,
+									"value": 0.0,
+									"interp": "Bezier",
+									"handleMode": "Aligned",
+									"inHandle": [-0.111599445, 0.0],
+									"outHandle": [0.0, 0.0]
+								}
+							]
+						}
+					}
+				}
+			]
+		}
+	]
+}

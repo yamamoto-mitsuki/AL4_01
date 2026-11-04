@@ -1,0 +1,296 @@
+{
+	"settings": {
+		"length": 2.0
+	},
+	"tracks": [
+		{
+			"type": "TimelineValueTrack",
+			"settings": {
+				"name": "Alpha",
+				"target": "Title",
+				"isMuted": false,
+				"component": "Image",
+				"property": "color"
+			},
+			"clips": [
+				{
+					"start": 0.0,
+					"duration": 1.0,
+					"curves": {
+						"w": {
+							"keys": [
+								{
+									"time": 0.0,
+									"value": 0.0,
+									"interp": "Linear",
+									"handleMode": "Aligned",
+									"inHandle": [0.0, 0.0],
+									"outHandle": [0.0, 0.0]
+								},
+								{
+									"time": 1.0,
+									"value": 1.0,
+									"interp": "Bezier",
+									"handleMode": "Aligned",
+									"inHandle": [0.0, 0.0],
+									"outHandle": [0.0, 0.0]
+								}
+							]
+						}
+					}
+				}
+			]
+		},
+		{
+			"type": "TimelineValueTrack",
+			"settings": {
+				"name": "Move",
+				"target": "Title",
+				"isMuted": false,
+				"component": "Transform",
+				"property": "translation"
+			},
+			"clips": [
+				{
+					"start": 0.0,
+					"duration": 2.0,
+					"curves": {
+						"x": {
+							"keys": [
+								{
+									"time": 0.0,
+									"value": -200.0,
+									"interp": "Bezier",
+									"handleMode": "Aligned",
+									"inHandle": [0.0, 0.0],
+									"outHandle": [0.6, 0.0]
+								},
+								{
+									"time": 2.0,
+									"value": 200.0,
+									"interp": "Bezier",
+									"handleMode": "Aligned",
+									"inHandle": [-0.6, 0.0],
+									"outHandle": [0.0, 0.0]
+								}
+							]
+						}
+					}
+				}
+			]
+		},
+		{
+			"type": "TimelineValueTrack",
+			"settings": {
+				"name": "Spin",
+				"target": "Title",
+				"isMuted": false,
+				"component": "Transform",
+				"property": "rotation"
+			},
+			"clips": [
+				{
+					"start": 0.0,
+					"duration": 2.0,
+					"curves": {
+						"z": {
+							"keys": [
+								{
+									"time": 0.0,
+									"value": 0.0,
+									"interp": "Bezier",
+									"handleMode": "Aligned",
+									"inHandle": [0.0, 0.0],
+									"outHandle": [0.0, 0.0]
+								},
+								{
+									"time": 0.5560503,
+									"value": 77.81111,
+									"interp": "Bezier",
+									"handleMode": "Aligned",
+									"inHandle": [-0.3425189, -15.41335],
+									"outHandle": [0.11659646, 5.2468414]
+								},
+								{
+									"time": 1.1255319,
+									"value": 87.861084,
+									"interp": "Bezier",
+									"handleMode": "Aligned",
+									"inHandle": [-0.23334277, -1.7538223],
+									"outHandle": [0.4153694, 3.1219559]
+								},
+								{
+									"time": 2.0,
+									"value": 90.0,
+									"interp": "Bezier",
+									"handleMode": "Aligned",
+									"inHandle": [0.0, 0.0],
+									"outHandle": [0.0, 0.0]
+								}
+							]
+						}
+					}
+				}
+			]
+		},
+		{
+			"type": "TimelineValueTrack",
+			"settings": {
+				"name": "Grow",
+				"target": "Title",
+				"isMuted": false,
+				"component": "Transform",
+				"property": "scale"
+			},
+			"clips": [
+				{
+					"start": 0.0,
+					"duration": 2.0,
+					"curves": {
+						"x": {
+							"keys": [
+								{
+									"time": 0.0,
+									"value": 1.0,
+									"interp": "Linear",
+									"handleMode": "Aligned",
+									"inHandle": [0.0, 0.0],
+									"outHandle": [0.0, 0.0]
+								},
+								{
+									"time": 2.0,
+									"value": 2.0,
+									"interp": "Bezier",
+									"handleMode": "Aligned",
+									"inHandle": [0.0, 0.0],
+									"outHandle": [0.0, 0.0]
+								}
+							]
+						},
+						"y": {
+							"keys": [
+								{
+									"time": 0.0,
+									"value": 1.0,
+									"interp": "Linear",
+									"handleMode": "Aligned",
+									"inHandle": [0.0, 0.0],
+									"outHandle": [0.0, 0.0]
+								},
+								{
+									"time": 2.0,
+									"value": 2.0,
+									"interp": "Bezier",
+									"handleMode": "Aligned",
+									"inHandle": [0.0, 0.0],
+									"outHandle": [0.0, 0.0]
+								}
+							]
+						}
+					}
+				}
+			]
+		},
+		{
+			"type": "TimelineValueTrack",
+			"settings": {
+				"name": "Font",
+				"target": "Label",
+				"isMuted": false,
+				"component": "Text",
+				"property": "fontSize"
+			},
+			"clips": [
+				{
+					"start": 1.0,
+					"duration": 1.0,
+					"curves": {
+						"x": {
+							"keys": [
+								{
+									"time": 0.0,
+									"value": 24.0,
+									"interp": "Linear",
+									"handleMode": "Aligned",
+									"inHandle": [0.0, 0.0],
+									"outHandle": [0.0, 0.0]
+								},
+								{
+									"time": 1.0,
+									"value": 48.0,
+									"interp": "Bezier",
+									"handleMode": "Aligned",
+									"inHandle": [0.0, 0.0],
+									"outHandle": [0.0, 0.0]
+								}
+							]
+						}
+					}
+				}
+			]
+		},
+		{
+			"type": "TimelineValueTrack",
+			"settings": {
+				"name": "Gauge",
+				"target": "Shape",
+				"isMuted": false,
+				"component": "Vector Shape",
+				"property": "gaugeAmount"
+			},
+			"clips": [
+				{
+					"start": 0.0,
+					"duration": 2.0,
+					"curves": {
+						"x": {
+							"keys": [
+								{
+									"time": 0.0,
+									"value": 0.0,
+									"interp": "Linear",
+									"handleMode": "Aligned",
+									"inHandle": [0.0, 0.0],
+									"outHandle": [0.0, 0.0]
+								},
+								{
+									"time": 2.0,
+									"value": 1.0,
+									"interp": "Bezier",
+									"handleMode": "Aligned",
+									"inHandle": [0.0, 0.0],
+									"outHandle": [0.0, 0.0]
+								}
+							]
+						}
+					}
+				}
+			]
+		},
+		{
+			"type": "TimelineEventTrack",
+			"settings": {
+				"name": "Events",
+				"target": "",
+				"isMuted": false
+			},
+			"clips": [
+				{
+					"start": 0.0,
+					"name": "Start",
+					"value": ""
+				},
+				{
+					"start": 1.0,
+					"name": "Middle",
+					"value": "1 秒"
+				},
+				{
+					"start": 2.0,
+					"name": "End",
+					"value": ""
+				}
+			]
+		}
+	]
+}

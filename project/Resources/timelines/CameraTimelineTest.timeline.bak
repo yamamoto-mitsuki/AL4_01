@@ -1,0 +1,349 @@
+{
+	"settings": {
+		"length": 8.0
+	},
+	"tracks": [
+		{
+			"type": "TimelineCameraTrack",
+			"settings": {
+				"name": "Camera",
+				"target": "",
+				"isMuted": false
+			},
+			"clips": [
+				{
+					"start": 0.0,
+					"duration": 2.5,
+					"blendIn": 0.6,
+					"blendEase": "InOutCubic",
+					"exit": "Cut",
+					"exitTime": 1.0,
+					"exitEase": "InOutCubic",
+					"camera": "/Cameras/Cam Wide"
+				},
+				{
+					"start": 2.0,
+					"duration": 3.0,
+					"blendIn": 0.0,
+					"blendEase": "InOutCubic",
+					"exit": "Cut",
+					"exitTime": 1.0,
+					"exitEase": "InOutCubic",
+					"camera": "/Cameras/Cam Dolly"
+				},
+				{
+					"start": 5.0,
+					"duration": 1.0,
+					"blendIn": 0.0,
+					"blendEase": "InOutCubic",
+					"exit": "Cut",
+					"exitTime": 1.0,
+					"exitEase": "InOutCubic",
+					"camera": "/Cameras/Cam Hero"
+				},
+				{
+					"start": 6.0,
+					"duration": 1.5,
+					"blendIn": 0.0,
+					"blendEase": "InOutCubic",
+					"exit": "Cut",
+					"exitTime": 1.0,
+					"exitEase": "InOutCubic",
+					"camera": "/Cameras/Cam Impact"
+				},
+				{
+					"start": 7.0,
+					"duration": 1.8,
+					"blendIn": 0.0,
+					"blendEase": "InOutSine",
+					"exit": "Ease",
+					"exitTime": 1.2,
+					"exitEase": "InOutCubic",
+					"camera": "/Cameras/Cam Final"
+				}
+			]
+		},
+		{
+			"type": "TimelineValueTrack",
+			"settings": {
+				"name": "Wide FOV",
+				"target": "/Cameras/Cam Wide",
+				"isMuted": false,
+				"component": "Camera",
+				"property": "fovY"
+			},
+			"clips": [
+				{
+					"start": 0.0,
+					"duration": 2.5,
+					"curves": {
+						"x": {
+							"keys": [
+								{
+									"time": 0.0,
+									"value": 50.0,
+									"interp": "Linear",
+									"handleMode": "Aligned",
+									"inHandle": [0.0, 0.0],
+									"outHandle": [0.0, 0.0]
+								},
+								{
+									"time": 2.5,
+									"value": 35.0,
+									"interp": "Bezier",
+									"handleMode": "Aligned",
+									"inHandle": [0.0, 0.0],
+									"outHandle": [0.0, 0.0]
+								}
+							]
+						}
+					}
+				}
+			]
+		},
+		{
+			"type": "TimelineValueTrack",
+			"settings": {
+				"name": "Dolly",
+				"target": "/Cameras/Cam Dolly",
+				"isMuted": false,
+				"component": "Camera Path",
+				"property": "position"
+			},
+			"clips": [
+				{
+					"start": 2.0,
+					"duration": 3.0,
+					"curves": {
+						"x": {
+							"keys": [
+								{
+									"time": 0.0,
+									"value": 0.0,
+									"interp": "Bezier",
+									"handleMode": "Aligned",
+									"inHandle": [0.0, 0.0],
+									"outHandle": [1.0, 0.0]
+								},
+								{
+									"time": 3.0,
+									"value": 1.0,
+									"interp": "Bezier",
+									"handleMode": "Aligned",
+									"inHandle": [-1.0, 0.0],
+									"outHandle": [0.0, 0.0]
+								}
+							]
+						}
+					}
+				}
+			]
+		},
+		{
+			"type": "TimelineValueTrack",
+			"settings": {
+				"name": "Hero Push",
+				"target": "/Cameras/Cam Hero",
+				"isMuted": false,
+				"component": "Transform",
+				"property": "translation"
+			},
+			"clips": [
+				{
+					"start": 5.0,
+					"duration": 1.0,
+					"curves": {
+						"z": {
+							"keys": [
+								{
+									"time": 0.0,
+									"value": -5.0,
+									"interp": "Linear",
+									"handleMode": "Aligned",
+									"inHandle": [0.0, 0.0],
+									"outHandle": [0.0, 0.0]
+								},
+								{
+									"time": 1.0,
+									"value": -3.6,
+									"interp": "Bezier",
+									"handleMode": "Aligned",
+									"inHandle": [0.0, 0.0],
+									"outHandle": [0.0, 0.0]
+								}
+							]
+						}
+					}
+				}
+			]
+		},
+		{
+			"type": "TimelineValueTrack",
+			"settings": {
+				"name": "Hero Focus",
+				"target": "/Cameras/Cam Hero",
+				"isMuted": false,
+				"component": "Camera Volume",
+				"property": "maxBlur"
+			},
+			"clips": [
+				{
+					"start": 5.0,
+					"duration": 1.0,
+					"curves": {
+						"x": {
+							"keys": [
+								{
+									"time": 0.0,
+									"value": 2.0,
+									"interp": "Linear",
+									"handleMode": "Aligned",
+									"inHandle": [0.0, 0.0],
+									"outHandle": [0.0, 0.0]
+								},
+								{
+									"time": 1.0,
+									"value": 14.0,
+									"interp": "Bezier",
+									"handleMode": "Aligned",
+									"inHandle": [0.0, 0.0],
+									"outHandle": [0.0, 0.0]
+								}
+							]
+						}
+					}
+				}
+			]
+		},
+		{
+			"type": "TimelineValueTrack",
+			"settings": {
+				"name": "Impact Noise",
+				"target": "/Cameras/Cam Impact",
+				"isMuted": false,
+				"component": "Camera Shake",
+				"property": "noiseGain"
+			},
+			"clips": [
+				{
+					"start": 6.0,
+					"duration": 1.5,
+					"curves": {
+						"x": {
+							"keys": [
+								{
+									"time": 0.0,
+									"value": 1.0,
+									"interp": "Linear",
+									"handleMode": "Aligned",
+									"inHandle": [0.0, 0.0],
+									"outHandle": [0.0, 0.0]
+								},
+								{
+									"time": 1.5,
+									"value": 0.0,
+									"interp": "Bezier",
+									"handleMode": "Aligned",
+									"inHandle": [0.0, 0.0],
+									"outHandle": [0.0, 0.0]
+								}
+							]
+						}
+					}
+				}
+			]
+		},
+		{
+			"type": "TimelineValueTrack",
+			"settings": {
+				"name": "Impact Exposure",
+				"target": "/Cameras/Cam Impact",
+				"isMuted": false,
+				"component": "Camera Volume",
+				"property": "exposureOverride"
+			},
+			"clips": [
+				{
+					"start": 6.0,
+					"duration": 0.6,
+					"curves": {
+						"x": {
+							"keys": [
+								{
+									"time": 0.0,
+									"value": 3.0,
+									"interp": "Linear",
+									"handleMode": "Aligned",
+									"inHandle": [0.0, 0.0],
+									"outHandle": [0.0, 0.0]
+								},
+								{
+									"time": 0.6,
+									"value": 1.0,
+									"interp": "Bezier",
+									"handleMode": "Aligned",
+									"inHandle": [0.0, 0.0],
+									"outHandle": [0.0, 0.0]
+								}
+							]
+						}
+					}
+				}
+			]
+		},
+		{
+			"type": "TimelineValueTrack",
+			"settings": {
+				"name": "Vector Shape.gaugeAmount",
+				"target": "/Vector Shape",
+				"isMuted": false,
+				"component": "Vector Shape",
+				"property": "gaugeAmount"
+			},
+			"clips": [
+				{
+					"start": 0.0,
+					"duration": 10.0,
+					"curves": {
+						"x": {
+							"keys": [
+								{
+									"time": 0.0,
+									"value": 0.0,
+									"interp": "Bezier",
+									"handleMode": "Free",
+									"inHandle": [-0.0, -0.0],
+									"outHandle": [2.5557694, 0.51115394]
+								},
+								{
+									"time": 2.5557694,
+									"value": 0.87200004,
+									"interp": "Bezier",
+									"handleMode": "Aligned",
+									"inHandle": [-0.96121806, -0.09612181],
+									"outHandle": [1.0429664, 0.104296625]
+								},
+								{
+									"time": 7.831732,
+									"value": 0.28414536,
+									"interp": "Bezier",
+									"handleMode": "Aligned",
+									"inHandle": [-0.98746204, -0.009085655],
+									"outHandle": [1.2584147, 0.01157856]
+								},
+								{
+									"time": 10.0,
+									"value": 1.0,
+									"interp": "Bezier",
+									"handleMode": "Free",
+									"inHandle": [-1.8677406, 0.0],
+									"outHandle": [0.0, 0.0]
+								}
+							]
+						}
+					}
+				}
+			]
+		}
+	]
+}
