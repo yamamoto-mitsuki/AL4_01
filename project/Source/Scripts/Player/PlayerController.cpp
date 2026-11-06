@@ -1,21 +1,21 @@
 #include "PlayerController.h"
 
 #include <cmath>
+#include <string_view>
 
 #include <MyEngine/Curve/Curve.h>
 #include <MyEngine/Curve/CurveManager.h>
-#include <MyEngine/Components/Animation/AnimatorComponent.h>
-#include <MyEngine/Graphics/Animation/AnimationManager.h>
 #include <MyEngine/Input/InputManager.h>
+#include <MyEngine/Systems/Animation/AnimationSystem.h>
 #include <MyEngine/Systems/Physics/PhysicsSystem.h>
 
 SCRIPT(PlayerController, "Player");
 
 namespace {
-// --- アニメの番号（Player.gltf の中の並び。Blender のアクション名の頭の番号と同じ。足すときは後ろに足す）---
-constexpr int kClipIdle = 0;       // 待機（ループ）
-constexpr int kClipRun = 1;        // 走り（ループ。杖を前に構えたまま）
-constexpr int kClipDodgeJump = 8;  // 回避ジャンプ（1回だけ。跳ぶ → 前に1回転 → 着地）
+// --- アニメの名前（Player.gltf の中の名前＝Blender のアクションの名前。ファイルの中の並びは関係ない）---
+constexpr std::string_view kClipIdle = "Idle";           // 待機（ループ）
+constexpr std::string_view kClipRun = "Run";             // 走り（ループ。杖を前に構えたまま）
+constexpr std::string_view kClipDodgeJump = "DodgeJump"; // 回避ジャンプ（1回だけ。跳ぶ → 前に1回転 → 着地）
 
 // --- 入力 ---
 constexpr float kMoveInputDeadzone = 0.1f; // これより小さい入力は「止まっている」扱い（スティックを離したときの小さな揺れ）
@@ -30,7 +30,7 @@ constexpr float kRunAnimMinSpeed = 0.5f;   // スティックを少しだけ倒�
 void PlayerController::Start() {
 	// 置いたときの向きから始める（エディタで回して置いた向きを引き継ぐ）
 	facingYaw_ = GetEulerAngles(transform).y;
-	SetClip(kClipIdle, true, 1.0f);
+	AnimationSystem::Play(gameObject.handle, kClipIdle, true, 1.0f);
 }
 
 // ===== 毎フレーム =====
@@ -126,6 +126,11 @@ void PlayerController::StartDodge(CharacterControllerComponent& controller, cons
 	state_ = PlayerState::Dodge;
 	dodgeElapsed_ = 0.0f;
 
+	// --- アニメ：1回転を、平らな地面で着地するまでの時間でちょうど流しきる（距離・高さ・重力を変えてもアニメが合う）---
+	// 前の回避のアニメがまだ流れていても最初から（Play は同じ名前が流れていると速さしか変えないので、Restart も呼ぶ）
+	AnimationSystem::Play(gameObject.handle, kClipDodgeJump, false, AnimationSystem::CalcSpeedToFit(gameObject.handle, kClipDodgeJump, dodgeAirTime_));
+	AnimationSystem::Restart(gameObject.handle);
+
 	// 上の速さは1回だけ書く（あとは Character Controller が重力で落とす）。横はこのフレームの分。次のフレームからは UpdateDodge が書く
 	controller.velocity = dodgeDirection_ * CalcDodgeHorizontalSpeed(0.0f, deltaTime) + Vector3{0.0f, upSpeed, 0.0f};
 }
@@ -199,15 +204,16 @@ void PlayerController::UpdateAnimation(const Vector3& moveDirection) {
 		const float moveAmount = Length(moveDirection); // スティックの倒し具合（0〜1）
 		if (moveAmount > 0.0f) {
 			// ゆっくり歩くときは足もゆっくり。std::lerp（C++20 の <cmath>）は a + (b - a) × t。エンジンの float の Lerp は MathUtility の中にあるので、STL の方を使う
-			SetClip(kClipRun, true, std::lerp(kRunAnimMinSpeed, 1.0f, moveAmount));
+			// Play は毎フレーム呼んでよい（同じ名前が流れていれば、速さだけ変わる）
+			AnimationSystem::Play(gameObject.handle, kClipRun, true, std::lerp(kRunAnimMinSpeed, 1.0f, moveAmount));
 		} else {
-			SetClip(kClipIdle, true, 1.0f);
+			AnimationSystem::Play(gameObject.handle, kClipIdle, true, 1.0f);
 		}
 		break;
 	}
 	case PlayerState::Dodge:
-		// 1回転のアニメを、平らな地面で着地するまでの時間でちょうど流しきる（距離・高さ・重力を変えてもアニメが合う）
-		SetClip(kClipDodgeJump, false, CalcSpeedToFit(kClipDodgeJump, dodgeAirTime_));
+		// 回避ジャンプのアニメは StartDodge で1回だけ流す
+		// ここで毎フレーム Play すると、台地の端から跳んでアニメが終わった後もまだ落ちているとき、Play が「止まっている」と見て最初から流し直してしまう
 		break;
 	}
 }
@@ -216,31 +222,6 @@ void PlayerController::UpdateAnimation(const Vector3& moveDirection) {
 //=============================================================================
 // 道具
 //=============================================================================
-// ===== アニメを切り替える =====
-// Animator の clipIndex を変えると、AnimationSystem が次のフレームにそのアニメを最初から流す。同じ番号を入れ続けても最初には戻らない
-void PlayerController::SetClip(int clipIndex, bool loop, float speed) {
-	AnimatorComponent* animator = GetComponent<AnimatorComponent>();
-	if (animator == nullptr) {
-		return; // Animator を付けていない（アニメなしで動かして確かめるとき）
-	}
-	animator->speed = speed;
-	if (animator->clipIndex != clipIndex) {
-		animator->clipIndex = clipIndex;
-		animator->loop = loop; // loop は切り替えたときに読まれるので、番号と一緒に変える
-	}
-}
-
-// ===== アニメをちょうど seconds 秒で流しきる再生の速さ =====
-// アニメの長さ ÷ 流したい秒。1.2 秒のアニメを 0.6 秒で流すなら 2 倍速（アニメが見つからなければ等速）
-float PlayerController::CalcSpeedToFit(int clipIndex, float seconds) const {
-	const AnimatorComponent* animator = GetComponent<AnimatorComponent>();
-	if (animator == nullptr || seconds <= 0.0f) {
-		return 1.0f;
-	}
-	const Animation* clip = AnimationManager::GetAnimation(animator->animationHandle, static_cast<uint32_t>(clipIndex));
-	return (clip != nullptr && clip->duration > 0.0f) ? clip->duration / seconds : 1.0f;
-}
-
 // ===== このキャラにかかる重力の強さ =====
 // Character Controller は「Settings の Physics → World → Gravity × Gravity Scale」で落とす。それと同じ値（向きは真下とみなして、長さだけ）
 float PlayerController::CalcGravity(const CharacterControllerComponent& controller) {

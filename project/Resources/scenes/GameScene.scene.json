@@ -110,7 +110,7 @@
 				"Animator": {
 					"enabled": true,
 					"animation": "resources/Model/Player/Player.gltf",
-					"clip": "00_Idle",
+					"clip": "Idle",
 					"speed": 1.0,
 					"loop": true,
 					"playOnStart": true,

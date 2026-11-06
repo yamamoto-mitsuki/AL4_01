@@ -46,8 +46,6 @@ private:
 	void UpdateAnimation(const Vector3& moveDirection);                 // アニメの切り替え
 
 	// ===== 道具 =====
-	void SetClip(int clipIndex, bool loop, float speed);      // アニメを切り替える（同じアニメなら速さだけ変える）
-	float CalcSpeedToFit(int clipIndex, float seconds) const; // アニメをちょうど seconds 秒で流しきる再生の速さ
 	static float CalcGravity(const CharacterControllerComponent& controller); // このキャラにかかる重力の強さ（m/秒²。Character Controller と同じ値）
 	float CalcDodgeHorizontalSpeed(float elapsed, float deltaTime) const; // 回避ジャンプで、elapsed 秒から deltaTime 秒の間に横へ進む速さ（カーブから）
 	const Curve& GetDodgeMoveCurve() const;                              // 回避ジャンプの横の進み方のカーブ（未選択なら InOutSine）
