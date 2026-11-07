@@ -10,16 +10,34 @@
     <Filter Include="Source\Scripts\Player">
       <UniqueIdentifier>{3f8a2c71-6d4e-4b19-a5c2-9e7d1b0f4a68}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\Scripts\Combat">
+      <UniqueIdentifier>{8d2e5b47-1c93-4f6a-b07e-5a4c9e2d1f83}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Source\Scripts\Player\PlayerController.cpp">
       <Filter>Source\Scripts\Player</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Scripts\Player\JustCounter.cpp" />
+    <ClCompile Include="Source\Scripts\Enemy\AttackParts\GroundAttackPart.cpp" />
+    <ClCompile Include="Source\Scripts\Enemy\AttackParts\Chase.cpp" />
+    <ClCompile Include="Source\Scripts\Enemy\AttackParts\StationaryAttack.cpp" />
+    <ClCompile Include="Source\Scripts\Enemy\AttackParts\Pounce.cpp" />
+    <ClCompile Include="Source\Scripts\Enemy\BossCat.cpp" />
+    <ClCompile Include="Source\Scripts\Combat\HitBlink.cpp">
+      <Filter>Source\Scripts\Combat</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Scripts\Player\PlayerController.h">
       <Filter>Source\Scripts\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Scripts\Player\JustCounter.h" />
+    <ClInclude Include="Source\Scripts\Enemy\AttackParts\GroundAttackPart.h" />
+    <ClInclude Include="Source\Scripts\Enemy\BossCat.h" />
+    <ClInclude Include="Source\Scripts\Combat\HitBlink.h">
+      <Filter>Source\Scripts\Combat</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

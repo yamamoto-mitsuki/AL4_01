@@ -1,0 +1,51 @@
+{
+	"version": 5,
+	"entities": [
+		{
+			"id": 13665277418750845619,
+			"name": "PounceImpact",
+			"parent": 0,
+			"active": true,
+			"layer": 2,
+			"components": {
+				"Transform": {
+					"translation": [14.454369, 0.0, 0.0],
+					"rotation": [0.0, 0.0, 0.0],
+					"scale": [1.0, 1.0, 1.0]
+				},
+				"Damage Source": {
+					"damage": 1.0,
+					"damageType": 0,
+					"falloffCurve": "",
+					"falloffNear": 0.0,
+					"falloffFar": 10.0,
+					"hitStop": 0.12,
+					"shake": 0.6
+				},
+				"Hitbox": {
+					"shapeType": "Circle",
+					"shapeCenter": [0.0, 0.0, 0.0],
+					"shapeRadius": 4.0,
+					"shapeInnerRadius": 0.0,
+					"shapeHeight": 3.0,
+					"targets": -6,
+					"instigator": 0,
+					"phase": "Off",
+					"warningSeconds": 0.0,
+					"activateAfterWarning": false,
+					"activeSeconds": 0.0,
+					"rehitInterval": 0.0,
+					"maxTargets": 0,
+					"justMargin": 0.5,
+					"justLeadTime": 0.3
+				},
+				"Hitbox Telegraph": {
+					"enabled": true,
+					"material": "",
+					"showWhileActive": false,
+					"order": 0
+				}
+			}
+		}
+	]
+}

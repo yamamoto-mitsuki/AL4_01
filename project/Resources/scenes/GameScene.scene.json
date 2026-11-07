@@ -1,5 +1,5 @@
 {
-	"version": 4,
+	"version": 5,
 	"entities": [
 		{
 			"id": 1,
@@ -38,6 +38,17 @@
 					"useBounds": false,
 					"boundsMin": [-10.0, -10.0],
 					"boundsMax": [100.0, 30.0]
+				},
+				"Camera Shake": {
+					"enabled": true,
+					"noisePosition": [0.0, 0.0, 0.0],
+					"noiseRotation": [0.0, 0.0, 0.0],
+					"noiseFrequency": 1.0,
+					"noiseGain": 1.0,
+					"impulseGain": 1.0,
+					"impulseFrequency": 8.0,
+					"impulseDamping": 0.2,
+					"impulseRotation": 2.0
 				}
 			}
 		},
@@ -92,7 +103,8 @@
 					"shininess": 32.0,
 					"metallic": 0.0,
 					"roughness": 0.5,
-					"emissive": [0.0, 0.0, 0.0]
+					"emissive": [0.0, 0.0, 0.0],
+					"receivesDecals": true
 				}
 			}
 		},
@@ -101,10 +113,11 @@
 			"name": "Player",
 			"parent": 0,
 			"active": true,
+			"layer": 1,
 			"components": {
 				"Transform": {
-					"translation": [0.0, 0.0, 0.0],
-					"rotation": [0.0, 0.0, 0.0],
+					"translation": [-30.0, 0.0, 0.0],
+					"rotation": [0.0, 90.0, 0.0],
 					"scale": [1.0, 1.0, 1.0]
 				},
 				"Animator": {
@@ -137,6 +150,27 @@
 					"physicMaterial": "",
 					"radius": 0.45
 				},
+				"Health": {
+					"maxHealth": 5.0,
+					"health": 5.0,
+					"invincible": false,
+					"invincibleAfterHit": 1.0,
+					"immuneTypes": 0
+				},
+				"HitBlink": {
+					"Enabled": true,
+					"blinkInterval": 0.1
+				},
+				"Hurtbox": {
+					"enabled": true,
+					"shape": "Sphere",
+					"center": [0.0, 0.5, 0.0],
+					"radius": 0.4,
+					"damageMultiplier": 1.0
+				},
+				"JustCounter": {
+					"Enabled": true
+				},
 				"Model Renderer": {
 					"enabled": true,
 					"model": "resources/Model/Player/Player.gltf",
@@ -146,6 +180,7 @@
 					"rasterizerType": "SolidBack",
 					"depthMode": "TestWrite",
 					"billboard": "None",
+					"receivesDecals": false,
 					"color": [0.5984556, 0.512962, 0.512962, 1.0],
 					"intensity": 1.0,
 					"overrideMaterial": false,
@@ -164,13 +199,397 @@
 				"PlayerController": {
 					"Enabled": true,
 					"Move Speed": 6.0,
-					"Acceleration": 20.0,
-					"Turn Sharpness": 18.0,
+					"Move Smooth Time": 0.08,
+					"Turn Smooth Time": 0.06,
 					"Dodge Distance": 6.0,
 					"Dodge Height": 3.0,
+					"Dodge Cooldown": 1.0,
 					"Dodge Move Curve": "resources/curve/playerJump.curve",
 					"Dodge Invincible Time": 0.35,
-					"Dodge Cooldown": 1.0
+					"Hit Stun Time": 0.4,
+					"Hit Knockback Distance": 1.0
+				}
+			}
+		},
+		{
+			"id": 11760217611290104191,
+			"name": "Boss",
+			"parent": 0,
+			"active": true,
+			"layer": 2,
+			"components": {
+				"Transform": {
+					"translation": [6.0, 3.0, 0.0],
+					"rotation": [0.0, -90.0, 0.0],
+					"scale": [1.0, 1.0, 1.0]
+				},
+				"Animator": {
+					"enabled": true,
+					"animation": "resources/Model/Boss/Boss.gltf",
+					"clip": "Idle",
+					"speed": 1.0,
+					"loop": true,
+					"playOnStart": true,
+					"previewTime": 0.0
+				},
+				"Attack Table": {
+					"enabled": true,
+					"table": "resources/attackTable/Boss.attacktable",
+					"target": 18404052429168653556,
+					"healthRatio": 1.0
+				},
+				"BossCat": {
+					"Enabled": true
+				},
+				"Character Controller": {
+					"enabled": true,
+					"slopeLimit": 45.0,
+					"stepOffset": 0.3,
+					"useGravity": true,
+					"gravityScale": 3.0,
+					"pushRigidbodies": false,
+					"pushMass": 80.0,
+					"freezePositionX": false,
+					"freezePositionY": false,
+					"freezePositionZ": false,
+					"velocity": [0.0, 0.0, 0.0]
+				},
+				"Collider": {
+					"enabled": true,
+					"isTrigger": false,
+					"shape": "Capsule",
+					"center": [-0.01, 2.38, -0.01],
+					"physicMaterial": "",
+					"radius": 2.29,
+					"height ": 4.4
+				},
+				"Health": {
+					"maxHealth": 100.0,
+					"health": 100.0,
+					"invincible": false,
+					"invincibleAfterHit": 0.0,
+					"immuneTypes": 0
+				},
+				"Model Renderer": {
+					"enabled": true,
+					"model": "resources/Model/Boss/Boss.gltf",
+					"texture": "",
+					"shadingType": "PBR",
+					"blendMode": "Normal",
+					"rasterizerType": "SolidBack",
+					"depthMode": "TestWrite",
+					"billboard": "None",
+					"receivesDecals": false,
+					"color": [0.45945948, 0.45945948, 0.45945948, 1.0],
+					"intensity": 1.0,
+					"overrideMaterial": false,
+					"ambient": [0.2, 0.2, 0.2],
+					"baseColor": [1.0, 1.0, 1.0, 1.0],
+					"specular": [0.0, 0.0, 0.0],
+					"emissive": [0.0, 0.0, 0.0],
+					"shininess": 32.0,
+					"metallic": 0.0,
+					"roughness": 0.5,
+					"alphaCutoff": 0.0,
+					"uvTranslation": [0.0, 0.0, 0.0],
+					"uvRotation": [0.0, 0.0, 0.0],
+					"uvScale": [1.0, 1.0, 1.0]
+				}
+			}
+		},
+		{
+			"id": 6663526261418405576,
+			"name": "Hurtbox Head",
+			"parent": 11760217611290104191,
+			"active": true,
+			"layer": 2,
+			"components": {
+				"Transform": {
+					"translation": [0.0, 0.0, 0.0],
+					"rotation": [0.0, 0.0, 0.0],
+					"scale": [1.0, 1.0, 1.0]
+				},
+				"Hurtbox": {
+					"enabled": true,
+					"shape": "Sphere",
+					"center": [0.0, 3.0, 2.16],
+					"radius": 1.0,
+					"damageMultiplier": 1.0
+				}
+			}
+		},
+		{
+			"id": 17217823924601294102,
+			"name": "Hurtbox Front",
+			"parent": 11760217611290104191,
+			"active": true,
+			"layer": 2,
+			"components": {
+				"Transform": {
+					"translation": [0.0, 0.0, 0.0],
+					"rotation": [0.0, 0.0, 0.0],
+					"scale": [1.0, 1.0, 1.0]
+				},
+				"Hurtbox": {
+					"enabled": true,
+					"shape": "Sphere",
+					"center": [0.0, 2.5, -0.91],
+					"radius": 1.79,
+					"damageMultiplier": 1.0
+				}
+			}
+		},
+		{
+			"id": 2129205725728334324,
+			"name": "Hurtbox Rear",
+			"parent": 11760217611290104191,
+			"active": true,
+			"layer": 2,
+			"components": {
+				"Transform": {
+					"translation": [0.0, 0.0, 0.0],
+					"rotation": [0.0, 0.0, 0.0],
+					"scale": [1.0, 1.0, 1.0]
+				},
+				"Hurtbox": {
+					"enabled": true,
+					"shape": "Sphere",
+					"center": [0.0, 2.95, -2.77],
+					"radius": 1.36,
+					"damageMultiplier": 1.0
+				}
+			}
+		},
+		{
+			"id": 4062704376484304000,
+			"name": "Tail Sweep Hitbox",
+			"parent": 11760217611290104191,
+			"active": true,
+			"layer": 2,
+			"components": {
+				"Transform": {
+					"translation": [0.0, 0.0, 0.0],
+					"rotation": [0.0, 0.0, 0.0],
+					"scale": [1.0, 1.0, 1.0]
+				},
+				"Damage Source": {
+					"damage": 1.0,
+					"damageType": 0,
+					"falloffCurve": "",
+					"falloffNear": 0.0,
+					"falloffFar": 10.0,
+					"hitStop": 0.08,
+					"shake": 0.3
+				},
+				"Hitbox": {
+					"shapeType": "Circle",
+					"shapeCenter": [0.0, 0.0, 0.0],
+					"shapeRadius": 6.0,
+					"shapeInnerRadius": 0.0,
+					"shapeHeight": 3.0,
+					"targets": -6,
+					"instigator": 0,
+					"phase": "Off",
+					"warningSeconds": 0.0,
+					"activateAfterWarning": false,
+					"activeSeconds": 0.0,
+					"rehitInterval": 0.0,
+					"maxTargets": 0,
+					"justEnabled": true,
+					"justMargin": 0.5,
+					"justLeadTime": 0.3
+				},
+				"Hitbox Telegraph": {
+					"enabled": true,
+					"material": "",
+					"showWhileActive": false,
+					"order": 0
+				}
+			}
+		},
+		{
+			"id": 7310582946617203841,
+			"name": "Boss Plateau",
+			"parent": 0,
+			"active": true,
+			"components": {
+				"Transform": {
+					"translation": [0.0, 1.5, 0.0],
+					"rotation": [0.0, 0.0, 0.0],
+					"scale": [32.0, 3.0, 32.0]
+				},
+				"Collider": {
+					"enabled": true,
+					"isTrigger": false,
+					"shape": "Box",
+					"center": [0.0, 0.0, 0.0],
+					"physicMaterial": "",
+					"size": [1.0, 1.0, 1.0]
+				},
+				"Primitive Renderer": {
+					"enabled": true,
+					"shape": "Box",
+					"color": [0.42, 0.38, 0.33, 1.0],
+					"intensity": 1.0,
+					"surface": "Opaque",
+					"texture": "MyEngine/Resources/Textures/uvChecker.png",
+					"uvScale": [1.0, 1.0],
+					"shadingType": "PBR",
+					"specular": [0.0, 0.0, 0.0],
+					"shininess": 32.0,
+					"metallic": 0.0,
+					"roughness": 0.5,
+					"emissive": [0.0, 0.0, 0.0],
+					"receivesDecals": true
+				}
+			}
+		},
+		{
+			"id": 7310582946617203842,
+			"name": "Boss Slope",
+			"parent": 0,
+			"active": true,
+			"components": {
+				"Transform": {
+					"translation": [0.0, 0.0, 0.0],
+					"rotation": [0.0, 0.0, 0.0],
+					"scale": [1.0, 1.0, 1.0]
+				},
+				"Collider": {
+					"enabled": true,
+					"isTrigger": false,
+					"shape": "Polygon",
+					"center": [0.0, 0.0, 0.0],
+					"physicMaterial": ""
+				},
+				"Polygon Renderer": {
+					"enabled": true,
+					"sideShade": 0.7,
+					"worldSpaceUV": true,
+					"color": [0.42, 0.38, 0.33, 1.0],
+					"intensity": 1.0,
+					"surface": "Opaque",
+					"texture": "",
+					"uvScale": [2.0, 2.0],
+					"shadingType": "HalfLambert",
+					"specular": [0.0, 0.0, 0.0],
+					"shininess": 32.0,
+					"metallic": 0.0,
+					"roughness": 0.5,
+					"emissive": [0.0, 0.0, 0.0],
+					"receivesDecals": true
+				},
+				"Polygon Shape": {
+					"depth": 6.0,
+					"pointCount": 3,
+					"point0": [-26.0, 0.0],
+					"point1": [-16.0, 0.0],
+					"point2": [-16.0, 3.0]
+				}
+			}
+		},
+		{
+			"id": 7310582946617203843,
+			"name": "Boss Wall N",
+			"parent": 0,
+			"active": true,
+			"components": {
+				"Transform": {
+					"translation": [0.0, 5.0, 16.5],
+					"rotation": [0.0, 0.0, 0.0],
+					"scale": [1.0, 1.0, 1.0]
+				},
+				"Collider": {
+					"enabled": true,
+					"isTrigger": false,
+					"shape": "Box",
+					"center": [0.0, 0.0, 0.0],
+					"physicMaterial": "",
+					"size": [34.0, 4.0, 1.0]
+				}
+			}
+		},
+		{
+			"id": 7310582946617203844,
+			"name": "Boss Wall S",
+			"parent": 0,
+			"active": true,
+			"components": {
+				"Transform": {
+					"translation": [0.0, 5.0, -16.5],
+					"rotation": [0.0, 0.0, 0.0],
+					"scale": [1.0, 1.0, 1.0]
+				},
+				"Collider": {
+					"enabled": true,
+					"isTrigger": false,
+					"shape": "Box",
+					"center": [0.0, 0.0, 0.0],
+					"physicMaterial": "",
+					"size": [34.0, 4.0, 1.0]
+				}
+			}
+		},
+		{
+			"id": 7310582946617203845,
+			"name": "Boss Wall E",
+			"parent": 0,
+			"active": true,
+			"components": {
+				"Transform": {
+					"translation": [16.5, 5.0, 0.0],
+					"rotation": [0.0, 0.0, 0.0],
+					"scale": [1.0, 1.0, 1.0]
+				},
+				"Collider": {
+					"enabled": true,
+					"isTrigger": false,
+					"shape": "Box",
+					"center": [0.0, 0.0, 0.0],
+					"physicMaterial": "",
+					"size": [1.0, 4.0, 32.0]
+				}
+			}
+		},
+		{
+			"id": 7310582946617203846,
+			"name": "Boss Wall W (+Z)",
+			"parent": 0,
+			"active": true,
+			"components": {
+				"Transform": {
+					"translation": [-16.5, 5.0, 9.5],
+					"rotation": [0.0, 0.0, 0.0],
+					"scale": [1.0, 1.0, 1.0]
+				},
+				"Collider": {
+					"enabled": true,
+					"isTrigger": false,
+					"shape": "Box",
+					"center": [0.0, 0.0, 0.0],
+					"physicMaterial": "",
+					"size": [1.0, 4.0, 13.0]
+				}
+			}
+		},
+		{
+			"id": 7310582946617203847,
+			"name": "Boss Wall W (-Z)",
+			"parent": 0,
+			"active": true,
+			"components": {
+				"Transform": {
+					"translation": [-16.5, 5.0, -9.5],
+					"rotation": [0.0, 0.0, 0.0],
+					"scale": [1.0, 1.0, 1.0]
+				},
+				"Collider": {
+					"enabled": true,
+					"isTrigger": false,
+					"shape": "Box",
+					"center": [0.0, 0.0, 0.0],
+					"physicMaterial": "",
+					"size": [1.0, 4.0, 13.0]
 				}
 			}
 		}

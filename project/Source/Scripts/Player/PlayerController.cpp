@@ -1,89 +1,81 @@
 #include "PlayerController.h"
 
 #include <cmath>
+#include <format>
 #include <string_view>
 
+#include <MyEngine/Components/Combat/HealthComponent.h>
 #include <MyEngine/Curve/Curve.h>
 #include <MyEngine/Curve/CurveManager.h>
+#include <MyEngine/Diagnostics/LogManager.h>
 #include <MyEngine/Input/InputManager.h>
+#include <MyEngine/Math/Easing.h>
 #include <MyEngine/Systems/Animation/AnimationSystem.h>
+#include <MyEngine/Systems/Combat/HitSystem.h>
 #include <MyEngine/Systems/Physics/PhysicsSystem.h>
+
+#include "JustCounter.h"
 
 SCRIPT(PlayerController, "Player");
 
 namespace {
-// --- アニメの名前（Player.gltf の中の名前＝Blender のアクションの名前。ファイルの中の並びは関係ない）---
-constexpr std::string_view kClipIdle = "Idle";           // 待機（ループ）
-constexpr std::string_view kClipRun = "Run";             // 走り（ループ。杖を前に構えたまま）
-constexpr std::string_view kClipDodgeJump = "DodgeJump"; // 回避ジャンプ（1回だけ。跳ぶ → 前に1回転 → 着地）
+// ===== アニメの名前（Player.gltf の中の名前。Blender のアクションの名前）=====
+constexpr std::string_view kClipIdle = "Idle";           // 待機
+constexpr std::string_view kClipRun = "Run";             // 走り
+constexpr std::string_view kClipHit = "Hit";             // のけぞり
+constexpr std::string_view kClipDown = "Down";           // 倒れる
+constexpr std::string_view kClipDodgeJump = "DodgeJump"; // 回避
 
-// --- 入力 ---
+// ===== 入力 =====
 constexpr float kMoveInputDeadzone = 0.1f; // これより小さい入力は「止まっている」扱い（スティックを離したときの小さな揺れ）
 constexpr float kRunAnimMinSpeed = 0.5f;   // スティックを少しだけ倒したときの走りのアニメの速さ（倒しきると 1）
 } // namespace
 
 
 //=============================================================================
-// エンジンが呼ぶ関数
+// 初期化・更新
 //=============================================================================
-// ===== 始め =====
-void PlayerController::Start() {
-	// 置いたときの向きから始める（エディタで回して置いた向きを引き継ぐ）
-	facingYaw_ = GetEulerAngles(transform).y;
+// ===== 初期化 =====
+void PlayerController::Start() { 
+	facingYaw_ = GetEulerAngles(transform).y;  // 置いたときの向きから始める
 	AnimationSystem::Play(gameObject.handle, kClipIdle, true, 1.0f);
 }
 
-// ===== 毎フレーム =====
-void PlayerController::Update() {
-	const float deltaTime = Time::GetDeltaTime();
-	if (deltaTime <= 0.0f) {
-		return; // 時間が止まっている（ヒットストップ・時間の倍率 0）
+// ===== 更新 =====
+void PlayerController::Update() { 
+	const float dt = Time::GetDeltaTime();
+
+	// --- 早期リターン ---
+	if (dt <= 0.0f) {
+		return; // ヒットストップ・ポーズ
 	}
 	CharacterControllerComponent* controller = GetComponent<CharacterControllerComponent>();
 	if (controller == nullptr) {
-		return; // Character Controller を付け忘れている（動かせない）
+		return; // CharacterController を付け忘れている
 	}
 
-	// --- 入力 → 状態ごとの処理 → 向き → アニメ の順（向きとアニメは、このフレームに回避を始めたかを見るため後ろ）---
+	// --- 共通処理 ---
+	dodgeCooldownTimer_ = (std::max)(0.0f, dodgeCooldownTimer_ - dt); // 回避のクールダウンを減らす
+
+	// --- 状態ごとの処理 ---
 	const Vector3 moveDirection = CalcMoveDirection();
-	switch (state_) {
+	switch (state_) { 
 	case PlayerState::Move:
-		UpdateMove(*controller, moveDirection, deltaTime);
+		UpdateMove(*controller, moveDirection, dt);
 		break;
 	case PlayerState::Dodge:
-		UpdateDodge(*controller, deltaTime);
+		UpdateDodge(*controller, dt);
+		break;
+	case PlayerState::Hit:
+		UpdateHit(*controller, dt);
+		break;
+	case PlayerState::Down:
+		DampHorizontalVelocity(*controller, {0.0f, 0.0f, 0.0f}, dt); // 倒れた所で止まる（押し戻しの勢いだけ消していく）
 		break;
 	}
-	UpdateFacing(moveDirection, deltaTime);
-	UpdateAnimation(moveDirection);
-}
-
-// ===== Inspector に出す・保存する値 =====
-void PlayerController::Fields(ComponentUI& ui) {
-	ui.Field("Move Speed", moveSpeed_, AtLeast(0.0f).Tip("歩く速さ（m/秒）"));
-	ui.Field("Acceleration", acceleration_, AtLeast(0.0f).Tip("速さが入力に追いつく速さ。大きいほどキビキビ、小さいほど滑る（着地の後の勢いの残り方も）"));
-	ui.Field("Turn Sharpness", turnSharpness_, AtLeast(0.0f).Tip("向きが入力に追いつく速さ。大きいほど素早く振り向く"));
-	ui.Field("Dodge Distance", dodgeDistance_, AtLeast(0.0f).Tip("回避ジャンプで横に進む距離（m。平らな地面で、跳んでから着地するまで）"));
-	ui.Field("Dodge Height", dodgeHeight_, AtLeast(0.0f).Tip("回避ジャンプの一番高い所（m。足元から）。跳んでいる時間は、これと Character Controller の重力で決まる"));
-	ui.AssetField("Dodge Move Curve", dodgeMoveCurve_, AssetType::Curve,
-	    Tip("回避ジャンプの横の進み方（.curve）。横軸＝跳んでからの時間の割合 0〜1、縦軸＝進んだ距離の割合 0〜1。未選択なら InOutSine（ゆっくり出て、ゆっくり止まる）"));
-	ui.Field("Dodge Invincible Time", dodgeInvincibleTime_, AtLeast(0.0f).Tip("回避ジャンプを始めてから無敵の秒"));
-	ui.Field("Dodge Cooldown", dodgeCooldown_, AtLeast(0.0f).Tip("着地してから、次の回避ジャンプができるまでの秒"));
-}
-
-
-//=============================================================================
-// ほかの Script から読む
-//=============================================================================
-// ===== 攻撃が当たらない =====
-bool PlayerController::IsInvincible() const {
-	return state_ == PlayerState::Dodge && dodgeElapsed_ < dodgeInvincibleTime_;
-}
-
-// ===== 向いている向き =====
-Vector3 PlayerController::GetFacingDirection() const {
-	const float radian = facingYaw_ * kDegToRad;
-	return {std::sin(radian), 0.0f, std::cos(radian)};
+	UpdateFacing(moveDirection, dt); // 向き
+	UpdateAnimation(moveDirection);  // 歩きと待機のアニメーション
+	SyncInvincible();                // IsInvincible() を HealthのInvincible と同期する
 }
 
 
@@ -91,68 +83,115 @@ Vector3 PlayerController::GetFacingDirection() const {
 // 状態ごとの処理
 //=============================================================================
 // ===== 歩く =====
-// velocity の X・Z を毎フレーム書く（Y は Character Controller が重力で決める。地面にいる間は 0）
 void PlayerController::UpdateMove(CharacterControllerComponent& controller, const Vector3& moveDirection, float deltaTime) {
-	// --- 横の速さ：目標の速さへなめらかに近づける（着地の後は、回避の速さから歩きの速さへ少しずつ落ちる＝勢いが残る）---
-	const Vector3 current = {controller.velocity.x, 0.0f, controller.velocity.z};
-	const Vector3 next = Lerp(current, moveDirection * moveSpeed_, CalcDampFactor(acceleration_, deltaTime));
-	controller.velocity.x = next.x;
-	controller.velocity.z = next.z;
+	// --- 横の速さ ---
+	DampHorizontalVelocity(controller, moveDirection * moveSpeed_, deltaTime);
 
-	// --- 回避ジャンプ：キーボードは Space、パッドは A。地面にいて、待ち時間が終わっているときだけ（空中では出ない＝1回だけ）---
-	dodgeCooldownTimer_ = (std::max)(dodgeCooldownTimer_ - deltaTime, 0.0f);
+	// --- 回避 ---
 	const bool isPressed = InputManager::IsKeyTriggered(DIK_SPACE) || InputManager::IsButtonTriggered(GamepadButton::A);
-	if (isPressed && controller.IsGrounded() && dodgeCooldownTimer_ <= 0.0f) {
+	if (isPressed && CanDodge()) {
 		StartDodge(controller, moveDirection, deltaTime);
 	}
 }
 
-// ===== 回避ジャンプを始める =====
-// 「どれだけ横に進むか（Dodge Distance）」と「どこまで高く上がるか（Dodge Height）」から、跳ぶ速さを逆算する
-//   上向きの速さ vy ＝ √(2 × 重力 × 高さ)       … 投げ上げで、その高さで速さが 0 になる速さ
-//   着地までの時間 T ＝ 2 × vy ÷ 重力            … 上がる時間と下りる時間は同じ
-//   横は T の間に Dodge Distance だけ進む。どう進むか（出だし・終わりの速さ）は Dodge Move Curve（CalcDodgeHorizontalSpeed）
-// 重力は Character Controller と同じ値を使うので、Gravity Scale を変えても距離と高さはそのまま（速く跳んで、速く落ちるだけ）
-void PlayerController::StartDodge(CharacterControllerComponent& controller, const Vector3& moveDirection, float deltaTime) {
-	const float gravity = CalcGravity(controller);
+// ==== 回避（Start）=====
+void PlayerController::StartDodge(CharacterControllerComponent& controller, const Vector3& moveDirection, float deltaTime) { 
+	const float gravity = GetCalcGravity(controller);
+	// --- 早期リターン ---
 	if (gravity <= 0.0f || dodgeHeight_ <= 0.0f) {
-		return; // 重力が無い（落ちてこない）・高さ 0 では跳べない
+		return; // 重力なし・高さ0
 	}
-	const float upSpeed = std::sqrt(2.0f * gravity * dodgeHeight_);
+
+	// --- 共通処理 ---
+	const float upSpeed = std::sqrtf(2.0f * gravity * dodgeHeight_); // 上に上がる速さ（v^2 = 2gh）
 	dodgeAirTime_ = 2.0f * upSpeed / gravity;
+	state_ = PlayerState::Dodge; // 回避状態に
+	dodgeElapsedTime_ = 0.0f;    // 経過時間リセット
+	dodgeDirection_ = (LengthSq(moveDirection) > 0.0f) ? Normalize(moveDirection) : GetFacingDirection(); // 入力の向きを反映
+	controller.velocity = dodgeDirection_ * GetCalcDodgeHorizontalSpeed(0.0f, deltaTime) + Vector3{0.0f, upSpeed, 0.0f}; // 上の速さは最初のみ
 
-	// 入力があればその向き、無ければ今向いている向きへ（止まったままでも避けられる）
-	dodgeDirection_ = (LengthSq(moveDirection) > 0.0f) ? Normalize(moveDirection) : GetFacingDirection();
-	state_ = PlayerState::Dodge;
-	dodgeElapsed_ = 0.0f;
-
-	// --- アニメ：1回転を、平らな地面で着地するまでの時間でちょうど流しきる（距離・高さ・重力を変えてもアニメが合う）---
-	// 前の回避のアニメがまだ流れていても最初から（Play は同じ名前が流れていると速さしか変えないので、Restart も呼ぶ）
-	AnimationSystem::Play(gameObject.handle, kClipDodgeJump, false, AnimationSystem::CalcSpeedToFit(gameObject.handle, kClipDodgeJump, dodgeAirTime_));
+	// --- アニメーション ---
+	const float animSpeed = AnimationSystem::CalcSpeedToFit(gameObject.handle, kClipDodgeJump, dodgeAirTime_); // 着地するまでの時間に合わせる
+	AnimationSystem::Play(gameObject.handle, kClipDodgeJump, false, animSpeed);
 	AnimationSystem::Restart(gameObject.handle);
 
-	// 上の速さは1回だけ書く（あとは Character Controller が重力で落とす）。横はこのフレームの分。次のフレームからは UpdateDodge が書く
-	controller.velocity = dodgeDirection_ * CalcDodgeHorizontalSpeed(0.0f, deltaTime) + Vector3{0.0f, upSpeed, 0.0f};
+	// --- ジャスト回避 ---
+	JustCandidate just;
+	if (HitSystem::TryConsumeJust(gameObject.handle, just)) {
+		if (JustCounter* counter = GetComponent<JustCounter>()) {
+			counter->Begin(just);
+		} else {
+			LogManager::Warning("ジャスト回避したが、JustCounter が付いていない（プレイヤーの Entity に足してください）");
+		}
+	}
 }
 
-// ===== 回避ジャンプ中・着地 =====
+// ===== 回避（Update）=====
 void PlayerController::UpdateDodge(CharacterControllerComponent& controller, float deltaTime) {
-	// --- 着地：地面に戻ったら歩きへ。始めたフレームは Character Controller がまだ動かしていないので、ここに来るのは次のフレームから ---
-	// （跳んだ次のフレームには空中になっている。天井ですぐ止められたときも、落ちて地面に着けばここで終わる）
+	// --- 着地 ---
 	if (controller.IsGrounded()) {
 		state_ = PlayerState::Move;
-		dodgeCooldownTimer_ = dodgeCooldown_;
+		dodgeCooldownTimer_ = dodgeCooldown_; // クールダウン発生
 		return;
 	}
-	// --- 横の速さ：カーブの進み方になるように、このフレームに進む分の速さを毎フレーム書く（縦は Character Controller の重力のまま）---
-	// 壁に当たっても毎フレーム同じ向きへ書くが、壁へ向かう分は Character Controller が消すので、壁に沿うか止まる
-	// 平らな地面で着地する時間（T）を過ぎてもまだ落ちている（台地の端から跳んだ）ときは書かない＝最後の速さのまま落ちる
-	if (dodgeElapsed_ < dodgeAirTime_) {
-		const Vector3 horizontal = dodgeDirection_ * CalcDodgeHorizontalSpeed(dodgeElapsed_, deltaTime);
+
+	// --- 横の速さ --
+	if (dodgeElapsedTime_ < dodgeAirTime_) {
+		const Vector3 horizontal = dodgeDirection_ * GetCalcDodgeHorizontalSpeed(dodgeElapsedTime_, deltaTime);
 		controller.velocity.x = horizontal.x;
 		controller.velocity.z = horizontal.z;
 	}
-	dodgeElapsed_ += deltaTime;
+	dodgeElapsedTime_ += deltaTime;
+}
+
+// ===== のけぞり（Start）=====
+void PlayerController::StartHit(const HitInfo& hit) { 
+	state_ = PlayerState::Hit; // 状態変更
+	hitElapsedTime_ = 0.0f;    // 経過時間リセット
+
+	// --- 押し戻しの向き ---
+	const Vector3 direction = {hit.direction.x, 0.0f, hit.direction.z};
+	knockbackDirection_ = (LengthSq(direction) > 0.0001f) ? Normalize(direction) : GetFacingDirection() * -1.0f; // 真上・真下からの攻撃は向きが決まらないので、後ろへ
+
+	// --- アニメーション ---
+	const float animSpeed = AnimationSystem::CalcSpeedToFit(gameObject.handle, kClipHit, hitStunTime_); // のけぞりの時間に合わせる
+	AnimationSystem::Play(gameObject.handle, kClipHit, false, animSpeed);
+	AnimationSystem::Restart(gameObject.handle);
+}
+
+// ===== のけぞり（Update）=====
+void PlayerController::UpdateHit(CharacterControllerComponent& controller, float deltaTime) {
+	// --- のけぞりの横の速さ ---
+	const Vector3 horizontal = knockbackDirection_ * GetCalcKnockbackSpeed(hitElapsedTime_, deltaTime);
+	controller.velocity.x = horizontal.x;
+	controller.velocity.z = horizontal.z;
+	hitElapsedTime_ += deltaTime;
+	if (hitElapsedTime_ >= hitStunTime_) {
+		state_ = PlayerState::Move;
+	}
+}
+
+// ===== 倒れる（Start）=====
+void PlayerController::StartDown() {
+	state_ = PlayerState::Down;
+	AnimationSystem::Play(gameObject.handle, kClipDown, false, 1.0f);
+	AnimationSystem::Restart(gameObject.handle);
+}
+
+
+//=============================================================================
+// 攻撃を受けたとき
+//=============================================================================
+void PlayerController::OnHitTaken(const HitInfo& hit) {
+	if (state_ == PlayerState::Down) {
+		return; // 既に負け
+	}
+	LogManager::Log(std::format("被弾：{}（{} 減って、残り {}）", GameObject{hit.hitbox}.GetName(), hit.damage, hit.healthAfter));
+	if (hit.isDefeated) {
+		StartDown(); // HP0
+	} else {
+		StartHit(hit);
+	}
 }
 
 
@@ -160,61 +199,64 @@ void PlayerController::UpdateDodge(CharacterControllerComponent& controller, flo
 // 毎フレーム（状態によらない）
 //=============================================================================
 // ===== 入力をカメラから見た向きに直す =====
-// 上（W・スティックを奥）を押したら画面の奥へ、右を押したら画面の右へ動くようにする。長さは 0〜1（スティックの倒し具合）
-Vector3 PlayerController::CalcMoveDirection() const {
+Vector3 PlayerController::CalcMoveDirection() const { 
 	const Vector2 input = InputManager::GetMoveAxis();
+	// --- 早期リターン ---
 	if (Length(input) < kMoveInputDeadzone) {
-		return {0.0f, 0.0f, 0.0f};
+		return {0.0f, 0.0f, 0.0f}; // 入力なし
 	}
 
-	// --- カメラの前を地面に平らにした向き（カメラが無いときはワールドの +Z を奥にする）---
+	// --- カメラの前を地面に平らにした向き ---
 	Vector3 forward = {0.0f, 0.0f, 1.0f};
 	if (const Camera* camera = CameraSystem::GetMainCamera()) {
-		// ビュー行列はカメラのワールド行列の逆。回転の部分は「逆＝転置」なので、ビュー行列の3列目がカメラの前（ワールドの向き）になる
 		const Matrix4x4& view = camera->GetViewMatrix();
-		const Vector3 flatForward = {view.m[0][2], 0.0f, view.m[2][2]}; // 見下ろしのカメラは下を向いているので、y を捨てて地面に平らにする
-		if (LengthSq(flatForward) > 0.0001f) {                          // 真下を向いているときだけは前が決まらないので、+Z のまま
+		const Vector3 flatForward = {view.m[0][2], 0.0f, view.m[2][2]};
+		// 真下を向いてるとき
+		if (LengthSq(flatForward) > 0.0001f) {
 			forward = Normalize(flatForward);
 		}
 	}
-	// 右は、前を Y のまわりに 90 度回した向き（(x, z) → (z, -x)。左手系で上から見て時計回り）
 	const Vector3 right = {forward.z, 0.0f, -forward.x};
 	return right * input.x + forward * input.y;
 }
 
 // ===== 向き =====
-// 歩いている向きへ振り向く。回避ジャンプ中は跳んだ向きにすぐ向く（1回転はアニメがする）。止まっているときは最後に向いた向きのまま
-void PlayerController::UpdateFacing(const Vector3& moveDirection, float deltaTime) {
-	const Vector3 target = IsDodging() ? dodgeDirection_ : moveDirection;
-	if (LengthSq(target) > 0.0f) {
-		// 向きを角度（度）にする。atan2(x, z) は +Z で 0、+X で 90（SetEulerAngles の Y と同じ測り方）
-		const float targetYaw = std::atan2(target.x, target.z) * kRadToDeg;
-		// 今の角度から一番近い回り方の差（-180〜180）。std::remainder は「一番近い整数倍を引いた余り」なので、350 度の差は -10 度になる（大回りしない）
-		const float difference = std::remainder(targetYaw - facingYaw_, 360.0f);
-		const float t = IsDodging() ? 1.0f : CalcDampFactor(turnSharpness_, deltaTime);
-		facingYaw_ = std::remainder(facingYaw_ + difference * t, 360.0f); // 何周しても -180〜180 に収める
+void PlayerController::UpdateFacing(const Vector3& moveDirection, float deltaTime) { 
+	Vector3 target = {0.0f, 0.0f, 0.0f};
+	if (state_ == PlayerState::Move) {
+		target = moveDirection;
+	} else if (state_ == PlayerState::Dodge) {
+		target = dodgeDirection_;
+	}
+	// --- 今の角度から一番近い回り方で ---
+	if (Length(target) > 0.0f) {
+		const float targetYaw = MathUtility::DirectionToYaw(target);
+		const float rate = IsDodging() ? 1.0f : MathUtility::CalcSmoothRate(deltaTime, turnSmoothTime_);
+		facingYaw_ = std::remainder(facingYaw_ + MathUtility::DeltaAngle(facingYaw_, targetYaw) * rate, 360.0f);
 	}
 	SetEulerAngles(transform, {0.0f, facingYaw_, 0.0f});
 }
 
-// ===== アニメの切り替え =====
-void PlayerController::UpdateAnimation(const Vector3& moveDirection) {
-	switch (state_) {
-	case PlayerState::Move: {
-		const float moveAmount = Length(moveDirection); // スティックの倒し具合（0〜1）
-		if (moveAmount > 0.0f) {
-			// ゆっくり歩くときは足もゆっくり。std::lerp（C++20 の <cmath>）は a + (b - a) × t。エンジンの float の Lerp は MathUtility の中にあるので、STL の方を使う
-			// Play は毎フレーム呼んでよい（同じ名前が流れていれば、速さだけ変わる）
-			AnimationSystem::Play(gameObject.handle, kClipRun, true, std::lerp(kRunAnimMinSpeed, 1.0f, moveAmount));
-		} else {
-			AnimationSystem::Play(gameObject.handle, kClipIdle, true, 1.0f);
-		}
-		break;
+// ===== 歩きと待機のアニメーション =====
+void PlayerController::UpdateAnimation(const Vector3& moveDirection) { 
+	// --- 早期リターン ---
+	if (state_ != PlayerState::Move) {
+		return; // 歩き状態のみ
 	}
-	case PlayerState::Dodge:
-		// 回避ジャンプのアニメは StartDodge で1回だけ流す
-		// ここで毎フレーム Play すると、台地の端から跳んでアニメが終わった後もまだ落ちているとき、Play が「止まっている」と見て最初から流し直してしまう
-		break;
+	
+	// --- 倒し具合で再生速度を調整 ---
+	const float moveAmount = Length(moveDirection); // スティックの倒し具合
+	if (moveAmount > 0.0f) {
+		AnimationSystem::Play(gameObject.handle, kClipRun, true, std::lerp(kRunAnimMinSpeed, 1.0f, moveAmount));
+	} else {
+		AnimationSystem::Play(gameObject.handle, kClipIdle, true, 1.0f);
+	}
+}
+
+// ===== 無敵をHealthに写す =====
+void PlayerController::SyncInvincible() {
+	if (HealthComponent* health = GetComponent<HealthComponent>()) {
+		health->invincible = IsInvincible();
 	}
 }
 
@@ -222,42 +264,88 @@ void PlayerController::UpdateAnimation(const Vector3& moveDirection) {
 //=============================================================================
 // 道具
 //=============================================================================
-// ===== このキャラにかかる重力の強さ =====
-// Character Controller は「Settings の Physics → World → Gravity × Gravity Scale」で落とす。それと同じ値（向きは真下とみなして、長さだけ）
-float PlayerController::CalcGravity(const CharacterControllerComponent& controller) {
+// ===== 重力の強さ =====
+float PlayerController::GetCalcGravity(const CharacterControllerComponent& controller) {
 	if (!controller.useGravity) {
 		return 0.0f;
 	}
 	return Length(PhysicsSystem::GetGravity()) * controller.gravityScale;
 }
 
-// ===== 回避ジャンプで、elapsed 秒から deltaTime 秒の間に横へ進む速さ =====
-// カーブは「時間の割合 → 進んだ距離の割合」。2つの時刻の割合の差 × 距離 が、この間に進む距離。それを時間で割ると速さになる
-// 速さではなく「進んだ割合」をカーブにするのは、カーブの形をどう変えても、最後に進む距離がちょうど Dodge Distance になるため
-// （速さのカーブだと、形を変えるたびに面積＝距離が変わってしまう）
-float PlayerController::CalcDodgeHorizontalSpeed(float elapsed, float deltaTime) const {
+// ===== 回避で、 elapsed 秒から deltaTime 秒の間に横へ進む速さ =====
+float PlayerController::GetCalcDodgeHorizontalSpeed(float elapsed, float deltaTime) const {
+	// --- 早期リターン ---
 	if (dodgeAirTime_ <= 0.0f || deltaTime <= 0.0f) {
 		return 0.0f;
 	}
 	const Curve& curve = GetDodgeMoveCurve();
 	const float from = curve.Evaluate(elapsed / dodgeAirTime_);
-	const float to = curve.Evaluate((elapsed + deltaTime) / dodgeAirTime_); // 1 を過ぎたら最後の値（Evaluate がそう返す）
+	const float to = curve.Evaluate((elapsed + deltaTime) / dodgeAirTime_);
 	return dodgeDistance_ * (to - from) / deltaTime;
 }
 
-// ===== 回避ジャンプの横の進み方のカーブ =====
+// ===== 回避の横の進み方のカーブ =====
 const Curve& PlayerController::GetDodgeMoveCurve() const {
 	if (const Curve* curve = CurveManager::Get(dodgeMoveCurve_)) {
 		return *curve;
 	}
-	// 未選択：ゆっくり出て、ゆっくり止まる形（関数の中の static は、最初に通ったときに1回だけ作られる）
+	// 未選択
 	static const Curve kDefaultCurve = Curve::FromEase(Ease::Type::InOutSine);
 	return kDefaultCurve;
 }
 
-// ===== なめらかに近づける割合 =====
-// 毎フレーム「残りの差 × t」だけ近づける。t を 1 - e^(-sharpness × 時間) にすると、60fps でも 144fps でも同じ速さで近づく
-// （t を固定の 0.2 などにすると、フレームが多いほど速く近づいてしまう）
-float PlayerController::CalcDampFactor(float sharpness, float deltaTime) {
-	return 1.0f - std::exp(-sharpness * deltaTime);
+// ===== のけぞりで、elapsed 秒から deltaTime 秒の間に押される速さ =====
+float PlayerController::GetCalcKnockbackSpeed(float elapsed, float deltaTime) const {
+	if (hitStunTime_ <= 0.0f || deltaTime <= 0.0f) {
+		return 0.0f; // スタン終了
+	}
+	const auto progress = [this](float time) { return Ease::Apply((std::min)(time / hitStunTime_, 1.0f), Ease::Type::OutQuad); };
+	return hitKnockbackDistance_ * (progress(elapsed + deltaTime) - progress(elapsed)) / deltaTime;
+}
+
+// ===== 横の速さをtargetへ滑らかに近づける =====
+void PlayerController::DampHorizontalVelocity(CharacterControllerComponent& controller, const Vector3& target, float deltaTime) const {
+	const Vector3 current = {controller.velocity.x, 0.0f, controller.velocity.z};
+	const Vector3 next = Lerp(current, {target.x, 0.0f, target.z}, MathUtility::CalcSmoothRate(deltaTime, moveSmoothTime_));
+	controller.velocity.x = next.x;
+	controller.velocity.z = next.z;
+}
+
+
+//=============================================================================
+// ほかの Script から読む
+//=============================================================================
+// ===== 攻撃が当たらない =====
+bool PlayerController::IsInvincible() const { return state_ == PlayerState::Dodge && dodgeElapsedTime_ < dodgeInvincibleTime_; }
+
+// ===== 向いている向き =====
+Vector3 PlayerController::GetFacingDirection() const { return MathUtility::YawToDirection(facingYaw_); }
+
+// ===== 今、回避ジャンプを始められる =====
+bool PlayerController::CanDodge() const {
+	const CharacterControllerComponent* controller = GetComponent<CharacterControllerComponent>();
+	return state_ == PlayerState::Move && controller != nullptr && controller->IsGrounded() && dodgeCooldownTimer_ <= 0.0f;
+}
+
+// ===== 回避の待ち時間の残りの割合 =====
+float PlayerController::GetDodgeCooldownRatio() const { return (dodgeCooldown_ > 0.0f) ? dodgeCooldownTimer_ / dodgeCooldown_ : 0.0f; }
+
+
+//=============================================================================
+// Inspector に出す・保存する値
+//=============================================================================
+void PlayerController::Fields(ComponentUI& ui) {
+	// --- State: Move ---
+	ui.Field("Move Speed", moveSpeed_, AtLeast(0.0f).Tip("移動速度"));
+	ui.Field("Move Smooth Time", moveSmoothTime_, AtLeast(0.0f).Tip("速さが入力に追いつくまでの時間"));
+	ui.Field("Turn Smooth Time", turnSmoothTime_, AtLeast(0.0f).Tip("向きが入力に追いつくまでの時間"));
+	// --- State: Dodge ---
+	ui.Field("Dodge Distance", dodgeDistance_, AtLeast(0.0f).Tip("回避で横に進む距離"));
+	ui.Field("Dodge Height", dodgeHeight_, AtLeast(0.0f).Tip("回避で上に上がる高さ"));
+	ui.Field("Dodge Cooldown", dodgeCooldown_, AtLeast(0.0f).Tip("回避のクールタイム"));
+	ui.AssetField("Dodge Move Curve", dodgeMoveCurve_, AssetType::Curve, Tip("回避の進み方の.curveの番号"));
+	ui.Field("Dodge Invincible Time", dodgeInvincibleTime_, AtLeast(0.0f).Tip("回避の無敵時間"));
+	// --- State: Hit ---
+	ui.Field("Hit Stun Time", hitStunTime_, AtLeast(0.0f).Tip("スタンの時間"));
+	ui.Field("Hit Knockback Distance", hitKnockbackDistance_, AtLeast(0.0f).Tip("ノックバックの距離"));
 }

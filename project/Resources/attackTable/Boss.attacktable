@@ -1,0 +1,67 @@
+{
+	"settings": {
+		"maxRepeat": 2,
+		"sampleAnimation": "resources/Model/Boss/Boss.gltf"
+	},
+	"phases": [
+		{
+			"name": "Phase 1",
+			"minIdleSeconds": 0.8,
+			"idlePart": "Chase",
+			"idlePartFields": {
+				"moveSpeed": 5.0,
+				"stopDistance": 5.0,
+				"resumeMargin": 0.5,
+				"turnSmoothTime": 0.3,
+				"idleClip": "Idle",
+				"walkClip": "Walk",
+				"walkAnimSpeed": 1.0
+			}
+		}
+	],
+	"attacks": [
+		{
+			"name": "Pounce",
+			"weight": 1.0,
+			"minDistance": 6.0,
+			"maxDistance": 0.0,
+			"cooldown": 3.0,
+			"windupSeconds": 1.2,
+			"activeSeconds": 0.1,
+			"recoverySeconds": 1.0,
+			"phase0": true,
+			"part": "Pounce",
+			"partFields": {
+				"leapSeconds": 0.8,
+				"leapHeight": 3.0,
+				"maxLeapDistance": 14.0,
+				"turnSmoothTime": 0.15,
+				"impactPrefab": "resources/prefabs/PounceImpact.prefab",
+				"crouchClip": "Pounce_Windup",
+				"leapClip": "Pounce_Leap",
+				"activeClip": "Pounce_Active",
+				"recoveryClip": "Pounce_Recovery"
+			}
+		},
+		{
+			"name": "Tail Sweep",
+			"weight": 1.0,
+			"minDistance": 0.0,
+			"maxDistance": 7.0,
+			"cooldown": 2.0,
+			"windupSeconds": 0.9,
+			"activeSeconds": 0.3,
+			"recoverySeconds": 0.8,
+			"phase0": true,
+			"part": "StationaryAttack",
+			"partFields": {
+				"windupClip": "TailSweep_Windup",
+				"activeClip": "TailSweep_Active",
+				"recoveryClip": "TailSweep_Recovery",
+				"hitbox": "Tail Sweep Hitbox",
+				"faceTargetInWindup": false,
+				"turnSmoothTime": 0.2
+			}
+		}
+	]
+}

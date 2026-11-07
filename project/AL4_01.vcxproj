@@ -16,9 +16,20 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Source\Scripts\Combat\HitBlink.cpp" />
+    <ClCompile Include="Source\Scripts\Enemy\AttackParts\Chase.cpp" />
+    <ClCompile Include="Source\Scripts\Enemy\AttackParts\GroundAttackPart.cpp" />
+    <ClCompile Include="Source\Scripts\Enemy\AttackParts\Pounce.cpp" />
+    <ClCompile Include="Source\Scripts\Enemy\AttackParts\StationaryAttack.cpp" />
+    <ClCompile Include="Source\Scripts\Enemy\BossCat.cpp" />
+    <ClCompile Include="Source\Scripts\Player\JustCounter.cpp" />
     <ClCompile Include="Source\Scripts\Player\PlayerController.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Source\Scripts\Combat\HitBlink.h" />
+    <ClInclude Include="Source\Scripts\Enemy\AttackParts\GroundAttackPart.h" />
+    <ClInclude Include="Source\Scripts\Enemy\BossCat.h" />
+    <ClInclude Include="Source\Scripts\Player\JustCounter.h" />
     <ClInclude Include="Source\Scripts\Player\PlayerController.h" />
   </ItemGroup>
   <ItemGroup>
