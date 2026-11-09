@@ -1,5 +1,5 @@
 #pragma once
-#include <MyEngine/ECS/Script.h>
+#include <HTTEngine/ECS/Script.h>
 
 //=============================================================================
 // 被弾の後の無敵の間、モデルを点滅させる（Health の Invincible After Hit の残りを見る）

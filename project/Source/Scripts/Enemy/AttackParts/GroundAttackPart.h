@@ -1,8 +1,8 @@
 #pragma once
 #include <string_view>
 
-#include <MyEngine/AI/AttackPart.h>
-#include <MyEngine/Components/Animation/AnimatorComponent.h>
+#include <HTTEngine/AI/AttackPart.h>
+#include <HTTEngine/Components/Animation/AnimatorComponent.h>
 
 
 /// <summary>

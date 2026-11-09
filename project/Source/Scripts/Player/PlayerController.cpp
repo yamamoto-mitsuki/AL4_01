@@ -4,15 +4,15 @@
 #include <format>
 #include <string_view>
 
-#include <MyEngine/Components/Combat/HealthComponent.h>
-#include <MyEngine/Curve/Curve.h>
-#include <MyEngine/Curve/CurveManager.h>
-#include <MyEngine/Diagnostics/LogManager.h>
-#include <MyEngine/Input/InputManager.h>
-#include <MyEngine/Math/Easing.h>
-#include <MyEngine/Systems/Animation/AnimationSystem.h>
-#include <MyEngine/Systems/Combat/HitSystem.h>
-#include <MyEngine/Systems/Physics/PhysicsSystem.h>
+#include <HTTEngine/Components/Combat/HealthComponent.h>
+#include <HTTEngine/Curve/Curve.h>
+#include <HTTEngine/Curve/CurveManager.h>
+#include <HTTEngine/Diagnostics/LogManager.h>
+#include <HTTEngine/Input/InputManager.h>
+#include <HTTEngine/Math/Easing.h>
+#include <HTTEngine/Systems/Animation/AnimationSystem.h>
+#include <HTTEngine/Systems/Combat/HitSystem.h>
+#include <HTTEngine/Systems/Physics/PhysicsSystem.h>
 
 #include "JustCounter.h"
 

@@ -1,9 +1,9 @@
 #include <format>
 #include <string>
 
-#include <MyEngine/Components/Combat/HitboxComponent.h>
-#include <MyEngine/Diagnostics/LogManager.h>
-#include <MyEngine/Systems/Combat/HitSystem.h>
+#include <HTTEngine/Components/Combat/HitboxComponent.h>
+#include <HTTEngine/Diagnostics/LogManager.h>
+#include <HTTEngine/Systems/Combat/HitSystem.h>
 
 #include "GroundAttackPart.h"
 

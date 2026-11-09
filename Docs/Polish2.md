@@ -5,7 +5,7 @@
 参考：
 - エンジン：`Scene/SceneTransition.h`（`ReloadScene(fadeTime)`：幕を閉じてから読み直す）・`Systems/ParticleSystem.h`（`Emit`：今すぐ count 個出す）・`Components/ParticleSystemComponent.h`（`gravity`・`drag`・Shape の Box / Cone）・`Systems/WindZoneSystem.h`（`Sample`）・`ECS/EntityManager.h`（`Get(handle)`：Entity の親を読む）
 - Unity の Particle System の「Rate over Distance」（進んだ長さで出す）
-- エンジンの粒の回転：[ParticleRotation.md](../../MyEngine_v1/Docs/Tasks/ParticleRotation.md)（Start Rotation・Angular Velocity・Align To Velocity・Stretch。最初のフレームの Play の直しも）
+- エンジンの粒の回転：[ParticleRotation.md](../../HTTEngine/Docs/Tasks/ParticleRotation.md)（Start Rotation・Angular Velocity・Align To Velocity・Stretch。最初のフレームの Play の直しも）
 
 ## この段階でやること
 
@@ -24,13 +24,13 @@
 | E | エディタ | 変 | Player に足元の粒・風の範囲に粒 |
 
 **写す順番**：A → B → C → D（**C・D の4つは VS の「既存の項目を追加」で Source/Scripts/Effects に入れる**。入れ忘れるとリンクエラー）→ ビルド → E。
-**E-2 の「筋」「葉」の値は、エンジンに [ParticleRotation.md](../../MyEngine_v1/Docs/Tasks/ParticleRotation.md) を写して、サブモジュールを進めた後**（それより前は Inspector に Rotation が無い。A〜D と E-1 は今のエンジンのままでよい）。
+**E-2 の「筋」「葉」の値は、エンジンに [ParticleRotation.md](../../HTTEngine/Docs/Tasks/ParticleRotation.md) を写して、サブモジュールを進めた後**（それより前は Inspector に Rotation が無い。A〜D と E-1 は今のエンジンのままでよい）。
 
 ---
 
 ## 0. 粒の回転について（エンジンで足した）
 
-粒の絵（`Resources/Textures/Effects/leaf.png` など）を回すのは、エンジンを変えるしかなかった（回転の値が無く、VS が world から位置と大きさしか取り出さない）。AL4_01 の CLAUDE.md は「Engine 層を変えない」なので、エンジンのチャット（外の `MyEngine_v1`）で [ParticleRotation.md](../../MyEngine_v1/Docs/Tasks/ParticleRotation.md) を作った。Particle System の Inspector に **Rotation** が増える：
+粒の絵（`Resources/Textures/Effects/leaf.png` など）を回すのは、エンジンを変えるしかなかった（回転の値が無く、VS が world から位置と大きさしか取り出さない）。AL4_01 の CLAUDE.md は「Engine 層を変えない」なので、エンジンのチャット（外の `HTTEngine`）で [ParticleRotation.md](../../HTTEngine/Docs/Tasks/ParticleRotation.md) を作った。Particle System の Inspector に **Rotation** が増える：
 
 | 項目 | 中身 |
 |---|---|
@@ -153,8 +153,8 @@ void IceCube::UpdateShards(float deltaTime) {
 ### `DistanceTrail.h`
 ```cpp
 #pragma once
-#include <MyEngine/ECS/Script.h>
-#include <MyEngine/Math/Vector3.h>
+#include <HTTEngine/ECS/Script.h>
+#include <HTTEngine/Math/Vector3.h>
 
 // 前方宣言
 struct RigidbodyComponent;
@@ -194,7 +194,7 @@ private:
 
 #include <cmath>
 
-#include <MyEngine/Systems/ParticleSystem.h>
+#include <HTTEngine/Systems/ParticleSystem.h>
 
 SCRIPT(DistanceTrail, "Effects");
 
@@ -279,8 +279,8 @@ void DistanceTrail::Update() {
 ### `WindParticles.h`
 ```cpp
 #pragma once
-#include <MyEngine/ECS/Script.h>
-#include <MyEngine/Math/Vector2.h>
+#include <HTTEngine/ECS/Script.h>
+#include <HTTEngine/Math/Vector2.h>
 
 /// <summary>
 /// 風の範囲（Wind Zone）の中に、風に流される粒を出す。Wind Zone と Particle System を両方付けた Entity に付ける
@@ -312,10 +312,10 @@ private:
 #include <algorithm>
 #include <cmath>
 
-#include <MyEngine/Components/ParticleSystemComponent.h>
-#include <MyEngine/Components/WindZoneComponent.h>
-#include <MyEngine/Systems/ParticleSystem.h>
-#include <MyEngine/Systems/WindZoneSystem.h>
+#include <HTTEngine/Components/ParticleSystemComponent.h>
+#include <HTTEngine/Components/WindZoneComponent.h>
+#include <HTTEngine/Systems/ParticleSystem.h>
+#include <HTTEngine/Systems/WindZoneSystem.h>
 
 SCRIPT(WindParticles, "Effects");
 
@@ -484,7 +484,7 @@ IceCube の Life に **Fall Restart Delay 0.2**・**Restart Fade Time 0.5** が�
 - キー・パッドで本当に走る・トゲ・熱湯は試していない（ユーザーの PC に本物の入力は送らないため）。上の表で確かめてほしい。
 
 ### 2026-10-27 追加：風の「筋」「葉」の値
-- 上の作業用コピーに、エンジンの [ParticleRotation.md](../../MyEngine_v1/Docs/Tasks/ParticleRotation.md)（A〜D）を入れたもので確かめた。このページのコード（WindParticles など）はそのまま。
+- 上の作業用コピーに、エンジンの [ParticleRotation.md](../../HTTEngine/Docs/Tasks/ParticleRotation.md)（A〜D）を入れたもので確かめた。このページのコード（WindParticles など）はそのまま。
 - Level01 を写して、カメラの見える所（高さ 5m）に 8×4m の Wind Zone（Speed 5・Gust 0.3）を2つ置き、左に「筋」、右に「葉」の値を入れて製品版で撮った。
   - 1回目：筋 Size 0.04〜0.07・Stretch 8、葉 Size 0.25〜0.4・Rate 8 → 筋が短く点に近い、葉が小さくて何か分からない。
   - 2回目：筋 Size 0.03〜0.05・Stretch 14・Color A の A 0.7 → 風の線らしく横に流れた。葉 Size 0.5〜0.8・Rate 10 → 葉の形が分かり、ばらばらの向きで回って流れた（**E-2 の表の値**）。
@@ -509,4 +509,4 @@ IceCube の Life に **Fall Restart Delay 0.2**・**Restart Fade Time 0.5** が�
 | 筋が太い・ぼやける | Size が大きい（太さは Size で決まる。長さは Size × Stretch） |
 | 葉が白っぽく光る・重なると明るい | Blend が Add（Normal にする） |
 | 葉の代わりに丸いぼかし | Texture が空（`resources/Textures/Effects/leaf.png` を選ぶ） |
-| Release で粒が崩れる（エンジンを写した後） | Release が読む `project/MyEngine/Shader` の写しが古い。エンジンをビルドし直す（ParticleRotation.md の6章） |
+| Release で粒が崩れる（エンジンを写した後） | Release が読む `project/HTTEngine/Shader` の写しが古い。エンジンをビルドし直す（ParticleRotation.md の6章） |

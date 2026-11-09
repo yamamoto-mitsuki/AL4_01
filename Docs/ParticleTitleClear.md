@@ -3,12 +3,12 @@
 参考：
 - 川瀬式ブルーム（MGF：Multiple Gaussian Filter）… 川瀬正樹「Frame Buffer Postprocessing Effects in DOUBLE-S.T.E.A.L (Wreckless)」GDC 2003 の講演
 - Unity の Particle System（Main・Emission・Shape・Over Lifetime の分け方を手本にした）
-- 今のエンジン：`MyEngine_v1/project/MyEngine/Particle/*`・`Graphics/PostEffect/BloomPass.*`・`UI/UIScreen.h`・`Scene/SceneTransition.h`
+- 今のエンジン：`HTTEngine/project/HTTEngine/Particle/*`・`Graphics/PostEffect/BloomPass.*`・`UI/UIScreen.h`・`Scene/SceneTransition.h`
 - 今のゲーム：`project/Source/Scripts/GoalDoor.*`・`LevelInfo.*`・`Gimmicks/JumpRing.*`・`UI/PauseMenu.*`
 
 > **このファイルは設計だけ**（写経用のコードは、決めてほしいこと（9章）が決まってから、パートごとに別の md に書く）。
 
-> ⚠ **エンジンを変える所がある**（2章のパーティクル・3章のブルームとスター）。AL4_01 の CLAUDE.md に「Engine 層は変えない」とあるので、**エンジンの部分は MyEngine_v1 のエンジンのチャットで作る**（10/25 に決めた）。このファイルの2・3章は、エンジンのチャットに渡す設計。ゲームの部分（4〜7章）はエンジンを変えずに作れる。
+> ⚠ **エンジンを変える所がある**（2章のパーティクル・3章のブルームとスター）。AL4_01 の CLAUDE.md に「Engine 層は変えない」とあるので、**エンジンの部分は HTTEngine のエンジンのチャットで作る**（10/25 に決めた）。このファイルの2・3章は、エンジンのチャットに渡す設計。ゲームの部分（4〜7章）はエンジンを変えずに作れる。
 
 ---
 
@@ -481,12 +481,12 @@ Update：Delay（1.0 秒）たったら
 | `Resources/prefabs/JumpOrb・LaunchOrb.prefab`・各 Level の Goal | 変（子に Sparkle・Burst） | F |
 | `Resources/Textures/Effects/particle_soft.png`・鍵・クリア印 | 新（素材） | C・F |
 
-### エンジン（MyEngine_v1 の方で）
+### エンジン（HTTEngine の方で）
 
 | ファイル | パート |
 |---|---|
 | `Components/ParticleSystemComponent.h`・`Systems/ParticleSystem.h / .cpp`（新） | E |
-| `Renderer.h / .cpp`（`DrawParticleInstances`）・`WindowManager.cpp`・`Engine.cpp`・`MyEngine_v1.vcxproj` | E |
+| `Renderer.h / .cpp`（`DrawParticleInstances`）・`WindowManager.cpp`・`Engine.cpp`・`HTTEngine.vcxproj` | E |
 | `BloomPass.h / .cpp`・`PostProcess.cpp`・`BloomGaussian.PS`・`BloomKawaseComposite.PS`（新） | G1 |
 | `RenderStates.h`（`DrawTarget::glow`）・`RenderQueue`・`SceneRenderer.cpp`・Primitive / Sprite の Component と System | G2 |
 | `StarPass.h / .cpp`・`StarStreak.PS`・`StarComposite.PS`（新）・`PostProcess.cpp` | G3 |
@@ -499,7 +499,7 @@ Update：Delay（1.0 秒）たったら
 
 | | 質問 | おすすめ |
 |---|---|---|
-| ~~Q1~~ | エンジンの部分（E・G）を作るのは、MyEngine_v1 のリポジトリの方でよいか | **決まり（10/25）**：エンジンのチャットで作る |
+| ~~Q1~~ | エンジンの部分（E・G）を作るのは、HTTEngine のリポジトリの方でよいか | **決まり（10/25）**：エンジンのチャットで作る |
 | Q2 | 「Start, Quad」は **Start・Quit**（ゲームを終わる）でよいか | Quit |
 | Q3 | ステージの名前（10個）。今 Level01・02 があるので、あと8つ作る | 名前は後で。初めは「ステージ 1」〜 |
 | Q4 | クリア画面の「タイトルへ」で戻ったとき、**ステージ選択を開いた状態**にするか（すぐ次を選べる） | 開いた状態（全体の入れ物に「戻ったらステージ選択を開く」を1つ持つ） |
@@ -513,7 +513,7 @@ Update：Delay（1.0 秒）たったら
 
 ゲーム（こちら）とエンジン（エンジンのチャット）を並べて進める。
 
-| | ゲーム（AL4_01） | エンジン（MyEngine_v1） |
+| | ゲーム（AL4_01） | エンジン（HTTEngine） |
 |---|---|---|
 | 1 | **A・B**（一覧・保存・MenuBase。PauseMenu を移して、今までどおり動くのを確かめる） | **E**（Particle System） |
 | 2 | **C・D**（Title・StageSelect・Clear・GoalDoor・main.cpp）→ タイトルから通しで遊べる | **G1**（川瀬式ブルーム） |

@@ -146,7 +146,7 @@ std::string FormatTime(float seconds);
 
 #include <externals/nlohmann/json.hpp>
 
-#include <MyEngine/Diagnostics/LogManager.h>
+#include <HTTEngine/Diagnostics/LogManager.h>
 
 #include "Source/Scripts/Progress/StageCatalog.h"
 
@@ -446,7 +446,7 @@ void MenuBase::ApplyLook(const std::vector<Handle<Entity>>& items) {
 #include <optional>
 #include <string>
 
-#include <MyEngine/ECS/Script.h>
+#include <HTTEngine/ECS/Script.h>
 
 
 /// <summary>
@@ -507,8 +507,8 @@ private:
 
 #include <format>
 
-#include <MyEngine/Diagnostics/LogManager.h>
-#include <MyEngine/Input/InputManager.h>
+#include <HTTEngine/Diagnostics/LogManager.h>
+#include <HTTEngine/Input/InputManager.h>
 
 #include "Source/Scripts/Progress/GameProgress.h"
 #include "Source/Scripts/Progress/OutGameState.h"
@@ -691,10 +691,10 @@ private:
 
 #include <algorithm>
 
-#include <MyEngine/Components/AlphaGroupComponent.h>
-#include <MyEngine/Diagnostics/LogManager.h>
-#include <MyEngine/Engine.h>
-#include <MyEngine/Input/InputManager.h>
+#include <HTTEngine/Components/AlphaGroupComponent.h>
+#include <HTTEngine/Diagnostics/LogManager.h>
+#include <HTTEngine/Engine.h>
+#include <HTTEngine/Input/InputManager.h>
 
 #include "Source/Scripts/GameTitle.h"
 #include "Source/Scripts/Progress/GameProgress.h"
@@ -797,8 +797,8 @@ void TitleMenu::QuitGame() {
 #pragma once
 #include <string>
 
-#include <MyEngine/Math/Vector2.h>
-#include <MyEngine/Math/Vector4.h>
+#include <HTTEngine/Math/Vector2.h>
+#include <HTTEngine/Math/Vector4.h>
 
 #include "Source/Scripts/UI/MenuBase.h"
 
@@ -858,7 +858,7 @@ private:
 #include <format>
 #include <optional>
 
-#include <MyEngine/Diagnostics/LogManager.h>
+#include <HTTEngine/Diagnostics/LogManager.h>
 
 #include "Source/Scripts/Progress/GameProgress.h"
 #include "Source/Scripts/Progress/OutGameState.h"

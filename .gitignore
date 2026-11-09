@@ -363,7 +363,7 @@ MigrationBackup/
 FodyWeavers.xsd
 
 # Generated engine export and local build logs
-/project/MyEngine/
+/project/HTTEngine/
 /build-*.log
 /project/imgui.ini
 

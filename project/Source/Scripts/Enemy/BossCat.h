@@ -1,6 +1,6 @@
 #pragma once
-#include <MyEngine/Components/Gameplay/AttackTableComponent.h>
-#include <MyEngine/ECS/Script.h>
+#include <HTTEngine/Components/Gameplay/AttackTableComponent.h>
+#include <HTTEngine/ECS/Script.h>
 
 //=============================================================================
 // ボスの猫の体。顔の表情と怯み、フェーズの移行、撃破のアニメーション

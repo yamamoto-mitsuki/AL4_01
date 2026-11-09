@@ -2,11 +2,11 @@
 
 参照・参考元
 - 設計書：`C:\Users\K025G\Downloads\ShooterGameDesign.md`（4章 回避ジャンプとジャスト回避・5章 ボス・9章 UI。2026-11-06 に確定）
-- エンジンの攻撃の当たりとダメージ：`MyEngine_v1/Docs/Tasks/HitDamage.md`（0.3 使い方）
-- エンジンの床の予告：`MyEngine_v1/Docs/Tasks/MaterialTelegraph.md`
-- エンジンの攻撃表：`MyEngine_v1/Docs/Tasks/AttackTable.md`
+- エンジンの攻撃の当たりとダメージ：`HTTEngine/Docs/Tasks/HitDamage.md`（0.3 使い方）
+- エンジンの床の予告：`HTTEngine/Docs/Tasks/MaterialTelegraph.md`
+- エンジンの攻撃表：`HTTEngine/Docs/Tasks/AttackTable.md`
 - エンジンの待ちの部品・アニメを流す窓口・角度の計算：エンジンの 24e4d2b・86df43b（アニメを名前で選ぶ）の md
-- エンジンの見本：`MyEngine_v1/project/Sandbox/Source/AttackParts/ChaseTarget.cpp`・`SpinAttack.cpp`、`Sandbox/Source/Scripts/HitTestPlayer`
+- エンジンの見本：`HTTEngine/project/Sandbox/Source/AttackParts/ChaseTarget.cpp`・`SpinAttack.cpp`、`Sandbox/Source/Scripts/HitTestPlayer`
 - 前の作業：`Docs/PlayerMove.md`（PlayerController）
 - Unreal の Behavior Tree（考える所＝AI と、動く所＝体を分ける。待つ・近づくも AI の仕事）：https://dev.epicgames.com/documentation/en-us/unreal-engine/behavior-tree-in-unreal-engine---overview
 - フレームの速さに左右されない近づけ方（`1 - e^(-dt / smoothTime)`）：Freya Holmér「Lerp smoothing is broken」 https://www.youtube.com/watch?v=LSNQuFEDOyQ
@@ -237,8 +237,8 @@ print([(layer.name, layer.active_render) for layer in mesh.uv_layers])
 
 ```cpp
 #pragma once
-#include <MyEngine/Components/Physics/CharacterControllerComponent.h>
-#include <MyEngine/ECS/Script.h>
+#include <HTTEngine/Components/Physics/CharacterControllerComponent.h>
+#include <HTTEngine/ECS/Script.h>
 
 // プレイヤーの操作（歩く・振り向く・回避ジャンプ・被弾・倒れる・アニメの切り替え）。プレイヤーの Entity に付ける
 // 同じ Entity に付ける物：Collider（Sphere か Capsule）・Character Controller・Model Renderer・Animator（Player.gltf）・Health・Hurtbox・JustCounter
@@ -333,15 +333,15 @@ private:
 #include <format>
 #include <string_view>
 
-#include <MyEngine/Components/Combat/HealthComponent.h>
-#include <MyEngine/Curve/Curve.h>
-#include <MyEngine/Curve/CurveManager.h>
-#include <MyEngine/Diagnostics/LogManager.h>
-#include <MyEngine/Input/InputManager.h>
-#include <MyEngine/Math/Easing.h>
-#include <MyEngine/Systems/Animation/AnimationSystem.h>
-#include <MyEngine/Systems/Combat/HitSystem.h>
-#include <MyEngine/Systems/Physics/PhysicsSystem.h>
+#include <HTTEngine/Components/Combat/HealthComponent.h>
+#include <HTTEngine/Curve/Curve.h>
+#include <HTTEngine/Curve/CurveManager.h>
+#include <HTTEngine/Diagnostics/LogManager.h>
+#include <HTTEngine/Input/InputManager.h>
+#include <HTTEngine/Math/Easing.h>
+#include <HTTEngine/Systems/Animation/AnimationSystem.h>
+#include <HTTEngine/Systems/Combat/HitSystem.h>
+#include <HTTEngine/Systems/Physics/PhysicsSystem.h>
 
 #include "JustCounter.h"
 
@@ -719,8 +719,8 @@ Inspector の表示は `ui.Label`（灰色の文字。保存されない）で�
 #pragma once
 #include <string>
 
-#include <MyEngine/ECS/Script.h>
-#include <MyEngine/Systems/Combat/HitSystem.h>
+#include <HTTEngine/ECS/Script.h>
+#include <HTTEngine/Systems/Combat/HitSystem.h>
 
 // ジャスト反撃の流れを受け持つ（仕切り役）。プレイヤーの Entity に付ける
 // 入口：PlayerController が回避ジャンプを始めた瞬間に HitSystem::TryConsumeJust し、ジャストなら Begin を呼ぶ
@@ -757,7 +757,7 @@ private:
 
 #include <format>
 
-#include <MyEngine/Diagnostics/LogManager.h>
+#include <HTTEngine/Diagnostics/LogManager.h>
 
 SCRIPT(JustCounter, "Player");
 
@@ -799,8 +799,8 @@ void JustCounter::Fields(ComponentUI& ui) {
 #pragma once
 #include <string_view>
 
-#include <MyEngine/AI/AttackPart.h>
-#include <MyEngine/Components/Animation/AnimatorComponent.h> // AnimationClipName（部品の値にアニメの名前を持つ）
+#include <HTTEngine/AI/AttackPart.h>
+#include <HTTEngine/Components/Animation/AnimatorComponent.h> // AnimationClipName（部品の値にアニメの名前を持つ）
 
 // Character Controller で地面を動く敵の、攻撃部品・待ちの部品の基底（ゲーム側の道具）
 // 部品が何度も書く「相手の方を見る・向く・横の速さを書く・アニメを段階の秒に合わせて流す」をまとめる（コピペを減らす）
@@ -834,9 +834,9 @@ protected:
 ```cpp
 #include "GroundAttackPart.h"
 
-#include <MyEngine/Components/Physics/CharacterControllerComponent.h>
-#include <MyEngine/Math/MathUtility.h>
-#include <MyEngine/Systems/Animation/AnimationSystem.h>
+#include <HTTEngine/Components/Physics/CharacterControllerComponent.h>
+#include <HTTEngine/Math/MathUtility.h>
+#include <HTTEngine/Systems/Animation/AnimationSystem.h>
 
 namespace {
 constexpr float kMinDirectionLengthSq = 0.0001f; // これより短い向き（ほぼ真上・真下に居る）は、向きが決まらないとみなす
@@ -906,7 +906,7 @@ void GroundAttackPart::PlayFitted(const AttackPartContext& context, std::string_
 止まる距離と歩き出す距離を **Resume Margin** だけずらしている。同じ距離にすると、境目で「歩く → 止まる → 歩く」をフレームごとに繰り返して、アニメががたつくため。
 
 ```cpp
-#include <MyEngine/Systems/Animation/AnimationSystem.h>
+#include <HTTEngine/Systems/Animation/AnimationSystem.h>
 
 #include "GroundAttackPart.h"
 
@@ -1003,9 +1003,9 @@ void Chase::Fields(ComponentUI& ui) {
 #include <format>
 #include <string>
 
-#include <MyEngine/Components/Combat/HitboxComponent.h>
-#include <MyEngine/Diagnostics/LogManager.h>
-#include <MyEngine/Systems/Combat/HitSystem.h>
+#include <HTTEngine/Components/Combat/HitboxComponent.h>
+#include <HTTEngine/Diagnostics/LogManager.h>
+#include <HTTEngine/Systems/Combat/HitSystem.h>
 
 #include "GroundAttackPart.h"
 
@@ -1124,11 +1124,11 @@ void StationaryAttack::Fields(ComponentUI& ui) {
 ```cpp
 #include <format>
 
-#include <MyEngine/Components/Combat/HitboxComponent.h>
-#include <MyEngine/Components/Physics/CharacterControllerComponent.h>
-#include <MyEngine/Diagnostics/LogManager.h>
-#include <MyEngine/Math/MathUtility.h>
-#include <MyEngine/Systems/Combat/HitSystem.h>
+#include <HTTEngine/Components/Combat/HitboxComponent.h>
+#include <HTTEngine/Components/Physics/CharacterControllerComponent.h>
+#include <HTTEngine/Diagnostics/LogManager.h>
+#include <HTTEngine/Math/MathUtility.h>
+#include <HTTEngine/Systems/Combat/HitSystem.h>
 
 #include "GroundAttackPart.h"
 
@@ -1372,8 +1372,8 @@ void Pounce::Fields(ComponentUI& ui) {
 
 ```cpp
 #pragma once
-#include <MyEngine/Components/Gameplay/AttackTableComponent.h>
-#include <MyEngine/ECS/Script.h>
+#include <HTTEngine/Components/Gameplay/AttackTableComponent.h>
+#include <HTTEngine/ECS/Script.h>
 
 // ボス（巨大ネコ）の体。ボスの Entity に付ける
 // 受け持つのは「攻撃表の状態を読んで見せる」所だけ：顔の表情と、怯み・フェーズの移行・撃破のアニメ
@@ -1423,9 +1423,9 @@ private:
 
 #include <string_view>
 
-#include <MyEngine/Components/Rendering3D/ModelRendererComponent.h>
-#include <MyEngine/Systems/Animation/AnimationSystem.h>
-#include <MyEngine/Systems/Gameplay/AttackTableSystem.h>
+#include <HTTEngine/Components/Rendering3D/ModelRendererComponent.h>
+#include <HTTEngine/Systems/Animation/AnimationSystem.h>
+#include <HTTEngine/Systems/Gameplay/AttackTableSystem.h>
 
 SCRIPT(BossCat, "Enemy");
 
@@ -1538,7 +1538,7 @@ void BossCat::OnStateChanged(AttackTableState state, float duration) {
 
 ```cpp
 #pragma once
-#include <MyEngine/ECS/Script.h>
+#include <HTTEngine/ECS/Script.h>
 
 //=============================================================================
 // 被弾の後の無敵の間、モデルを点滅させる（Health の Invincible After Hit の残りを見る）
@@ -1574,8 +1574,8 @@ private:
 
 #include <cmath>
 
-#include <MyEngine/Components/Combat/HealthComponent.h>
-#include <MyEngine/Components/Rendering3D/ModelRendererComponent.h>
+#include <HTTEngine/Components/Combat/HealthComponent.h>
+#include <HTTEngine/Components/Rendering3D/ModelRendererComponent.h>
 
 SCRIPT(HitBlink, "Combat");
 

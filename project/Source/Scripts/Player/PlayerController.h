@@ -1,6 +1,6 @@
 #pragma once
-#include <MyEngine/Components/Physics/CharacterControllerComponent.h>
-#include <MyEngine/ECS/Script.h>
+#include <HTTEngine/Components/Physics/CharacterControllerComponent.h>
+#include <HTTEngine/ECS/Script.h>
 
 //=============================================================================
 // プレイヤーの操作（歩く・振り向く・回避・被弾・倒れる・アニメーションの切り替え）

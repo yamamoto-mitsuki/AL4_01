@@ -1,10 +1,10 @@
 #include <format>
 
-#include <MyEngine/Components/Combat/HitboxComponent.h>
-#include <MyEngine/Components/Physics/CharacterControllerComponent.h>
-#include <MyEngine/Diagnostics/LogManager.h>
-#include <MyEngine/Math/MathUtility.h>
-#include <MyEngine/Systems/Combat/HitSystem.h>
+#include <HTTEngine/Components/Combat/HitboxComponent.h>
+#include <HTTEngine/Components/Physics/CharacterControllerComponent.h>
+#include <HTTEngine/Diagnostics/LogManager.h>
+#include <HTTEngine/Math/MathUtility.h>
+#include <HTTEngine/Systems/Combat/HitSystem.h>
 
 #include "GroundAttackPart.h"
 

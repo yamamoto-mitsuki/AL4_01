@@ -2,8 +2,8 @@
 
 #include <cmath>
 
-#include <MyEngine/Components/Combat/HealthComponent.h>
-#include <MyEngine/Components/Rendering3D/ModelRendererComponent.h>
+#include <HTTEngine/Components/Combat/HealthComponent.h>
+#include <HTTEngine/Components/Rendering3D/ModelRendererComponent.h>
 
 SCRIPT(HitBlink, "Combat");
 

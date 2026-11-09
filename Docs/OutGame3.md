@@ -82,8 +82,8 @@
 #include <string>
 #include <vector>
 
-#include <MyEngine/Math/Vector2.h>
-#include <MyEngine/Math/Vector4.h>
+#include <HTTEngine/Math/Vector2.h>
+#include <HTTEngine/Math/Vector4.h>
 
 #include "Source/Scripts/UI/MenuBase.h"
 
@@ -147,7 +147,7 @@ private:
 #include <format>
 #include <optional>
 
-#include <MyEngine/Diagnostics/LogManager.h>
+#include <HTTEngine/Diagnostics/LogManager.h>
 
 #include "Source/Scripts/Progress/GameProgress.h"
 #include "Source/Scripts/Progress/OutGameState.h"
@@ -392,8 +392,8 @@ bool LevelInfo::LoadTitle() const { return SceneTransition::LoadScene(titleScene
 ### `DepthOfFieldFade.h`
 ```cpp
 #pragma once
-#include <MyEngine/Core/Handle.h>
-#include <MyEngine/ECS/Entity.h>
+#include <HTTEngine/Core/Handle.h>
+#include <HTTEngine/ECS/Entity.h>
 
 /// <summary>
 /// シーンの被写界深度（Depth Of Field）の値を、今の値から決めた値へ、ゆっくり動かす（クリアの瞬間に、ゲームの絵をぼかしていく）
@@ -437,12 +437,12 @@ private:
 #include <algorithm>
 #include <cmath>
 
-#include <MyEngine/Camera/Camera.h>
-#include <MyEngine/Components/DepthOfFieldComponent.h>
-#include <MyEngine/Components/TransformComponent.h>
-#include <MyEngine/ECS/EntityManager.h>
-#include <MyEngine/Math/Easing.h>
-#include <MyEngine/Systems/CameraSystem.h>
+#include <HTTEngine/Camera/Camera.h>
+#include <HTTEngine/Components/DepthOfFieldComponent.h>
+#include <HTTEngine/Components/TransformComponent.h>
+#include <HTTEngine/ECS/EntityManager.h>
+#include <HTTEngine/Math/Easing.h>
+#include <HTTEngine/Systems/CameraSystem.h>
 
 namespace {
 // メインカメラから point までの奥行き（カメラの前の向きに測った長さ。エンジンがピントを測るのと同じ測り方）
@@ -531,7 +531,7 @@ void DepthOfFieldFade::Update(float deltaTime) {
 #pragma once
 #include <string>
 
-#include <MyEngine/ECS/Script.h>
+#include <HTTEngine/ECS/Script.h>
 
 #include "Source/Scripts/Effects/DepthOfFieldFade.h"
 
@@ -570,8 +570,8 @@ private:
 ```cpp
 #include "GoalDoor.h"
 
-#include <MyEngine/Diagnostics/LogManager.h>
-#include <MyEngine/Systems/ParticleSystem.h>
+#include <HTTEngine/Diagnostics/LogManager.h>
+#include <HTTEngine/Systems/ParticleSystem.h>
 
 #include "IceCube.h"
 #include "LevelInfo.h"
@@ -672,7 +672,7 @@ void GoalDoor::Update() {
 #pragma once
 #include <string>
 
-#include <MyEngine/Math/Vector4.h>
+#include <HTTEngine/Math/Vector4.h>
 
 #include "Source/Scripts/UI/MenuBase.h"
 

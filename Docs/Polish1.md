@@ -52,8 +52,8 @@ Level02 の JumpOrb には、もう吸い寄せの粒（Converge）があるが�
 #include <vector>
 #include <optional>
 
-#include <MyEngine/Components/TextComponent.h>
-#include <MyEngine/ECS/Script.h>
+#include <HTTEngine/Components/TextComponent.h>
+#include <HTTEngine/ECS/Script.h>
 
 /// <summary>
 /// メニュー（項目を選んで決める画面）の共通部分。これだけでは付けられない（SCRIPT で登録しない。JumpRing と同じ）
@@ -237,7 +237,7 @@ void MenuBase::ApplySlide(const std::vector<Handle<Entity>>& items) {
 #pragma once
 #include <string>
 
-#include <MyEngine/ECS/Script.h>
+#include <HTTEngine/ECS/Script.h>
 
 /// <summary>
 /// ジャンプで使う輪（水色の円 JumpOrb・緑の円 LaunchOrb の共通部分）。これだけでは付けられない（SCRIPT で登録しない）
@@ -278,7 +278,7 @@ private:
 ```cpp
 #include "JumpRing.h"
 
-#include <MyEngine/Systems/ParticleSystem.h>
+#include <HTTEngine/Systems/ParticleSystem.h>
 
 #include "Source/Scripts/IceCube.h"
 

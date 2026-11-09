@@ -149,7 +149,7 @@ public:
 
 #include <externals/magic_enum/magic_enum.hpp>
 
-#include <MyEngine/Sound/SoundManager.h>
+#include <HTTEngine/Sound/SoundManager.h>
 
 namespace {
 //=============================================================================
@@ -515,7 +515,7 @@ void LevelInfo::Start() {
 
 ① include（エンジンの include の後に、1行空けて）
 ```cpp
-#include <MyEngine/Systems/TextRenderSystem.h>
+#include <HTTEngine/Systems/TextRenderSystem.h>
 
 #include "Source/Scripts/Audio/GameAudio.h"   // ← 足す
 ```

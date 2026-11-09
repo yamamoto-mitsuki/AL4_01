@@ -1,8 +1,8 @@
 #pragma once
 #include <string>
 
-#include <MyEngine/ECS/Script.h>
-#include <MyEngine/Systems/Combat/HitSystem.h>
+#include <HTTEngine/ECS/Script.h>
+#include <HTTEngine/Systems/Combat/HitSystem.h>
 
 //=============================================================================
 // ジャスト反撃の流れを受け持つ

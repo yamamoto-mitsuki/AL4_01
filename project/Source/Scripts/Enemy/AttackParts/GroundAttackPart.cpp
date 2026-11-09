@@ -1,8 +1,8 @@
 #include "GroundAttackPart.h"
 
-#include <MyEngine/Components/Physics/CharacterControllerComponent.h>
-#include <MyEngine/Math/MathUtility.h>
-#include <MyEngine/Systems/Animation/AnimationSystem.h>
+#include <HTTEngine/Components/Physics/CharacterControllerComponent.h>
+#include <HTTEngine/Math/MathUtility.h>
+#include <HTTEngine/Systems/Animation/AnimationSystem.h>
 
 namespace {
 constexpr float kMinDirectionLengthSq = 0.0001f; // これより短い向き（ほぼ真上・真下に居る）は、向きが決まらないとみなす

@@ -2,8 +2,8 @@
 
 参照・参考元
 - 設計書：`C:\Users\K025G\Downloads\ShooterGameDesign.md`（4章 操作とアクション）
-- エンジンの Character Controller：`MyEngine_v1/Docs/Tasks/CharacterController.md`（0.3 使い方・0.5 場面ごとの動作）
-- エンジンの Script の書き方：`MyEngine_v1/project/MyEngine/ECS/Script.h`
+- エンジンの Character Controller：`HTTEngine/Docs/Tasks/CharacterController.md`（0.3 使い方・0.5 場面ごとの動作）
+- エンジンの Script の書き方：`HTTEngine/project/HTTEngine/ECS/Script.h`
 - フレームの速さに左右されない近づけ方（`1 - e^(-k × dt)`）：Freya Holmér「Lerp smoothing is broken」 https://www.youtube.com/watch?v=LSNQuFEDOyQ
 
 最初の版のコードは本体に直接入れた：`project/Source/Scripts/Player/PlayerController.h`・`.cpp`（直接入れたのはこの1回だけ。7章からは写経）。
@@ -262,16 +262,16 @@ class Curve;
 
 前：
 ```cpp
-#include <MyEngine/Components/Animation/AnimatorComponent.h>
-#include <MyEngine/Graphics/Animation/AnimationManager.h>
+#include <HTTEngine/Components/Animation/AnimatorComponent.h>
+#include <HTTEngine/Graphics/Animation/AnimationManager.h>
 ```
 
 後：
 ```cpp
-#include <MyEngine/Components/Animation/AnimatorComponent.h>
-#include <MyEngine/Curve/Curve.h>
-#include <MyEngine/Curve/CurveManager.h>
-#include <MyEngine/Graphics/Animation/AnimationManager.h>
+#include <HTTEngine/Components/Animation/AnimatorComponent.h>
+#include <HTTEngine/Curve/Curve.h>
+#include <HTTEngine/Curve/CurveManager.h>
+#include <HTTEngine/Graphics/Animation/AnimationManager.h>
 ```
 
 **B-2** Fields に1行足す（Dodge Height の次）

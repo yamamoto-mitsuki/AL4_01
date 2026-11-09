@@ -2,7 +2,7 @@
 
 参考：
 - 前の設計：[ParticleTitleClear.md](ParticleTitleClear.md) の 4〜7章（**この md がその続き。ずれたらこちらが正**）
-- エンジン：`MyEngine_v1/project/MyEngine/UI/UIScreen.h`・`Components/UIScreenComponent.h`・`Scene/SceneTransition.h`・`Components/TextComponent.h`・`Systems/SpriteRenderSystem.h`（`CalcScreenQuad`・`IsInsideQuad`）・`Systems/TextRenderSystem.h`（`CalcTextSize`）・`Components/DepthOfFieldComponent.h`・`Time/EngineTime.h`（`HitStop`）・`Window/WindowManager.h`（`GetMainHWND`）
+- エンジン：`HTTEngine/project/HTTEngine/UI/UIScreen.h`・`Components/UIScreenComponent.h`・`Scene/SceneTransition.h`・`Components/TextComponent.h`・`Systems/SpriteRenderSystem.h`（`CalcScreenQuad`・`IsInsideQuad`）・`Systems/TextRenderSystem.h`（`CalcTextSize`）・`Components/DepthOfFieldComponent.h`・`Time/EngineTime.h`（`HitStop`）・`Window/WindowManager.h`（`GetMainHWND`）
 - ゲーム：`Source/Scripts/UI/PauseMenu.*`・`LevelInfo.*`・`GoalDoor.*`・`IceCube.h`（`Clear`・`IsPlayable`）
 
 > 写経用のコードは段階ごとに別の md：**段階1 → [OutGame1.md](OutGame1.md)・段階2 → [OutGame2.md](OutGame2.md)・段階3 → [OutGame3.md](OutGame3.md)**。前の段階を写して動いたのを確かめてから書く。

@@ -3,7 +3,7 @@
 設計：[OutGame.md](OutGame.md)（3章 MenuBase・4章 タイトル・7章 段階）
 
 参考：
-- エンジン：`MyEngine_v1/project/MyEngine/Systems/SpriteRenderSystem.h`（`CalcScreenQuad`・`IsInsideQuad`）・`Systems/TextRenderSystem.h`（`CalcTextSize`）・`Input/InputManager.h`・`UI/UIScreen.h`・`Scene/SceneTransition.h`・`Window/WindowManager.h`（`GetMainHWND`）・`String/ConvertString.h`・`Engine.h`（エディタは前回のシーンから始まる）
+- エンジン：`HTTEngine/project/HTTEngine/Systems/SpriteRenderSystem.h`（`CalcScreenQuad`・`IsInsideQuad`）・`Systems/TextRenderSystem.h`（`CalcTextSize`）・`Input/InputManager.h`・`UI/UIScreen.h`・`Scene/SceneTransition.h`・`Window/WindowManager.h`（`GetMainHWND`）・`String/ConvertString.h`・`Engine.h`（エディタは前回のシーンから始まる）
 - 今の `Source/Scripts/UI/PauseMenu.*`（中身の大半を MenuBase へ移す）
 
 ## この段階でやること
@@ -58,8 +58,8 @@ inline constexpr std::string_view kGameTitle = "霧氷ジャンプ";
 #include <string>
 #include <vector>
 
-#include <MyEngine/Components/TextComponent.h>
-#include <MyEngine/ECS/Script.h>
+#include <HTTEngine/Components/TextComponent.h>
+#include <HTTEngine/ECS/Script.h>
 
 /// <summary>
 /// メニュー（項目を選んで決める画面）の共通部分。これだけでは付けられない（SCRIPT で登録しない。JumpRing と同じ）
@@ -166,10 +166,10 @@ private:
 
 #include <algorithm>
 
-#include <MyEngine/ECS/EntityManager.h>
-#include <MyEngine/Input/InputManager.h>
-#include <MyEngine/Systems/SpriteRenderSystem.h>
-#include <MyEngine/Systems/TextRenderSystem.h>
+#include <HTTEngine/ECS/EntityManager.h>
+#include <HTTEngine/Input/InputManager.h>
+#include <HTTEngine/Systems/SpriteRenderSystem.h>
+#include <HTTEngine/Systems/TextRenderSystem.h>
 
 namespace {
 // 上・下・左・右・決める・戻るのキー（キーボードとパッドのどちらでも）
@@ -584,8 +584,8 @@ private:
 ```cpp
 #include "TitleMenu.h"
 
-#include <MyEngine/Diagnostics/LogManager.h>
-#include <MyEngine/Engine.h>
+#include <HTTEngine/Diagnostics/LogManager.h>
+#include <HTTEngine/Engine.h>
 
 #include "Source/Scripts/GameTitle.h"
 
@@ -669,8 +669,8 @@ void TitleMenu::QuitGame() {
 ```cpp
 #include <string>
 
-#include <MyEngine/Engine.h>
-#include <MyEngine/String/ConvertString.h>
+#include <HTTEngine/Engine.h>
+#include <HTTEngine/String/ConvertString.h>
 
 #include "Source/Scripts/GameTitle.h"
 

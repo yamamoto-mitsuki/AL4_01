@@ -2,9 +2,9 @@
 
 #include <string_view>
 
-#include <MyEngine/Components/Rendering3D/ModelRendererComponent.h>
-#include <MyEngine/Systems/Animation/AnimationSystem.h>
-#include <MyEngine/Systems/Gameplay/AttackTableSystem.h>
+#include <HTTEngine/Components/Rendering3D/ModelRendererComponent.h>
+#include <HTTEngine/Systems/Animation/AnimationSystem.h>
+#include <HTTEngine/Systems/Gameplay/AttackTableSystem.h>
 
 SCRIPT(BossCat, "Enemy");
 
